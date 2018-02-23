@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.contrib import admin
+from .models import CarOwner
+from .models import Car
 
-# Register your models here.
+admin.site.register(CarOwner)
+admin.site.register(Car)
