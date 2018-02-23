@@ -15,15 +15,14 @@ class SignUpForm(UserCreationForm):
 	first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
 	last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
 	email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
- 	password = forms.CharField(max_length=30,widget=forms.PasswordInput)
-    #phone = forms.IntegerField()
-    #birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
+	password = forms.CharField(max_length=30,widget=forms.PasswordInput)
+	#phone = forms.IntegerField()
+	#birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
 
-
- 	class Meta:
+	class Meta:
 		model = User
 		fields = ('username','first_name','last_name', 'password','email',)
-
+		
 '''class UserLoginForm(forms.Form):
 	email = forms.EmailField()
 	password = forms.CharField(widget=forms.PasswordInput)
