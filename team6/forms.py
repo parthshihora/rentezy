@@ -19,8 +19,11 @@ class SignUpForm(UserCreationForm):
     #phone = forms.IntegerField()
     #birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
 
+	password = forms.CharField(max_length=30,widget=forms.PasswordInput)
+	#phone = forms.IntegerField()
+	#birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
 
- 	class Meta:
+	class Meta:
 		model = User
 		fields = ('username','first_name','last_name','email',)
 
@@ -43,6 +46,7 @@ class CarForm(forms.ModelForm):
 		fields = ['car_pic','modelNumber','modelName','regNumber','insNumber',]
 
 
+		
 '''class UserLoginForm(forms.Form):
 	email = forms.EmailField()
 	password = forms.CharField(widget=forms.PasswordInput)
