@@ -17,13 +17,24 @@ class CarOwner(AbstractBaseUser):
 
 	USERNAME_FIELD = 'email'
 
+class UserData(models.Model):
+    user = models.ForeignKey(User, editable=False)
+    class Meta:
+        abstract = True
 
-class Car(models.Model):
-	#ownerId = models.ForeignKey('auth.User',on_delete=models.CASCADE)
+class Car(UserData):
+	#user = models.ForeignKey(User,on_delete=models.CASCADE)
+	user = models.ForeignKey(User,default="10000000000")
+	#user = models.OneToOneField(User)
+	car_pic =   models.FileField()
+	#car_pic =   models.ImageField(upload_to = 'static/pic_folder/',default='static/pic_folder/no.jpeg')
 	modelNumber = models.CharField(max_length=200)
 	modelName = models.CharField(max_length=200)
 	regNumber = models.CharField(max_length=200)
 	insNumber = models.CharField(max_length=200)
+
+	#def get_absolute_url(self):
+    #    return reverse('team6:home')
 
 
 '''class Profile(models.Model):
