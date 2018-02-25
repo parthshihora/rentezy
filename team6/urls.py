@@ -10,10 +10,10 @@ urlpatterns = [
     #url(r'^register/', views.register_view, name='register'),
     #url(r'^ownerreg/', views.OwnerRegister, name='owner_reg'),
     url(r'^login/$', auth_views.login, name='login'),
-    url(r'^accounts/profile/$', views.owner_page, name='owner_page'),
+    url(r'^accounts/profile/$', views.owner_profile, name='owner_page'),
     url(r'^signup/$', views.signup, name='signup'),
+	url(r'^yourcars/$', views.your_cars, name='your_cars'),
+	url(r'^addcar/$', views.add_car, name='add_car'),
+	url(r'^logout/$', views.logout_view, name='logout_view'),
 
-
-
-     
 ]

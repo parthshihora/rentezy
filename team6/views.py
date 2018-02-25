@@ -1,39 +1,68 @@
 
 from django.shortcuts import render
-#from .forms import CarOwnerForm
-from django.contrib.auth import login, authenticate, get_user_model
+from .forms import CarForm
+from django.contrib.auth import login, authenticate, get_user_model, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from .models import Car
 #from .forms import UserLoginForm, UserRegisterForm, OwnerLoginForm, OwnerRegisterForm
 from .forms import SignUpForm
 from django.contrib.auth import views as auth_views
 
+from django.views import generic
+from django.views.generic import CreateView
 
-def owner_page(request):
-	return render(request, "homepage.html")
+
+
+def owner_profile(request):
+	return render(request, "ownerprofile.html")
+
+def add_car(request):   # carentry car instead of this
+	if request.method == "POST":
+		form = CarForm(request.POST,request.FILES);
+		if form.is_valid():
+			cars = form.save(commit=False)
+			cars.user = request.user
+			cars.car_pic = request.FILES.get("car_pic")
+			cars.save()
+			#form.save()
+			return redirect('/yourcars/')
+	else:
+		form = CarForm()
+	return render(request, "carform.html",{'form':form})
+
 
 def start_page(request):
 	return render(request,"startpage.html")
 
+def your_cars(request): # CarView class instead of this
+	#user = Car.user
+	cars = Car.objects.filter(user=request.user)
+	return render(request,"team6/owner_cars.html",{'cars':cars})
+
+
+
 
 def signup(request):
-    if request.method == 'POST':
+	if request.method == 'POST':
         #form = UserCreationForm(request.POST)
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            #user.refresh_from_db()
-            #user.profile.birth_date = form.cleaned_data.get("birth_date")
-            #user.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password')
+		form = SignUpForm(request.POST)
+		if form.is_valid():
+			form.save()
+			username = form.cleaned_data.get('username')
+			raw_password = form.cleaned_data.get('password')
+            #user = authenticate(username=username, password=raw_password)
+            #login(request, user)
+			user = form.save()
+			login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+			return redirect('/accounts/profile')
+	else:
+		form = SignUpForm()
+	return render(request, 'signup.html', {'form': form})
 
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('/accounts/profile')
-    else:
-        form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+def logout_view(request):
+	logout(request)
+	return render(request,"team6/form.html",{})
 	
 '''def login_view(request):
 	form = UserLoginForm(request.POST or None)

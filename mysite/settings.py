@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+#import UploadfileappConfig
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'team6',
+    #'team6.apps.UploadfileappConfig',
 ]
 
 MIDDLEWARE = [
@@ -119,4 +121,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')#this line is added and it serves as the root address of 
+#uploaded file
+ 
+MEDIA_URL = '/media/'#this line is added and it creates a directory named media in your appfolder
+#where the uploaded images will be stored
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+#STATIC_ROOT = os.path.join(BASE_DIR, 'team6')
+
+
