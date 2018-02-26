@@ -1,4 +1,6 @@
 
+
+<% load static %}
 <html>
 <head>
 	 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -10,8 +12,8 @@
     {% for car in cars %}
     <p>	{{ car.modelName }} </p> 
     <p> {{ car.id }}</p>
-    <img src="{{ car.car_pic.url }}" />
-    {% endfor %}
+    <img src="{{ car.car_pic.url }}"></a>        
 
+    {% endfor %}
 
 </html>

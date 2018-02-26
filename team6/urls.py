@@ -15,5 +15,7 @@ urlpatterns = [
 	url(r'^yourcars/$', views.your_cars, name='your_cars'),
 	url(r'^addcar/$', views.add_car, name='add_car'),
 	url(r'^logout/$', views.logout_view, name='logout_view'),
+   # url(r'^(?P<object_id>[0-9]+)/delete_answer/$', views.objectDelete, name='delete_object')
+
 
 ]

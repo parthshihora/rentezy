@@ -14,6 +14,11 @@ from django.views.generic import CreateView
 
 
 
+
+def objectDelete(request, object_id):
+    object = get_object_or_404(Car, pk=object_id)
+    object.delete()
+
 def owner_profile(request):
 	return render(request, "ownerprofile.html")
 
