@@ -1,8 +1,72 @@
-<h1> Welcome to Rentezy</h1>
+{% load staticfiles	%}
 
-<a href="http://127.0.0.1:8000/login/">Owner login</a>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<a href="http://127.0.0.1:8000/signup/">Owner Registration</a>
+<html lang="en">
+	<head>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	
+		<style type="text/css">
+		.thumbnail{
+			position: relative;
+		}
+		.caption{
+			position: absolute;
+			top:25%;
+			left:0%;
+			width: 100%;	
+		}
+  		</style>
 
-<h2>hello</h2>
+	</head>
 
+
+	<body>
+		<div class="container-fluid">
+			<div class="row">	
+				<div class="thumbnail text-center">
+					<img src = "{% static 'img/main_img.jpg' %}" alt="Road Trip" width="100%" />
+					<div class="caption">
+						<div>	
+							<h1 class="h1-responsive text-black bg-faded font-weigth-bold mb-2 wow fadeInDown display-4" data-wow-delay="0.3s"> Welcome to Rentezy </h1>
+							<h3 class="text-black mb-5 wow fadeInDown" data-wow-delay="0.4s"><strong> Car Rentals </strong></h3>
+							<a type="button" class="btn bg-primary btn-lg text-white wow fadeInDown btn-md" data-wow-delay="0.4s" href="http://127.0.0.1:8000/login/">Login</a>
+							<a type="button" class="btn bg-primary btn-lg text-white wow fadeInDown btn-md" data-wow-delay="0.4s" href="http://127.0.0.1:8000/signup/">Registration</a>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+
+<!--
+
+		<div class="carousel slide" data-slide="carousel">
+			<div class="carousel-inner">	
+				<div class="item active">
+					<img src = "{% static 'img/main_img.jpg' %}" alt="Road Trip" width="100%" />
+
+						<h1> Welcome to Rentezy</h1>
+						
+						<a href="http://127.0.0.1:8000/login/">Login</a>
+						<a href="http://127.0.0.1:8000/signup/">Registration</a>	
+					
+					<div class="carousel-caption" style="border: 3px solid black; margin-top: 0px">
+						<h1> Welcome to Rentezy</h1>
+						
+						<a href="http://127.0.0.1:8000/login/">Login</a>
+						<a href="http://127.0.0.1:8000/signup/">Registration</a>
+					
+				</div>
+			</div>
+		</div>	
+
+-->
+	</body>
+</html>

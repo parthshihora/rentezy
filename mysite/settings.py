@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'team6',
-    #'team6.apps.UploadfileappConfig',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
