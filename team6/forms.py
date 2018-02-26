@@ -43,7 +43,7 @@ class CarForm(forms.ModelForm):
 
 	class Meta:
 		model = Car
-		fields = ['car_pic','modelNumber','modelName','regNumber','insNumber',]
+		fields = ['car_pic','modelNumber','modelName','regNumber','insNumber','priceperhour','pickuplocation']
 
 
 		
