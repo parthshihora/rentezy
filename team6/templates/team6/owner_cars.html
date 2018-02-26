@@ -1,6 +1,6 @@
 
 
-<% load static %}
+
 <html>
 <head>
 	 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -10,10 +10,11 @@
 
     <h1> Your cars </h1>
     {% for car in cars %}
-    <p>	{{ car.modelName }} </p> 
-    <p> {{ car.id }}</p>
-    <img src="{{ car.car_pic.url }}"></a>        
-
+        <p>	{{ car.modelName }} </p> 
+        <p> {{ car. }}</p>
+        <img src="{{ car.car_pic.url }}">     
+    <a href="{% url 'delete_object' car.id %}">delete</a> 
+    <a href="{% url 'modify_car' car.id %}">Modify</a>
     {% endfor %}
 
 </html>

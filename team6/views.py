@@ -11,13 +11,39 @@ from django.contrib.auth import views as auth_views
 
 from django.views import generic
 from django.views.generic import CreateView
+from django.shortcuts import get_list_or_404, get_object_or_404
+from django.http import HttpResponseRedirect, HttpResponse
 
 
 
 
 def objectDelete(request, object_id):
-    object = get_object_or_404(Car, pk=object_id)
-    object.delete()
+	print("*****",object_id)
+	object = get_object_or_404(Car, pk=object_id)
+	object.delete()
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+	#redirect('/yourcars/')
+
+def modifyCar(request,object_id):
+	#object = get_object_or_404(Car, pk=object_id)
+	if request.POST:
+		form = CarForm(request.POST,request.FILES)
+		if form.is_valid():
+			car = Car.objects.get(pk=object_id)
+			car.car_pic = request.FILES.get("car_pic")
+			form = CarForm(request.POST,instance=car)
+			form.save()
+			return HttpResponseRedirect('/yourcars/')
+	else:
+		#car = Car.objects.get(pk = object_id)       
+		#form = CarForm(instance=car)
+		form = CarForm()
+
+
+	#print("****Modify",object.modelNumber)
+	#return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+	return render(request, "carform.html",{'form':form})
+
 
 def owner_profile(request):
 	return render(request, "ownerprofile.html")

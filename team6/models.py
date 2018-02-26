@@ -32,6 +32,8 @@ class Car(UserData):
 	modelName = models.CharField(max_length=200)
 	regNumber = models.CharField(max_length=200)
 	insNumber = models.CharField(max_length=200)
+	priceperhour = models.IntegerField(default='0')
+	pickuplocation = models.CharField(max_length=200,default='0')
 
 	#def get_absolute_url(self):
     #    return reverse('team6:home')
