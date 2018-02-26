@@ -21,8 +21,8 @@ def objectDelete(request, object_id):
 	print("*****",object_id)
 	object = get_object_or_404(Car, pk=object_id)
 	object.delete()
-	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-	#redirect('/yourcars/')
+	#return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+	return HttpResponseRedirect('/yourcars/')
 
 def modifyCar(request,object_id):
 	#object = get_object_or_404(Car, pk=object_id)

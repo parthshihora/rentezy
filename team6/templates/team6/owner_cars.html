@@ -1,20 +1,43 @@
-
-
-
+{% load static %}
 <html>
+
+
 <head>
 	 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-    </head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <script src="jquery-3.3.1.min.js"></script>
+
+     
+</head>
 
     <h1> Your cars </h1>
     {% for car in cars %}
         <p>	{{ car.modelName }} </p> 
-        <p> {{ car. }}</p>
+        <p> {{ car.pickuplocation }}</p>
         <img src="{{ car.car_pic.url }}">     
     <a href="{% url 'delete_object' car.id %}">delete</a> 
     <a href="{% url 'modify_car' car.id %}">Modify</a>
+   <a href="{% url 'delete_object' car.id %}" class="btn btn-primary" id= "{{ car.id }}">Test delete</a> 
+
+   <script type="text/javascript">
+    var id1 = {{ car.id }};
+    //window.alert("Car id"+id1);
+    var l = document.getElementById(id1);
+    l.onclick = fun;
+
+    function fun(){
+    if (confirm('Are you sure you want to Delete?')) {
+            var id1 = {{ car.id }};
+           id1.submit();
+       } else {
+           return false;
+       }
+        
+    }
+</script>
     {% endfor %}
+
+    
 
 </html>
