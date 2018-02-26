@@ -19,7 +19,7 @@ class SignUpForm(UserCreationForm):
     #phone = forms.IntegerField()
     #birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
 
-	password = forms.CharField(max_length=30,widget=forms.PasswordInput)
+	#password = forms.CharField(max_length=30,widget=forms.PasswordInput)
 	#phone = forms.IntegerField()
 	#birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
 

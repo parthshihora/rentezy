@@ -22,42 +22,62 @@
 	</head>
 
 	<body>
-		<div class="card card-outline secondary">
-			<div class="card-header">
-				<h3 class = "mb-0"> Registration </h3>					
-			</div>	
-				
-			<div class="card-body">
-						<form class="form-horizontal" method="post">
-								{% csrf_token %}
+		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  		<a class="navbar-brand text-white" href="#">RENTEZY</a>
+		</nav>
+			<div class="container py-5">
+			    <div class="row">
+			        <div class="col-md-12">
+			            <div class="row">
+			                <div class="col-md-5 mx-auto">
+			                    <div class="card border-secondary">
+			                        <div class="card-header">
+			                            <h3 class="mb-0 my-2">Registration</h3>
+			                        </div>
+			                        <div class="card-body">
+			                            <form class="form" role="form" autocomplete="off" method="post">
 
-							        {% for field in form %}
-							            {% if field.errors %}
-							                <div class="control-group error row">
-							                    <label class="control-label col-sm-2">{{ field.label }}:</label> 
-							                    <div class="controls col-sm-10">{{ field }}
-							                        <small class="help-inline text-muted">
-							                            {% for error in  field.errors %}{{ error }}{% endfor %}
-							                        </small>
-							                    </div>
-							                </div>
-							            {% else %}
-							                <div class="control-group row">
-							                    <label class="control-label col-sm-2">{{ field.label }}:</label> 
-							                    <div class="controls col-sm-10">{{ field }}
-							                        {% if field.help_text %}
-							                            <small class="help-inline text-muted">{{ field.help_text }}</small>
-							                        {% endif %}
-							                    </div>
-							                </div>
-							            {% endif %}
-							        {% endfor %}
-							    <div class="col-sm-2"></div>
-						        <div class="col-sm-10"><button type="submit" class="btn btn-primary" >Sign Up</button></div>
-							</form>
+											{% csrf_token %}
 
-			</div>					
-		</div>	
+										        {% for field in form %}
+										         	{% if field.errors %}
+										                <div class="form-group error row">
+										                    <label class="form-label col-sm-4">{{ field.label }}:</label> 
+										                    <div class="form-field col-sm-8">{{ field }}
+										                        <small class="help-inline text-muted">
+										                            {% for error in  field.errors %}{{ error }}{% endfor %}
+										                        </small>
+										                    </div>
+										                </div>
+										            {% else %}
+										                <div class="form-group row">
+										                    <label class="form-label col-sm-4">{{ field.label }}:</label> 
+										                    <div class="form-field col-sm-8">{{ field }}
+										                      <!--  {% if field.help_text %}
+										                            <br><small class="help-inline text-muted">{{ field.help_text }}</small>
+										                        {% endif %} -->
+										                    </div>
+										                </div>
+										           {% endif %}
+										        {% endfor %}
+										    
+
+			                                <div class="form-group">
+			                                    <button type="submit" class="btn btn-success btn-md float-right">Sign Up</button>
+			                                </div>
+			                            </form>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <!--/row-->
+
+			        </div>
+			        <!--/col-->
+			    </div>
+			    <!--/row-->
+			</div>
+			<!--/container-->
 
 	</body>
 </html>

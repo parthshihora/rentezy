@@ -19,7 +19,7 @@
 		}
 		.caption{
 			position: absolute;
-			top:30%;
+			top:25%;
 			left:0%;
 			width: 100%;	
 		}
@@ -33,11 +33,12 @@
 				<div class="thumbnail text-center">
 					<img src = "{% static 'img/main_img.jpg' %}" alt="Road Trip" width="100%" />
 					<div class="caption">
-						<h1 class="h1-responsive text-black bg-faded font-weigth-bold mb-2 wow fadeInDown display-4" data-wow-delay="0.3s"> Welcome to Rentezy </h1>
-
-						<h3 class="text-black mb-5 wow fadeInDown" data-wow-delay="0.4s"><strong> Car Rentals </strong></h3>
-						<a type="button" class="btn btn-primary wow fadeInDown btn-md" data-wow-delay="0.4s" href="http://127.0.0.1:8000/login/">Login</a> 
-						<a type="button" class="btn btn-primary wow fadeInDown btn-md" data-wow-delay="0.4s" href="http://127.0.0.1:8000/signup/">Registration</a>	
+						<div>	
+							<h1 class="h1-responsive text-black bg-faded font-weigth-bold mb-2 wow fadeInDown display-4" data-wow-delay="0.3s"> Welcome to Rentezy </h1>
+							<h3 class="text-black mb-5 wow fadeInDown" data-wow-delay="0.4s"><strong> Car Rentals </strong></h3>
+							<a type="button" class="btn bg-primary btn-lg text-white wow fadeInDown btn-md" data-wow-delay="0.4s" href="http://127.0.0.1:8000/login/">Login</a>
+							<a type="button" class="btn bg-primary btn-lg text-white wow fadeInDown btn-md" data-wow-delay="0.4s" href="http://127.0.0.1:8000/signup/">Registration</a>	
+						</div>
 					</div>
 				</div>
 			</div>
@@ -68,10 +69,3 @@
 -->
 	</body>
 </html>
-
-<h2>hello</h2>
-
-{% for car in cars %}
-   <p> 	{{ car }}  </p>
-    {% endfor %}
-

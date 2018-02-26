@@ -1,24 +1,63 @@
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+{% load bootstrap4 %}
+{% load staticfiles	%}
+				
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+	<head>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	
+  		<style type="text/css">
+  		.caption{
+  			position:absolute;
+  			top:15%;
 
 
-<h1>Hello Owner</h1>
+			width: 100%;
+  		}
 
-{% block content %}
+  		</style>
 
-<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="float-left submit-button" >My Cars</button>
+	</head>
 
-<button onclick="location.href = 'http://127.0.0.1:8000/addcar/';" id="myButton" class="float-left submit-button" >Add Car</button>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  			<a class="navbar-brand text-white" href="#">RENTEZY</a>
+			<ul class="navbar-nav ml-auto">
+	  				<li class="nav-item text-white float-right" href="#">Hello Owner</li>
+				</ul>
+	</nav>
 
-<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="float-left submit-button" >Delete Car</button>
 
-<button onclick="location.href = 'http://127.0.0.1:8000/logout/';" id="myButton" class="float-left submit-button" >Log Out</button>
+			<div class="container-fluid">
+			<img src = "{% static 'img/main_img.jpg' %}" alt="Road Trip" width="100%" />
+				
+					<div class="row">	
+						<div class="thumbnail text-center">
+							<div class="caption">
 
-   
-{% endblock %}
+								<div class="caption">
+									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button w-15" >My Cars</button>
+									<button onclick="location.href = 'http://127.0.0.1:8000/addcar/';" id="myButton" class="btn bg-primary text-white submit-button" >Add Car</button>
+									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button" >Delete Car</button>
+									<button onclick="location.href = 'http://127.0.0.1:8000/logout/';" id="myButton" class="btn bg-primary text-white submit-button" >Log Out</button>
+								</div>
 
 
- <!--  
 
-    <p>	{{ cars.modelNumber }} </p>. -->
+
+							</div>
+						</div>
+					</div>
+				</div>	
+
+	</body>
+</html>
