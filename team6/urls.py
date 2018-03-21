@@ -17,6 +17,7 @@ urlpatterns = [
 	url(r'^logout/$', views.logout_view, name='logout_view'),
     url(r'^delete_answer/(?P<object_id>.*)', views.objectDelete, name='delete_object'),
     url(r'^modify/(?P<object_id>.*)', views.modifyCar, name='modify_car'),
+    url(r'^allcars/$', views.allCars, name='allcars'),
 
 
 ]

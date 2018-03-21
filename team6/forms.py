@@ -15,6 +15,9 @@ class SignUpForm(UserCreationForm):
 	first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
 	last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
 	email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+	#CHOICES=[('select1','Owner'),('select2','Customer')]
+	#I_am = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
+
  	#password = forms.CharField(max_length=30,widget=forms.PasswordInput)
     #phone = forms.IntegerField()
     #birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')

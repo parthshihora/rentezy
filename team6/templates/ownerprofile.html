@@ -32,12 +32,12 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
   			<a class="navbar-brand text-white" href="#">RENTEZY</a>
 			<ul class="navbar-nav ml-auto">
-	  				<li class="nav-item text-white float-right" href="#">Hello Owner</li>
+	  				<li class="nav-item text-white float-right" href="#">Hello {{ request.user }}</li>
 				</ul>
 	</nav>
 
 			<div class="container-fluid">
-			<img src = "{% static 'img/main_img.jpg' %}" alt="Road Trip" width="100%" />
+			<img src = "{% static 'img/main_img.jpg' %}" alt="Road Trip" width="115%" />
 				
 					<div class="row">	
 						<div class="thumbnail text-center">
@@ -47,7 +47,7 @@
 									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button w-15" >My Cars</button>
 									<button onclick="location.href = 'http://127.0.0.1:8000/addcar/';" id="myButton" class="btn bg-primary text-white submit-button" >Add Car</button>
 <!--									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button" >Modify Cars</button>-->
-									<button onclick="location.href = 'http://127.0.0.1:8000/logout/';" id="myButton" class="btn bg-primary text-white submit-button" >Log Out</button>
+									<button onclick="location.href = 'http://127.0.0.1:8000/startpage/';" id="myButton" class="btn bg-primary text-white submit-button" >Log Out</button>
 								</div>
 
 

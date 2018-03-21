@@ -17,6 +17,12 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 
 
+def allCars(request):
+	cars = Car.objects.all()
+	return render(request,"team6/allcars.html",{'cars':cars})
+
+
+
 def objectDelete(request, object_id):
 	print("*****",object_id)
 	object = get_object_or_404(Car, pk=object_id)
@@ -35,9 +41,9 @@ def modifyCar(request,object_id):
 			form.save()
 			return HttpResponseRedirect('/yourcars/')
 	else:
-		#car = Car.objects.get(pk = object_id)       
-		#form = CarForm(instance=car)
-		form = CarForm()
+		car = Car.objects.get(pk = object_id)       
+		form = CarForm(instance=car)
+		#form = CarForm()
 
 
 	#print("****Modify",object.modelNumber)
