@@ -18,6 +18,6 @@ urlpatterns = [
     url(r'^delete_answer/(?P<object_id>.*)', views.objectDelete, name='delete_object'),
     url(r'^modify/(?P<object_id>.*)', views.modifyCar, name='modify_car'),
     url(r'^allcars/$', views.allCars, name='allcars'),
-
+    url(r'^reserve/(?P<object_id>.*)', views.make_reservation, name='reserve'),
 
 ]

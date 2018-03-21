@@ -1,38 +1,55 @@
 from django import forms
 
-from .models import CarOwner, Car
+from .models import CarOwner, Car, Reservation
 
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.admin.widgets import AdminDateWidget, AdminTimeWidget
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate, get_user_model,logout
-
+from django.contrib.auth import login, authenticate, get_user_model, logout
+from django.forms.extras.widgets import SelectDateWidget
+from datetimewidget.widgets import DateTimeWidget
 
 User = get_user_model()
 
 
 class SignUpForm(UserCreationForm):
-	username = forms.CharField(max_length=30)
-	first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-	last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-	email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
-	#CHOICES=[('select1','Owner'),('select2','Customer')]
-	#I_am = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
+    username = forms.CharField(max_length=30)
+    first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
+    last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
+    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
 
- 	#password = forms.CharField(max_length=30,widget=forms.PasswordInput)
-    #phone = forms.IntegerField()
-    #birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
+    # CHOICES=[('select1','Owner'),('select2','Customer')]
+    # I_am = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
 
-	#password = forms.CharField(max_length=30,widget=forms.PasswordInput)
-	#phone = forms.IntegerField()
-	#birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
+    # password = forms.CharField(max_length=30,widget=forms.PasswordInput)
+    # phone = forms.IntegerField()
+    # birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
 
-	class Meta:
-		model = User
-		fields = ('username','first_name','last_name','email',)
+    # password = forms.CharField(max_length=30,widget=forms.PasswordInput)
+    # phone = forms.IntegerField()
+    # birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email',)
+
+
+class ResForm(forms.ModelForm):
+    # pickup_date = forms.DateField(widget=AdminDateWidget())
+    # drop_date = forms.DateTimeField(widget=SelectDateWidget)
+
+    class Meta:
+        model = Reservation
+        widgets = {
+            'pickup_date': SelectDateWidget(),
+            'drop_date': SelectDateWidget()
+        }
+        fields = ('pickup_date', 'pickup_time', 'drop_date', 'drop_time',)
+
 
 class CarForm(forms.ModelForm):
-	car_pic = forms.ImageField()
-	'''def __init__(self, *args, **kwargs):
+    car_pic = forms.ImageField()
+    '''def __init__(self, *args, **kwargs):
 		self.request = kwargs.pop('request', None)
 		return super(CarForm, self).__init__(*args, **kwargs)
 
@@ -44,12 +61,11 @@ class CarForm(forms.ModelForm):
 		obj.save()
 		return obj'''
 
-	class Meta:
-		model = Car
-		fields = ['car_pic','modelNumber','modelName','regNumber','insNumber','priceperhour','pickuplocation']
+    class Meta:
+        model = Car
+        fields = ['car_pic', 'modelNumber', 'modelName', 'regNumber', 'insNumber', 'priceperhour', 'pickuplocation']
 
 
-		
 '''class UserLoginForm(forms.Form):
 	email = forms.EmailField()
 	password = forms.CharField(widget=forms.PasswordInput)
@@ -107,30 +123,3 @@ class UserRegisterForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ['username', 'email', 'password']'''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
