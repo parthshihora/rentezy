@@ -121,6 +121,9 @@ def make_reservation(request, object_id):
         form = ResForm()
     return render(request, "team6/resform.html", {'form': form,'car':car})
 
+def my_reservations(request):
+    reservations = Reservation.objects.all()
+    return render(request, "team6/myreservations.html", {'reservations': reservations})
 
 '''def login_view(request):
 	form = UserLoginForm(request.POST or None)
