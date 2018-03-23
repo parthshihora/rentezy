@@ -101,21 +101,22 @@ def logout_view(request):
 
 def make_reservation(request, object_id):
     car = Car.objects.get(pk=object_id)
-    print "------------------------------"
-    print car.modelName
-    print "------------------------------"
+    #print "------------------------------"
+    #print car.modelName
+    #print "------------------------------"
     # owner = UserData.objects.get(pk=car.user)
     if request.method == 'POST':
         form = ResForm(request.POST)
         if form.is_valid():
+            reservations=form.save(commit=False)
             car = Car.objects.get(pk=object_id)
-            print "------------------------------"
-            print car
-            print "------------------------------"
-            owner = UserData.objects.get(pk=car.user)
+            #print "------------------------------"
+            #print car
+            #print "------------------------------"
+            #owner = UserData.objects.get(pk=car.user)
             reservation = form.save(commit=False)
             reservation.user = car.user
-            reservation.save()
+            reservations.save()
             return redirect('/myreservations/')
     else:
         form = ResForm()
@@ -123,6 +124,9 @@ def make_reservation(request, object_id):
 
 def my_reservations(request):
     reservations = Reservation.objects.all()
+    print("---------------")
+    print(reservations)
+    print("---------------")
     return render(request, "team6/myreservations.html", {'reservations': reservations})
 
 '''def login_view(request):

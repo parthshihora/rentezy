@@ -71,7 +71,10 @@
                 </div>
            {% endif %}
         {% endfor %}
-        <a href="{% url 'reserve' car.id %}" class="btn btn-primary">Reserve</a>
+        
+        <div class="form-group">
+            <button type="submit" class=" save btn btn-success btn-md float-right">New Reserve</button>
+        </div>
     </form>
 	</body>
 </html>
