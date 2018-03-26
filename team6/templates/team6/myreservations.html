@@ -36,10 +36,14 @@
 {#		  					<img class="card-img-top img-responsive" src="{{ reservation.customer_id }}" alt="Card image cap" style="width: 100%">#}
 {#		  				</div>#}
 		  				<div class="col-sm-8">
+                            <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  				    </div>
 			  				<div class="card-body">
 			    				<h5 class="card-title">{{ reservation.user }}</h5>
 			    				<p class="card-text">
-			    					Owner: {{ reservation.owner}} <br>
+                                    Carid: {{ reservation.carid }}
+			    					Owner: {{ reservation.user}} <br>
 			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
                                     Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
 			    				</p>

@@ -108,7 +108,7 @@ def make_reservation(request, object_id):
     if request.method == 'POST':
         form = ResForm(request.POST)
         if form.is_valid():
-            reservations=form.save(commit=False)
+            # reservations=form.save(commit=False)
             car = Car.objects.get(pk=object_id)
             #print "------------------------------"
             #print car
@@ -116,7 +116,8 @@ def make_reservation(request, object_id):
             #owner = UserData.objects.get(pk=car.user)
             reservation = form.save(commit=False)
             reservation.user = car.user
-            reservations.save()
+            reservation.carid_id = car.id
+            reservation.save()
             return redirect('/myreservations/')
     else:
         form = ResForm()
@@ -124,6 +125,9 @@ def make_reservation(request, object_id):
 
 def my_reservations(request):
     reservations = Reservation.objects.all()
+    # cars = []
+    # for reservation in reservations:
+    #     cars.append(Car.objects.get(pk=reservation.carid))
     print("---------------")
     print(reservations)
     print("---------------")
