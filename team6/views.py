@@ -19,6 +19,12 @@ def allCars(request):
     return render(request, "team6/allcars.html", {'cars': cars})
 
 
+def filteredcars(request):
+    city=request.GET.get('name')
+    cars = Car.objects.filter(pickuplocation__contains=city)
+    return render(request, "team6/filteredcars.html", {'cars': cars})
+
+
 def objectDelete(request, object_id):
     print("*****", object_id)
     object = get_object_or_404(Car, pk=object_id)

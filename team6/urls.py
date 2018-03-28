@@ -19,5 +19,7 @@ urlpatterns = [
     url(r'^modify/(?P<object_id>.*)', views.modifyCar, name='modify_car'),
     url(r'^allcars/$', views.allCars, name='allcars'),
     url(r'^reserve/(?P<object_id>.*)', views.make_reservation, name='reserve'),
-    url(r'^myreservations/$', views.my_reservations, name='myreservations')
+    url(r'^myreservations/$', views.my_reservations, name='myreservations'),
+    url(r'^filtercars/$', views.filteredcars, name='filteredcars')
+
 ]
