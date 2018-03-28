@@ -46,6 +46,7 @@ class Reservation(models.Model):
     drop_date = models.DateField(default=datetime.utcnow())
     drop_time = models.TimeField(default=datetime.utcnow())
     customer_id = models.CharField(max_length=200, default="cid")
+    carid = models.ForeignKey(Car,default="10000000000")
 
 
 # def get_absolute_url(self):
