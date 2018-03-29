@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="{% static 'css/main.css' %}">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -23,12 +24,52 @@
 			left:0%;
 			width: 100%;	
 		}
+		body
+		{
+			background: url('../../static/img/main_img.jpg') no-repeat;
+			background-size: cover;
+			background-attachment: fixed;
+		}
+		.inner-header{
+			padding-top: 170px;
+		}
+		.dark-overlay{
+			top:0;
+			left:0;
+			background-size: cover;
+			background-position: absolute;
+			min-height: 100%;
+		}
+		.text-overlay{
+			background-color: rgba(0,0,0,0.5);
+		}
   		</style>
 
 	</head>
 
 
 	<body>
+
+		<div class="dark-overlay">
+			<div class="inner-header">
+				<div class="container p-5 w-75 rounded text-overlay text-white">
+					<div class="row text-center">
+						<div class="col">
+							<h1 class="display-4 mb-2">	Welcome to Rentezy	</h1>
+							<h3 class="mb-3"> Car Rentals </h3>
+							<a class="btn btn-light mr-3" href="http://127.0.0.1:8000/login/">
+								Login
+							</a>
+							<a class="btn btn-light" href="http://127.0.0.1:8000/signup/">
+								SignUp
+							</a>
+						</div>
+					</div>
+				</div>				
+			</div>
+		</div>
+
+<!--
 		<div class="container-fluid">
 			<div class="row">	
 				<div class="thumbnail text-center">
@@ -44,7 +85,7 @@
 				</div>
 			</div>
 		</div>	
-
+-->
 <!--
 
 		<div class="carousel slide" data-slide="carousel">

@@ -11,6 +11,7 @@
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -19,44 +20,77 @@
   		.caption{
   			position:absolute;
   			top:15%;
-
-
 			width: 100%;
   		}
-
+		body
+		{
+			background: url('../../static/img/main_img.jpg') no-repeat;
+			background-size: cover;
+			background-attachment: fixed;
+		}
+		.inner-header{
+			padding-top: 170px;
+		}
+		.dark-overlay{
+			top:0;
+			left:0;
+			background-size: cover;
+			background-position: absolute;
+			min-height: 100%;
+		}
+		.text-overlay{
+			background-color: rgba(0,0,0,0.5);
+		}
   		</style>
 
 	</head>
 
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-  			<a class="navbar-brand text-white" href="#">RENTEZY</a>
-			<ul class="navbar-nav ml-auto">
-	  				<li class="nav-item text-white float-right" href="#">Hello Owner</li>
+			<div class="container">
+	  			<a class="navbar-brand text-white" href="#">RENTEZY</a>
+				<ul class="navbar-nav ml-auto">
+		  			<li class="nav-item text-white float-right" href="#">
+		  				<i class="fa fa-user mr-2"></i>Hello Owner
+		  			</li>
 				</ul>
-	</nav>
+			</div>
+		</nav>
 
+
+		<div class="dark-overlay">
+			<div class="inner-header">
+				<div class="container p-5 w-75 rounded text-overlay text-white">
+					<div class="row text-center">
+						<div class="col">
+		
+							<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn btn-white submit-button btn-lg mr-3 w-25">My Cars</button>
+							<button onclick="location.href = 'http://127.0.0.1:8000/addcar/';" id="myButton" class="btn btn-white submit-button btn-lg mr-3" >Add Car</button>
+							<button onclick="location.href = 'http://127.0.0.1:8000/logout/';" id="myButton" class="btn btn-white submit-button btn-lg mr-3" >Log Out</button>
+
+						</div>
+					</div>
+				</div>				
+			</div>
+		</div>
+
+<!--
 			<div class="container-fluid">
-			<img src = "{% static 'img/main_img.jpg' %}" alt="Road Trip" width="100%" />
+			    <img src = "{% static 'img/main_img.jpg' %}" alt="Road Trip" width="100%" />	
 				
 					<div class="row">	
 						<div class="thumbnail text-center">
 							<div class="caption">
-
 								<div class="caption">
-									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button w-15" >My Cars</button>
-									<button onclick="location.href = 'http://127.0.0.1:8000/addcar/';" id="myButton" class="btn bg-primary text-white submit-button" >Add Car</button>
-<!--									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button" >Modify Cars</button>-->
-									<button onclick="location.href = 'http://127.0.0.1:8000/logout/';" id="myButton" class="btn bg-primary text-white submit-button" >Log Out</button>
+									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button">My Cars</button>
+									<button onclick="location.href = 'http://127.0.0.1:8000/addcar/';" id="myButton" class="btn bg-primary text-white submit-button">Add Car</button>
+									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button">	Modify Cars</button>
+									<button onclick="location.href = 'http://127.0.0.1:8000/logout/';" id="myButton" class="btn bg-primary text-white submit-button">Log Out</button>
 								</div>
-
-
-
-
 							</div>
 						</div>
 					</div>
 				</div>	
-
+-->
 	</body>
 </html>
