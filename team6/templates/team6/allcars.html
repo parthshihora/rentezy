@@ -1,0 +1,104 @@
+{% load static %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+	<head>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+
+
+  	</head>
+    <body>
+
+   		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+	  		<a class="navbar-brand text-white" href="#">Your Cars </a>
+            <p style="color: white;float: right"> Welcome {{ request.session.id }}</p>
+	  		<a href="{% url 'myreservations' %}" class="btn btn-primary">My Reservation</a>
+		</nav>
+
+		  <label for="locationTextField">Location</label>
+        <input id="locationTextField" type="text" size="50">
+
+      <!--  <input type="submit" onClick="f1(this)"> -->
+        <a href="{% url 'filteredcars' %}" id= "output">Search</a> 
+
+        <script>
+
+        	function updateQueryStringParam(uri, key, value) {
+  				var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+  				var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+  				if (uri.match(re)) {
+    				return uri.replace(re, '$1' + key + "=" + value + '$2');
+  					}
+  				else {
+    				return uri + separator + key + "=" + value;
+  					}
+				}
+
+            function init() {
+                var input = document.getElementById('locationTextField');
+                var autocomplete = new google.maps.places.Autocomplete(input);
+                google.maps.event.addListener(autocomplete, 'place_changed',
+   
+   			function f1() {
+      			var place = autocomplete.getPlace();
+      			//var lat = place.geometry.location.lat();
+      			//var lng = place.geometry.location.lng();
+      			var city = place.address_components[0].short_name;
+      			output = document.getElementById("output");
+				output.href = updateQueryStringParam(output.href, 'name', city);
+				//output.innerHTML = city;
+      			//document.getElementById("output").innerHTML = city;
+    			
+   			});
+            
+           }
+ 
+            google.maps.event.addDomListener(window, 'load', init);
+        </script>
+        
+   
+
+		<div class="container p-3"></div>
+
+	    {% for car in cars %}
+			<div class="card w-75 rounded mx-auto bg-light" style="padding-bottom: 10px; padding-top: 10px; margin-bottom: 10px;	">
+		
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-4">
+		  					<img class="card-img-top img-responsive" src="{{ car.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  				</div>
+		  				<div class="col-sm-8">
+			  				<div class="card-body">
+			    				<h5 class="card-title">{{ car.modelName }}</h5>
+			    				<p class="card-text">
+			    					Price: {{car.priceperhour}} <br> 
+			    					Pickup Location: {{car.pickuplocation}} <br>	
+			    				</p>
+			    				<a href="{% url 'reserve' car.id %}" class="btn btn-primary">Reserve</a>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+		
+			</div>
+			
+		{% endfor %}
+	</body>
+</html>

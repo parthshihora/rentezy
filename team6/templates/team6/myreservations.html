@@ -1,0 +1,58 @@
+{% load static %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+	<head>
+		<title> My Reservations</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  	</head>
+    <body>
+
+   		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+	  		<a class="navbar-brand text-white" href="#">Your Cars </a>
+		</nav>
+
+		<div class="container p-3"></div>
+
+	    {% for reservation in reservations %}
+			<div class="card w-75 rounded mx-auto bg-light" style="padding-bottom: 10px; padding-top: 10px; margin-bottom: 10px;	">
+
+				<div class="container">
+					<div class="row">
+					<div class="col-sm-8">
+                            <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  				    </div>
+			  				<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.user }}</h5>
+			    				<p class="card-text">
+                                    Carid: {{ reservation.carid }}
+			    					Owner: {{ reservation.user}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+			    				<a href="{% url 'modify_reservation' reservation.carid_id %}" class="btn btn-primary">Edit Reservation</a>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+
+			</div>
+
+		{% endfor %}
+	</body>
+</html>
