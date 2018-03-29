@@ -28,15 +28,15 @@
 		<div class="container p-3"></div>
 
 	    {% for reservation in reservations %}
-			<div class="card w-75 rounded mx-auto bg-light" style="padding-bottom: 10px; padding-top: 10px; margin-bottom: 10px;	">
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
 
 				<div class="container">
 					<div class="row">
-					<div class="col-sm-8">
-                            <div class="col-sm-4">
+					    <div class="col-sm-4">
 		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
-		  				    </div>
-			  				<div class="card-body">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
 			    				<h5 class="card-title">{{ reservation.user }}</h5>
 			    				<p class="card-text">
                                     Carid: {{ reservation.carid }}
@@ -45,7 +45,6 @@
                                     Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
 			    				</p>
 			    				<a href="{% url 'modify_reservation' reservation.carid_id %}" class="btn btn-primary">Edit Reservation</a>
-
 			  				</div>
 			  			</div>
 			  		</div>
