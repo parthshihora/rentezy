@@ -26,7 +26,7 @@
 
    		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
 	  		<a class="navbar-brand text-white" href="#">Your Cars </a>
-
+            <p style="color: white;float: right"> Welcome {{ request.session.id }}</p>
 	  		<a href="{% url 'myreservations' %}" class="btn btn-primary">My Reservation</a>
 		</nav>
 
