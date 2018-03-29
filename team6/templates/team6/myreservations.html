@@ -45,6 +45,8 @@
                                     Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
 			    				</p>
 			    				<a href="{% url 'modify_reservation' reservation.carid_id %}" class="btn btn-primary">Edit Reservation</a>
+			    				<a href="{% url 'delete_reservation' reservation.carid_id %}" class="btn btn-primary">Delete Reservation</a>
+
 
 			  				</div>
 			  			</div>

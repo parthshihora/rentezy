@@ -105,6 +105,13 @@ def logout_view(request):
     return render(request, "team6/form.html", {})
 
 
+def delete_reservation(request, object_id):
+    object = get_object_or_404(Reservation, carid=object_id)
+    object.delete()
+    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect('/myreservations/')
+
+
 def modify_reservation(request,object_id):
     #reservation = Reservation.objects.get(pk=object_id)
     car = Car.objects.get(pk=object_id)
