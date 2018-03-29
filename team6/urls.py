@@ -27,4 +27,8 @@ urlpatterns = [
     url(r'^test-delete/$', views.test_delete, name='test_delete'),
     url(r'^filtercars/$', views.filteredcars, name='filteredcars'),
     url(r'^modifyreservation/(?P<object_id>.*)', views.modify_reservation, name='modify_reservation'),
+
+    url(r'^deletereservation/(?P<object_id>.*)', views.delete_reservation, name='delete_reservation'),
+
+
 ]

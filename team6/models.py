@@ -28,7 +28,7 @@ class CarOwner(AbstractBaseUser):
 
 
 class UserData(models.Model):
-    user = models.ForeignKey(User, editable=False)
+    user = models.ForeignKey(Reg, editable=False)
 
     class Meta:
         abstract = True
@@ -36,7 +36,7 @@ class UserData(models.Model):
 
 class Car(UserData):
     # user = models.ForeignKey(User,on_delete=models.CASCADE)
-    user = models.ForeignKey(User, default="10000000000")
+    user = models.ForeignKey(Reg, default="10000000000")
     # user = models.OneToOneField(User)
     car_pic = models.FileField()
     # car_pic =   models.ImageField(upload_to = 'static/pic_folder/',default='static/pic_folder/no.jpeg')
@@ -46,10 +46,11 @@ class Car(UserData):
     insNumber = models.CharField(max_length=200)
     priceperhour = models.IntegerField(default=" ")
     pickuplocation = models.CharField(max_length=200, default=" ")
+    Reserved = models.CharField(max_length=100,default="No")
 
 
 class Reservation(models.Model):
-    user = models.ForeignKey(User, default="")
+    user = models.ForeignKey(Reg, default="")
     pickup_date = models.DateField(default=datetime.utcnow())
     pickup_time = models.TimeField(default=datetime.utcnow())
     drop_date = models.DateField(default=datetime.utcnow())

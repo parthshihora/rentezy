@@ -47,13 +47,11 @@
 
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-
 			<div class="container">
 	  			<a class="navbar-brand text-white" href="#">RENTEZY</a>
 				<ul class="navbar-nav ml-auto">
-		  			<li class="nav-item text-white float-right" href="#">
-		  				<i class="fa fa-user mr-2"></i>Hello {{ request.user }}
-		  			</li>
+	  				<li class="nav-item text-white float-right" href="#">Hello {{ request.session.username }}</li>
+				</ul>
 			</div>
 		</nav>
 
@@ -66,7 +64,7 @@
 		
 							<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn btn-white submit-button btn-lg mr-3">My Cars</button>
 							<button onclick="location.href = 'http://127.0.0.1:8000/addcar/';" id="myButton" class="btn btn-white submit-button btn-lg mr-3" >Add Car</button>
-							<button onclick="location.href = 'http://127.0.0.1:8000/logout/';" id="myButton" class="btn btn-white submit-button btn-lg mr-3" >Log Out</button>
+							<a href = "{% url 'logout_view' %}" class="btn btn-white submit-button btn-lg mr-3" >Log Out</a>
 
 						</div>
 					</div>
@@ -74,34 +72,5 @@
 			</div>
 		</div>
 
-<!--
-			<div class="container-fluid">
-<<<<<<< HEAD
-			    <img src = "{% static 'img/main_img.jpg' %}" alt="Road Trip" width="100%" />	
-=======
-			<img src = "{% static 'img/main_img.jpg' %}" alt="Road Trip" width="115%" />
->>>>>>> 335b83e52f8a6dfd2b0c15bd68d7f703f66c3028
-				
-					<div class="row">	
-						<div class="thumbnail text-center">
-							<div class="caption">
-								<div class="caption">
-<<<<<<< HEAD
-									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button">My Cars</button>
-									<button onclick="location.href = 'http://127.0.0.1:8000/addcar/';" id="myButton" class="btn bg-primary text-white submit-button">Add Car</button>
-									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button">	Modify Cars</button>
-									<button onclick="location.href = 'http://127.0.0.1:8000/logout/';" id="myButton" class="btn bg-primary text-white submit-button">Log Out</button>
-=======
-									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button w-15" >My Cars</button>
-									<button onclick="location.href = 'http://127.0.0.1:8000/addcar/';" id="myButton" class="btn bg-primary text-white submit-button" >Add Car</button>
-<!--									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button" >Modify Cars</button>-->
-									<button onclick="location.href = 'http://127.0.0.1:8000/startpage/';" id="myButton" class="btn bg-primary text-white submit-button" >Log Out</button>
->>>>>>> 335b83e52f8a6dfd2b0c15bd68d7f703f66c3028
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>	
--->
 	</body>
 </html>

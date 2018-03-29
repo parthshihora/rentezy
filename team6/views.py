@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 
 def allCars(request):
-    cars = Car.objects.all()
+    cars = Car.objects.exclude(Reserved="Yes")
     return render(request, "team6/allcars.html", {'cars': cars})
 
 
@@ -56,8 +56,11 @@ def add_car(request):  # carentry car instead of this
         form = CarForm(request.POST, request.FILES);
         if form.is_valid():
             cars = form.save(commit=False)
-            cars.user = request.user
+            #cars.user = request.user
+
+            cars.user = Reg.objects.get(pk=request.session['id'])
             cars.car_pic = request.FILES.get("car_pic")
+
             cars.save()
             # form.save()
             return redirect('/yourcars/')
@@ -72,7 +75,7 @@ def start_page(request):
 
 def your_cars(request):  # CarView class instead of this
     # user = Car.user
-    cars = Car.objects.filter(user=request.user)
+    cars = Car.objects.filter(user=request.session['id'])
     return render(request, "team6/owner_cars.html", {'cars': cars})
 
 
@@ -93,10 +96,10 @@ def signup(request):
                     userdata.__setattr__('password',cleaned_password)
                     form.save()
 
-                if (form.data['role'] == "user"):
+                if (form.data['role'] == "customer"):
                     return redirect('/allcars/')
                 else:
-                    return redirect('/startpage/')
+                    return redirect('/accounts/profile')
         else:
             form = SignUpForm()
         return render(request, 'register.html', {'form': form, 'error_msg': errors})
@@ -108,13 +111,13 @@ def loginform(request):
         if form.is_valid():
             regs = Reg.objects.get(username=form.cleaned_data['username'])
             if regs.username == form.cleaned_data['username'] and regs.password == form.cleaned_data['password']:
-                request.session['id'] = form.cleaned_data['username']
+                request.session['id'] = regs.id
                 request.session['username'] = form.cleaned_data['username']
                 request.session['password'] = form.cleaned_data['password']
-        if(form.data['role'] == "user"):
+        if(form.data['role'] == "customer"):
             return redirect('/allcars/')
         else:
-            return redirect('/startpage/')
+            return redirect('/accounts/profile')
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
@@ -127,6 +130,16 @@ def logout_view(request):
         pass
     logout(request)
     return render(request, "team6/form.html", {})
+
+
+def delete_reservation(request, object_id):
+    car = Car.objects.get(pk=object_id)
+    car.Reserved = " "
+    car.save()
+    object = get_object_or_404(Reservation, carid=object_id)
+    object.delete()
+    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect('/myreservations/')
 
 
 def modify_reservation(request,object_id):
@@ -157,12 +170,16 @@ def make_reservation(request, object_id):
             car = Car.objects.get(pk=object_id)
             #owner = UserData.objects.get(pk=car.user)
             reservation = form.save(commit=False)
-            reservation.user = car.user
+            #car.user = Reg.objects.get(pk=request.session['id'])
+            reservation.user = Reg.objects.get(pk=request.session['id'])
             reservation.carid_id = car.id
+            car.Reserved = "Yes"
+            car.save()
             reservation.save()
             return redirect('/myreservations/')
     else:
         form = ResForm()
+        car.Reserved = "Reserved"
     return render(request, "team6/resform.html", {'form': form,'car':car})
 
 def my_reservations(request):
@@ -170,9 +187,6 @@ def my_reservations(request):
     # cars = []
     # for reservation in reservations:
     #     cars.append(Car.objects.get(pk=reservation.carid))
-    print("---------------")
-    print(reservations)
-    print("---------------")
     return render(request, "team6/myreservations.html", {'reservations': reservations})
 
 def test_session(request):

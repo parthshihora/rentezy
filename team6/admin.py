@@ -7,6 +7,7 @@ from .models import Reg
 admin.site.register(CarOwner)
 admin.site.register(Car)
 admin.site.register(Reg)
+admin.site.register(Reservation)
 
 class MyModelAdmin(admin.ModelAdmin):
     #fields = ("name",)
