@@ -1,15 +1,9 @@
 from django.shortcuts import render
 from .forms import CarForm, ResForm
 from django.contrib.auth import login, authenticate, get_user_model, logout
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from .models import Car, Reservation, UserData
-# from .forms import UserLoginForm, UserRegisterForm, OwnerLoginForm, OwnerRegisterForm
-from .forms import SignUpForm
-from django.contrib.auth import views as auth_views
-
-from django.views import generic
-from django.views.generic import CreateView
+from .models import Car, Reservation, UserData, Reg
+from .forms import SignUpForm, LoginForm
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 
@@ -77,24 +71,54 @@ def your_cars(request):  # CarView class instead of this
 
 
 def signup(request):
-    if request.method == 'POST':
-        # form = UserCreationForm(request.POST)
-        form = SignUpForm(request.POST)
+        errors = []
+        if request.method == 'POST':
+            form = SignUpForm(request.POST)
+            if form.is_valid():
+                userdata = form.save(commit=False)
+                cleaned_username = form.cleaned_data.get('username')
+                cleaned_password = form.cleaned_data.get('password')
+                regs_count = Reg.objects.filter(username=cleaned_username).count()
+                if regs_count >= 1:
+                    print("-----------------------",regs_count)
+                    errors.append('User Name already exists');
+                else:
+                    userdata.__setattr__('username',cleaned_username)
+                    userdata.__setattr__('password',cleaned_password)
+                    form.save()
+
+                if (form.data['role'] == "user"):
+                    return redirect('/allcars/')
+                else:
+                    return redirect('/startpage/')
+        else:
+            form = SignUpForm()
+        return render(request, 'register.html', {'form': form, 'error_msg': errors})
+
+def loginform(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        # print form.data['username']
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password')
-            # user = authenticate(username=username, password=raw_password)
-            # login(request, user)
-            user = form.save()
-            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            return redirect('/accounts/profile')
+            regs = Reg.objects.get(username=form.cleaned_data['username'])
+            if regs.username == form.cleaned_data['username'] and regs.password == form.cleaned_data['password']:
+                request.session['id'] = form.cleaned_data['username']
+                request.session['username'] = form.cleaned_data['username']
+                request.session['password'] = form.cleaned_data['password']
+        if(form.data['role'] == "user"):
+            return redirect('/allcars/')
+        else:
+            return redirect('/startpage/')
     else:
-        form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})
 
 
 def logout_view(request):
+    try:
+        del request.session['id']
+    except KeyError:
+        pass
     logout(request)
     return render(request, "team6/form.html", {})
 
@@ -133,56 +157,15 @@ def my_reservations(request):
     print("---------------")
     return render(request, "team6/myreservations.html", {'reservations': reservations})
 
-'''def login_view(request):
-	form = UserLoginForm(request.POST or None)
-	if form.is_valid():
-	    username = form.cleaned_data.get('email')
-	    password = form.cleaned_data.get('password')
-	    user = authenticate(username=email,password=password)
-	    login(request,user)
-	    print(request.user.is_authenticated())
-	    return redirect('/accounts/profile')
-	return render(request,"form.html",{"form":form})'''
-
-'''def OwnerLogin(request):
-	form = OwnerLoginForm(request.POST)
-	if form.is_valid():
-		email = form.cleaned_data.get("email")
-		password = form.cleaned_data.get("password")
-		user = authenticate(username=email,password=password)
-		login(request,user)
-		return redirect("/home/")
-	return render(request, "form.html", {'form': form})
+def test_session(request):
+    request.session.set_test_cookie()
+    return HttpResponse("Testing session cookie")
 
 
-def OwnerRegister(request):
-	form = OwnerRegisterForm(request.POST)
-
-	if form.is_valid():
-		user = form.save(commit=False)
-		password = form.cleaned_data.get('password')
-		user.set_password(password)
-		user.save()
-		new_user = authenticate(username=user.email,password=password)
-		login(request,new_user)
-		return redirect("/home")
-
-	return render(request,"form.html",{"form":form})
-	 
-
-
-
-
-def register_view(request):
-	form = UserRegisterForm(request.POST or None)
-
-	if form.is_valid():
-		user = form.save(commit=False)
-		password = form.cleaned_data.get('password')
-		user.set_password(password)
-		user.save()
-		new_user = authenticate(username=user.username,password=password)
-		login(request,new_user)
-		return redirect("/home")
-
-	return render(request,"form.html",{"form":form})'''
+def test_delete(request):
+    if request.session.test_cookie_worked():
+        request.session.delete_test_cookie()
+        response = HttpResponse("Cookie test passed")
+    else:
+        response = HttpResponse("Cookie test failed")
+    return response

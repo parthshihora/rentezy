@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import CarOwner, Car, Reservation
+from .models import CarOwner, Car, Reservation, Reg
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.admin.widgets import AdminDateWidget, AdminTimeWidget
@@ -12,26 +12,34 @@ from datetimewidget.widgets import DateTimeWidget
 User = get_user_model()
 
 
-class SignUpForm(UserCreationForm):
-    username = forms.CharField(max_length=30)
-    first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+# class SignUpForm(UserCreationForm):
+class SignUpForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SignUpForm,self).__init__(*args, **kwargs)
+        for key in self.fields:
+            self.fields[key].required = True
 
-    # CHOICES=[('select1','Owner'),('select2','Customer')]
-    # I_am = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
+    password = forms.CharField(widget=forms.PasswordInput)
 
-    # password = forms.CharField(max_length=30,widget=forms.PasswordInput)
-    # phone = forms.IntegerField()
-    # birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
-
-    # password = forms.CharField(max_length=30,widget=forms.PasswordInput)
-    # phone = forms.IntegerField()
-    # birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
-
+    CHOICES = [('owner','Owner'),('customer','Customer')]
+    role = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
     class Meta:
-        model = User
-        fields = ('username', 'first_name', 'last_name', 'email',)
+        model = Reg
+        fields = ('username', 'first_name', 'last_name', 'password', 'email', 'role')
+
+class LoginForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(LoginForm,self).__init__(*args, **kwargs)
+        for key in self.fields:
+            self.fields[key].required = True
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    CHOICES = [('owner','Owner'),('customer','Customer')]
+    role = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
+    class Meta:
+        model = Reg
+        fields = ('username','password', 'role',)
+
 
 
 class ResForm(forms.ModelForm):
@@ -64,62 +72,3 @@ class CarForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = ['car_pic', 'modelNumber', 'modelName', 'regNumber', 'insNumber', 'priceperhour', 'pickuplocation']
-
-
-'''class UserLoginForm(forms.Form):
-	email = forms.EmailField()
-	password = forms.CharField(widget=forms.PasswordInput)
-
-	class Meta:
-		model = User
-		fields = ['email','password']
-
-	def clean(self,*args,**kwargs):
-		email = self.cleaned_data.get("email")
-		password = self.cleaned_data.get("password")
-		if email and password:
-			user = authenticate(username=email, password=password)
-			if not user:
-				raise forms.ValidationError("No user")
-	    	if not user.check_password(password):
-	    		raise forms.ValidationError("Password incorrect")
-	    	if not user.is_active:
-	    		raise forms.ValidationError("User not active")
-		return super(UserLoginForm,self).clean(*args,**kwargs)'''
-
-'''class OwnerLoginForm(forms.Form):
-	username = forms.EmailField()
-	password = forms.CharField(widget=forms.PasswordInput)
-
-	class Meta:
-		model = CarOwner
-		fields = ['email', 'password']
-	def clean(self,*args,**kwargs):
-		email = self.cleaned_data.get("email")
-		password = self.cleaned_data.get("password")
-		if email and password:
-			user = authenticate(username=email,password=password)
-			if not user:
-				raise forms.ValidationError("not exist")
-			if not user.check_password(password):
-				raise forms.ValidationError("No pass")
-			if not user.is_active():
-				raise forms.ValidationError("No act")
-		return super(OwnerLoginForm,self).clean(*args,**kwargs)
-
-
-class OwnerRegisterForm(forms.ModelForm):
-	#phone = forms.IntegerField()
-	class Meta:
-		model = CarOwner
-		fields = ['firstName','lastname', 'email', 'password']
-
-
-
-
-
-
-class UserRegisterForm(forms.ModelForm):
-	class Meta:
-		model = User
-		fields = ['username', 'email', 'password']'''

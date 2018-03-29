@@ -2,10 +2,11 @@ from django.contrib import admin
 from .models import CarOwner
 from .models import Car
 from .models import Reservation
+from .models import Reg
 
 admin.site.register(CarOwner)
 admin.site.register(Car)
-admin.site.register(Reservation)
+admin.site.register(Reg)
 
 class MyModelAdmin(admin.ModelAdmin):
     #fields = ("name",)

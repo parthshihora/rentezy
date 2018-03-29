@@ -7,6 +7,15 @@ from django.dispatch import receiver
 from datetime import datetime
 
 
+class Reg(models.Model):
+    username = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+    email = models.EmailField(max_length=200)
+    role = models.CharField(max_length=200)
+
+
 class CarOwner(AbstractBaseUser):
     # ownerId = models.IntegerField()
     firstName = models.CharField(max_length=200)
@@ -46,7 +55,7 @@ class Reservation(models.Model):
     drop_date = models.DateField(default=datetime.utcnow())
     drop_time = models.TimeField(default=datetime.utcnow())
     customer_id = models.CharField(max_length=200, default="cid")
-    carid = models.ForeignKey(Car,default="10000000000")
+    carid = models.ForeignKey(Car, default="10000000000")
 
 
 # def get_absolute_url(self):
