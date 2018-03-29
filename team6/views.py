@@ -105,20 +105,32 @@ def logout_view(request):
     return render(request, "team6/form.html", {})
 
 
+def modify_reservation(request,object_id):
+    #reservation = Reservation.objects.get(pk=object_id)
+    car = Car.objects.get(pk=object_id)
+    #print("************",car)
+    if request.method == 'POST':
+        form = ResForm(request.POST)
+        if form.is_valid():
+            reservation = Reservation.objects.get(carid=object_id)
+            print("********Reservation",reservation)
+            form = ResForm(request.POST,instance=reservation)
+            form.save()
+            return HttpResponseRedirect('/myreservations/')
+    else:
+        #reservation = Reservation.objects.get(pk=object_id)
+        form = ResForm()
+    return render(request,"team6/resform.html",{'form':form,'car':car})
+
+
 def make_reservation(request, object_id):
     car = Car.objects.get(pk=object_id)
-    #print "------------------------------"
-    #print car.modelName
-    #print "------------------------------"
     # owner = UserData.objects.get(pk=car.user)
     if request.method == 'POST':
         form = ResForm(request.POST)
         if form.is_valid():
             # reservations=form.save(commit=False)
             car = Car.objects.get(pk=object_id)
-            #print "------------------------------"
-            #print car
-            #print "------------------------------"
             #owner = UserData.objects.get(pk=car.user)
             reservation = form.save(commit=False)
             reservation.user = car.user
