@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .forms import CarForm, ResForm
+from django.contrib import messages
 from django.contrib.auth import login, authenticate, get_user_model, logout
 from django.shortcuts import render, redirect
 from .models import Car, Reservation, UserData, Reg
@@ -85,7 +86,7 @@ def signup(request):
             form = SignUpForm(request.POST)
             if form.is_valid():
                 userdata = form.save(commit=False)
-                cleaned_username = form.cleaned_data.get('username')
+                cleaned_username = form.cleaned_data.get('username').lower()
                 cleaned_password = form.cleaned_data.get('password')
                 regs_count = Reg.objects.filter(username=cleaned_username).count()
                 if regs_count >= 1:
@@ -95,11 +96,7 @@ def signup(request):
                     userdata.__setattr__('username',cleaned_username)
                     userdata.__setattr__('password',cleaned_password)
                     form.save()
-
-                if (form.data['role'] == "customer"):
-                    return redirect('/allcars/')
-                else:
-                    return redirect('/accounts/profile')
+                    messages.success(request, 'Registration Successful')
         else:
             form = SignUpForm()
         return render(request, 'register.html', {'form': form, 'error_msg': errors})
@@ -109,8 +106,9 @@ def loginform(request):
         form = LoginForm(request.POST)
         # print form.data['username']
         if form.is_valid():
-            regs = Reg.objects.get(username=form.cleaned_data['username'])
-            if regs.username == form.cleaned_data['username'] and regs.password == form.cleaned_data['password']:
+            usrname = form.cleaned_data['username'].lower()
+            regs = Reg.objects.get(username=usrname)
+            if regs.username == usrname and regs.password == form.cleaned_data['password']:
                 request.session['id'] = regs.id
                 request.session['username'] = form.cleaned_data['username']
                 request.session['password'] = form.cleaned_data['password']
