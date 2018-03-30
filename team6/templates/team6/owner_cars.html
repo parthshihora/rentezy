@@ -10,6 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="{% static 'css/main.css' %}">
 
         <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
@@ -21,9 +22,14 @@
   	</head>
     <body>
 
-   		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-	  		<a class="navbar-brand text-white" href="#">Your Cars </a>
-            <p style="color: white;float: right"> Welcome {{ request.session.username }}</p>
+   		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container">
+	  			<a class="navbar-brand" href="#">RENTEZY</a>
+				<ul class="navbar-nav ml-auto">
+	  				<li class="nav-item"> <a href="#" class=" nav-link text-white">Hello {{ request.session.username }}  </a>	</li>
+					<li class="nav-item"> <a href = "{% url 'logout_view' %}" class="nav-link text-white" >	Log Out	</a>	</li>
+				</ul>
+			</div>
 		</nav>
 
 		<div class="container p-3"></div>

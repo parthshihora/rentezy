@@ -10,6 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="{% static 'css/main.css' %}">
 
         <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
@@ -17,61 +18,76 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-  		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
 
   	</head>
     <body>
 
-   		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-	  		<a class="navbar-brand text-white" href="#">Your Cars </a>
-            <p style="color: white;float: right"> Welcome {{ request.session.username }}</p>
-	  		<a href="{% url 'myreservations' %}" class="btn btn-primary">My Reservation</a>
+   		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   			<div class="container">
+		  		<a class="navbar-brand" href="#">RENTEZY</a>
+	            <ul class="navbar-nav">
+	            	<li class="nav-item">
+	            		<a href="{% url 'myreservations' %}" class="nav-link text-white mr-3">My Reservations</a>
+	            	</li>
+	            	<li class="nav-item">
+	            		<a href="#" class="nav-link text-white"><span class="fa fa-user mr-2"></span>Welcome {{ request.session.username }}</a>
+	            	</li>
+	            	<li class="nav-item">
+	            		<a href="{% url 'logout_view' %}" class="nav-link text-white">Logout</a>
+	            	</li>	
+
+	            </ul>	
+			</div>
 		</nav>
+	
+		<div class="row">
+			<div class="col-md-6 mx-auto p-4 mt-3">
+					<div class="input-group">
+     					<input type="text" size="70" class="form-control" id="locationTextField" placeholder="Enter pickup location ...">
+      					<span class="input-group-btn">
+      						<!--  <input type="submit" onClick="f1(this)"> -->
+					        <a href="{% url 'filteredcars' %}" class="btn btn-dark" id="output">Search</a>
+      					</span>
+    				</div>
 
-		  <label for="locationTextField">Location</label>
-        <input id="locationTextField" type="text" size="50">
+				        <script>
 
-      <!--  <input type="submit" onClick="f1(this)"> -->
-        <a href="{% url 'filteredcars' %}" id= "output">Search</a> 
+				        	function updateQueryStringParam(uri, key, value) {
+				  				var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+				  				var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+				  				if (uri.match(re)) {
+				    				return uri.replace(re, '$1' + key + "=" + value + '$2');
+				  					}
+				  				else {
+				    				return uri + separator + key + "=" + value;
+				  					}
+								}
 
-        <script>
-
-        	function updateQueryStringParam(uri, key, value) {
-  				var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-  				var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-  				if (uri.match(re)) {
-    				return uri.replace(re, '$1' + key + "=" + value + '$2');
-  					}
-  				else {
-    				return uri + separator + key + "=" + value;
-  					}
-				}
-
-            function init() {
-                var input = document.getElementById('locationTextField');
-                var autocomplete = new google.maps.places.Autocomplete(input);
-                google.maps.event.addListener(autocomplete, 'place_changed',
-   
-   			function f1() {
-      			var place = autocomplete.getPlace();
-      			//var lat = place.geometry.location.lat();
-      			//var lng = place.geometry.location.lng();
-      			var city = place.address_components[0].short_name;
-      			output = document.getElementById("output");
-				output.href = updateQueryStringParam(output.href, 'name', city);
-				//output.innerHTML = city;
-      			//document.getElementById("output").innerHTML = city;
-    			
-   			});
-            
-           }
- 
-            google.maps.event.addDomListener(window, 'load', init);
-        </script>
-        
-   
+				            function init() {
+				                var input = document.getElementById('locationTextField');
+				                var autocomplete = new google.maps.places.Autocomplete(input);
+				                google.maps.event.addListener(autocomplete, 'place_changed',
+				   
+				   			function f1() {
+				      			var place = autocomplete.getPlace();
+				      			//var lat = place.geometry.location.lat();
+				      			//var lng = place.geometry.location.lng();
+				      			var city = place.address_components[0].short_name;
+				      			output = document.getElementById("output");
+								output.href = updateQueryStringParam(output.href, 'name', city);
+								//output.innerHTML = city;
+				      			//document.getElementById("output").innerHTML = city;
+				    			
+				   			});
+				            
+				           }
+				 
+				            google.maps.event.addDomListener(window, 'load', init);
+				        </script>
+    		</div>    
+   		</div>
 
 		<div class="container p-3"></div>
 
