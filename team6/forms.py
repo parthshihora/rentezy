@@ -7,7 +7,7 @@ from django.contrib.admin.widgets import AdminDateWidget, AdminTimeWidget
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, get_user_model, logout
 from django.forms.extras.widgets import SelectDateWidget
-from datetimewidget.widgets import DateTimeWidget
+#from datetimewidget.widgets import DateTimeWidget
 
 User = get_user_model()
 
