@@ -77,6 +77,14 @@
 			                                    <button type="submit" class="btn btn-success btn-md float-right">Sign Up</button>
 			                                </div>
 			                            </form>
+                                        {% if messages %}
+                                            <ul class="messages">
+                                                {% for message in messages %}
+                                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                            <a href="{%url 'loginpage' %}"> Click Here to go to login</a>
+                                        {% endif %}
 			                        </div>
 			                    </div>
 			                </div>
