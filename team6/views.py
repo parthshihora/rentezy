@@ -128,9 +128,9 @@ def logout_view(request):
         del request.session['id']
     except KeyError:
         pass
-    logout(request)
-    return render(request, "team6/form.html", {})
-
+    #logout(request)
+    #return render(request, "team6/form.html", {})
+    return redirect('/startpage/')
 
 def delete_reservation(request, object_id):
     car = Car.objects.get(pk=object_id)
