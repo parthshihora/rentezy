@@ -17,26 +17,21 @@ class Reg(models.Model):
 
 
 class CarOwner(AbstractBaseUser):
-    # ownerId = models.IntegerField()
     firstName = models.CharField(max_length=200)
     lastname = models.CharField(max_length=200)
-    # phoneNumber = models.IntegerField()
     email = models.EmailField(max_length=254)
     password = models.CharField(max_length=200)
-
-    USERNAME_FIELD = 'email'
 
 
 class UserData(models.Model):
     user = models.ForeignKey(Reg, editable=False)
-
     class Meta:
         abstract = True
 
 
 class Car(UserData):
     # user = models.ForeignKey(User,on_delete=models.CASCADE)
-    user = models.ForeignKey(Reg, default="10000000000")
+    user = models.ForeignKey(Reg, default="")
     # user = models.OneToOneField(User)
     car_pic = models.FileField()
     # car_pic =   models.ImageField(upload_to = 'static/pic_folder/',default='static/pic_folder/no.jpeg')
@@ -44,9 +39,11 @@ class Car(UserData):
     modelName = models.CharField(max_length=200)
     regNumber = models.CharField(max_length=200)
     insNumber = models.CharField(max_length=200)
-    priceperhour = models.IntegerField(default=" ")
-    pickuplocation = models.CharField(max_length=200, default=" ")
+    priceperhour = models.IntegerField(default="")
+    pickuplocation = models.CharField(max_length=200, default="")
     Reserved = models.CharField(max_length=100,default="No")
+    cartype = models.CharField(max_length=25, default="compact")
+    passengerCapacity = models.IntegerField(default="")
 
 
 class Reservation(models.Model):
@@ -56,7 +53,7 @@ class Reservation(models.Model):
     drop_date = models.DateField(default=datetime.utcnow())
     drop_time = models.TimeField(default=datetime.utcnow())
     customer_id = models.CharField(max_length=200, default="cid")
-    carid = models.ForeignKey(Car, default="10000000000")
+    carid = models.ForeignKey(Car, default="")
 
 
 # def get_absolute_url(self):
