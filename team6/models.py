@@ -14,6 +14,7 @@ class Reg(models.Model):
     password = models.CharField(max_length=200)
     email = models.EmailField(max_length=200)
     role = models.CharField(max_length=200)
+    status = models.CharField(max_length=200,default="")
 
 
 class CarOwner(AbstractBaseUser):
