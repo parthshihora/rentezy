@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cd440179-52e1-4076-8965-ec9490c6bd5e" name="Default" comment="Updated My Reservations and Make Reservations">
-      <change afterPath="$PROJECT_DIR$/team6/migrations/0049_auto_20180413_1615.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/rentezy.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rentezy.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/team6/migrations/0049_auto_20180413_1951.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/team6/migrations/0050_auto_20180413_1951.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team6/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/team6/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team6/migrations/0041_merge_20180329_1512.py" beforeDir="false" afterPath="$PROJECT_DIR$/team6/migrations/0041_merge_20180329_1512.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/team6/templates/team6/allcars.html" beforeDir="false" afterPath="$PROJECT_DIR$/team6/templates/team6/allcars.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,8 +51,11 @@
       <file leaf-file-name="allcars.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/team6/templates/team6/allcars.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="112" column="8" lean-forward="true" selection-start-line="112" selection-start-column="8" selection-end-line="112" selection-end-column="8" />
+            <state relative-caret-position="255">
+              <caret line="111" column="16" lean-forward="true" selection-start-line="111" selection-start-column="16" selection-end-line="111" selection-end-column="16" />
+              <folding>
+                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -660,8 +662,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/team6/templates/team6/allcars.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="112" column="8" lean-forward="true" selection-start-line="112" selection-start-column="8" selection-end-line="112" selection-end-column="8" />
+        <state relative-caret-position="255">
+          <caret line="111" column="16" lean-forward="true" selection-start-line="111" selection-start-column="16" selection-end-line="111" selection-end-column="16" />
+          <folding>
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
