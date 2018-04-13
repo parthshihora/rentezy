@@ -54,31 +54,26 @@
 					<li class="nav-item"> <a href = "{% url 'owner_page' %}" class="nav-link text-white" >	Home	</a>	</li>
                     <li class="nav-item"> <a href = "{% url 'logout_view' %}" class="nav-link text-white" >	Log Out	</a>	</li>
 				</ul>
-
-	</nav>
-
-			<div class="container-fluid">
-			<img src = "{% static 'img/main_img.jpg' %}" alt="Road Trip" width="115%" />
-				
-					<div class="row">	
-						<div class="thumbnail text-center">
-							<div class="caption">
-
-								<div class="caption">
-									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button w-15" >My Cars</button>
-									<button onclick="location.href = 'http://127.0.0.1:8000/addcar/';" id="myButton" class="btn bg-primary text-white submit-button" >Add Car</button>
-<!--									<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn bg-primary text-white submit-button" >Modify Cars</button>-->
-									<button onclick="location.href = 'http://127.0.0.1:8000/startpage/';" id="myButton" class="btn bg-primary text-white submit-button" >Log Out</button>
-									<a href="{% url 'logout_view'  %}" class="btn btn-primary">New Logout</a>
-
-								</div>
-
 			</div>
-		
+		</nav>
 
 		
 
 
+		<div class="dark-overlay">
+			<div class="inner-header">
+				<div class="container p-5 w-50 rounded text-overlay text-white">
+					<div class="row text-center">
+						<div class="col">
+		
+							<button onclick="location.href = 'http://127.0.0.1:8000/yourcars/';" id="myButton" class="btn btn-white submit-button btn-lg mr-3">My Cars</button>
+							<button onclick="location.href = 'http://127.0.0.1:8000/addcar/';" id="myButton" class="btn btn-white submit-button btn-lg mr-3" >Add Car</button>
+
+						</div>
+					</div>
+				</div>				
+			</div>
+		</div>
 
 	</body>
 </html>
