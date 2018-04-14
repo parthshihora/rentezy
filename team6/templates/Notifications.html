@@ -6,7 +6,7 @@
 
 <html lang="en">
 	<head>
-		<title> My Reservations</title>
+		<title> Notifications</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -45,7 +45,7 @@
 
 		<div class="container p-3"></div>
 
-	    {% for reservation in reservations %}
+	    {% for reservation in reservation %}
 			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
 
 				<div class="container">
@@ -57,7 +57,7 @@
 			      			<div class="card-body">
 			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
 			    				<p class="card-text">
-			    					Owner: {{ reservation.carid.user.first_name}} <br>
+			    					Owner: {{ reservation.user.first_name}} <br>
 			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
                                     Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
 			    				</p>

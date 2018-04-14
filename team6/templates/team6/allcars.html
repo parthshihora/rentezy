@@ -109,6 +109,7 @@
 				<div class="container p-3"></div>
 
 			    {% for car in cars %}
+			    	{% if car.Reserved == "No" %}
 				<div class="card w-75 rounded mr-2-auto bg-light py-2 mb-2">
 			
 					<div class="container">
@@ -131,6 +132,7 @@
 				  	</div>
 			
 				</div>
+				{% endif %}
 				{% endfor %}
 			</div>
    		</div>

@@ -9,6 +9,10 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 
 
+
+
+
+
 def allCars(request, type='none', no_of_pass=0, sortby='price'):
     if type=='none' and no_of_pass == 0:
         cars = Car.objects.exclude(Reserved="Yes")
@@ -20,6 +24,13 @@ def allCars(request, type='none', no_of_pass=0, sortby='price'):
         cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=type, user__car__passengerCapacity__exact=no_of_pass)
 
     return render(request, "team6/allcars.html", {'cars': cars})
+
+def notifications(request):
+    reservation = Reservation.objects.filter(owner=request.session['username'])
+    print("**************",request.session['username'])
+    print("****************",reservation)
+    return render(request, "Notifications.html", {'reservation': reservation})
+
 
 
 def filteredcars(request):
@@ -79,10 +90,11 @@ def add_car(request):  # carentry car instead of this
         if form.is_valid():
             cars = form.save(commit=False)
             #cars.user = request.user
-
+            print("^^^^^^^^^^above form")
             cars.user = Reg.objects.get(pk=request.session['id'])
+            print("^^^^^^^^^^below form",cars.user)
             cars.car_pic = request.FILES.get("car_pic")
-
+            print("very below")
             cars.save()
             # form.save()
             return redirect('/yourcars/')
@@ -170,7 +182,7 @@ def logout_view(request):
 
 def delete_reservation(request, object_id):
     car = Car.objects.get(pk=object_id)
-    car.Reserved = " "
+    car.Reserved = "No"
     car.save()
     object = get_object_or_404(Reservation, carid=object_id)
     object.delete()
@@ -210,6 +222,7 @@ def make_reservation(request, object_id):
             reservation.user = Reg.objects.get(pk=request.session['id'])
             reservation.carid_id = car.id
             car.Reserved = "Yes"
+            reservation.owner = car.user.username
             car.save()
             reservation.save()
             return redirect('/myreservations/')

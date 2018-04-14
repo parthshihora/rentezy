@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^allowners/$', views.allOwners, name='allowners'),
     url(r'^approvedowners/(?P<object_id>.*)', views.approvedOwners, name='approvedowners'),
     url(r'^rejectowners/(?P<object_id>.*)', views.rejectOwners, name='rejectowners'),
+    url(r'^notifications/$', views.notifications, name='notification'),
 
 
 ]
