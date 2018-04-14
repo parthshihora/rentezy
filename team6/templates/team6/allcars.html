@@ -19,6 +19,7 @@
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+        <script>var URL = "{% url 'allcars' %}";</script>
 
 
   	</head>
@@ -44,26 +45,31 @@
 	
 		<div class="row">
 			<div class="col-md-3 mx-auto p-4 mt-3 border-right">
-				<form class="pl-4">	
-					<div class="form-group">
+                <div class="form-group">
+                    <form action="{% url 'allcars' %}" method="post">
+                        				<div class="form-group">
 		      					<label for="category" class="mr-2 my-2"> Select car category: <br></label>
-								<select name="" id="category" class="mr-4">
-									<option value="none">No Filter</option>
+								<select name="cartype" id="category_car" class="mr-4">
+									<option value="none" selected="selected">No Filter</option>
 									<option value="compact">Compact</option>
 									<option value="sedan">Sedan</option>
 									<option value="suv">SUVs</option>
 								</select>
-					</div>
-					<div class="form-group">
 		      					<label for="category" class="mr-2 my-2"> Number of passengers: </label>
-								<select name="" id="category" class="mr-4">
-									<option value="0">No Filter</option>
+								<select name="nop" id="category_nop" class="mr-4">
+									<option value="10" selected="selected">No Filter</option>
 									<option value="4">4</option>
 									<option value="5">5</option>
 									<option value="6">6</option>
 									<option value="7">7</option>
 								</select>
+                               <button type="submit" class="btn">Filter</button>
 					</div>
+
+                    </form>
+                </div>
+
+                <form class="pl-4">
 					<div class="form-group">	
 		     					<input type="text" size="40" class="mx-auto form-control form-control-sm my-2 small" id="locationTextField" placeholder="Enter pickup location ...">
 		      					<a href="{% url 'filteredcars' %}" class="btn btn-dark mx-auto btn-sm my-2" id="output">Search</a>

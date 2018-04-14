@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from .forms import CarForm, ResForm
+from django.views.decorators.csrf import csrf_exempt
+
+from .forms import CarForm, ResForm, FilterForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, get_user_model, logout
 from django.shortcuts import render, redirect
@@ -9,6 +11,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 
 
+<<<<<<< HEAD
 
 
 
@@ -22,8 +25,27 @@ def allCars(request, type='none', no_of_pass=0, sortby='price'):
         cars = Car.objects.exclude(Reserved="Yes").filter(user__car__passengerCapacity__exact=no_of_pass)
     else:
         cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=type, user__car__passengerCapacity__exact=no_of_pass)
+=======
+@csrf_exempt
+def allCars(request):
+    print request
+    form = FilterForm()
+    cars = Car.objects.exclude(Reserved="Yes")
+    if request.method == "POST":
+        car_type=request.POST['cartype']
+        no_of_pass=request.POST['nop']
+        print car_type + no_of_pass
+        if car_type=='none' and no_of_pass == 10:
+            cars = Car.objects.exclude(Reserved="Yes")
+        elif car_type != 'none' and no_of_pass == 10:
+            cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type)
+        elif car_type == 'none' and no_of_pass != 10:
+            cars = Car.objects.exclude(Reserved="Yes").filter(user__car__passengerCapacity__exact=no_of_pass)
+        else:
+            cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type, user__car__passengerCapacity__exact=no_of_pass)
+>>>>>>> 723ab29f3aac0be64c2dc7ffce19746f995b1500
 
-    return render(request, "team6/allcars.html", {'cars': cars})
+    return render(request, "team6/allcars.html", {'form': form, 'cars': cars})
 
 def notifications(request):
     reservation = Reservation.objects.filter(owner=request.session['username'])
