@@ -9,8 +9,16 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 
 
-def allCars(request):
-    cars = Car.objects.exclude(Reserved="Yes")
+def allCars(request, type='none', no_of_pass=0, sortby='price'):
+    if type=='none' and no_of_pass == 0:
+        cars = Car.objects.exclude(Reserved="Yes")
+    elif type != 'none' and no_of_pass == 0:
+        cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=type)
+    elif type == 'none' and no_of_pass != 0:
+        cars = Car.objects.exclude(Reserved="Yes").filter(user__car__passengerCapacity__exact=no_of_pass)
+    else:
+        cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=type, user__car__passengerCapacity__exact=no_of_pass)
+
     return render(request, "team6/allcars.html", {'cars': cars})
 
 
