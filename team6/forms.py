@@ -57,18 +57,16 @@ class ResForm(forms.ModelForm):
 
 class CarForm(forms.ModelForm):
     car_pic = forms.ImageField()
-    '''def __init__(self, *args, **kwargs):
-		self.request = kwargs.pop('request', None)
-		return super(CarForm, self).__init__(*args, **kwargs)
-
-	def save(self, *args, **kwargs):
-		kwargs['commit']=False
-		obj = super(CarForm, self).save(*args, **kwargs)
-		if self.request:
-			obj.user = self.request.user
-		obj.save()
-		return obj'''
-
     class Meta:
         model = Car
         fields = ['car_pic', 'modelNumber', 'modelName', 'regNumber', 'insNumber', 'priceperhour', 'pickuplocation']
+
+
+class FilterForm(forms.ModelForm):
+    CARTYPES = [('none', 'No Filter'), ('compact', 'Compact'), ('sedan','Sedan'),('suv','SUV')]
+    NOP = [('0', 'No Filter'), ('4', '4'), ('5', '5'), ('6', '6'), ('7','7')]
+    cartype = forms.ChoiceField(choices=CARTYPES,label='cartype')
+    passengerCapacity = forms.ChoiceField(choices=NOP,label='passengerCapacity')
+    class Meta:
+        model = Car
+        fields = ['cartype', 'passengerCapacity']
