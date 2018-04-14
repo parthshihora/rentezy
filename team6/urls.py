@@ -29,6 +29,9 @@ urlpatterns = [
     url(r'^modifyreservation/(?P<object_id>.*)', views.modify_reservation, name='modify_reservation'),
 
     url(r'^deletereservation/(?P<object_id>.*)', views.delete_reservation, name='delete_reservation'),
+    url(r'^allowners/$', views.allOwners, name='allowners'),
+    url(r'^approvedowners/(?P<object_id>.*)', views.approvedOwners, name='approvedowners'),
+    url(r'^rejectowners/(?P<object_id>.*)', views.rejectOwners, name='rejectowners'),
 
 
 ]

@@ -55,10 +55,10 @@
 		  			   </div>
 			  			<div class="col-sm-8">
 			      			<div class="card-body">
-			    				<h5 class="card-title">{{ reservation.user }}</h5>
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
 			    				<p class="card-text">
-                                    Carid: {{ reservation.carid }}
-			    					Owner: {{ reservation.user}} <br>
+                                    Carid: {{ reservation.session.carid }} <br>
+			    					Owner: {{ reservation.carid.user}} <br>
 			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
                                     Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
 			    				</p>

@@ -35,6 +35,19 @@ def objectDelete(request, object_id):
     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponseRedirect('/yourcars/')
 
+def approvedOwners(request,object_id):
+    owner = Reg.objects.get(pk=object_id)
+    print("*******",owner)
+    owner.status = "Approved"
+    owner.save()
+    return HttpResponseRedirect('/allowners/')
+
+def rejectOwners(request,object_id):
+    owner = Reg.objects.get(pk=object_id)
+    print("*******",owner)
+    owner.status = "Rejected"
+    owner.save()
+    return HttpResponseRedirect('/allowners/')    
 
 def modifyCar(request, object_id):
     # object = get_object_or_404(Car, pk=object_id)
@@ -96,13 +109,17 @@ def signup(request):
                 userdata = form.save(commit=False)
                 cleaned_username = form.cleaned_data.get('username').lower()
                 cleaned_password = form.cleaned_data.get('password')
+                role = form.cleaned_data.get('role')
                 regs_count = Reg.objects.filter(username=cleaned_username).count()
                 if regs_count >= 1:
-                    print("-----------------------",regs_count)
                     errors.append('User Name already exists');
                 else:
                     userdata.__setattr__('username',cleaned_username)
                     userdata.__setattr__('password',cleaned_password)
+                    if(role=="owner"):
+                        userdata.__setattr__('status',"Not Approved")
+                    else:
+                        userdata.__setattr__('status',"Approved")
                     form.save()
                     messages.success(request, 'Registration Successful')
         else:
@@ -116,14 +133,19 @@ def loginform(request):
         if form.is_valid():
             usrname = form.cleaned_data['username'].lower()
             regs = Reg.objects.get(username=usrname)
-            if regs.username == usrname and regs.password == form.cleaned_data['password']:
+            #status = form.cleaned_data['status']
+            if regs.username == usrname and regs.password == form.cleaned_data['password'] :
                 request.session['id'] = regs.id
                 request.session['username'] = form.cleaned_data['username']
                 request.session['password'] = form.cleaned_data['password']
         if(form.data['role'] == "customer"):
             return redirect('/allcars/')
-        else:
+        elif(regs.status == "Approved"):
             return redirect('/accounts/profile')
+        elif(regs.status == "Not Approved"):
+            messages.warning(request, 'You are not  yet Approved')
+        elif(regs.status == "Rejected"):
+            messages.warning(request, 'You are rejected, please contact admin')
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
@@ -132,9 +154,17 @@ def loginform(request):
 def logout_view(request):
     try:
         del request.session['id']
+
     except KeyError:
         pass
     #logout(request)
+
+        #return HttpResponseRedirect('/startpage/')
+
+    #return render(request, "team6/form.html", {})
+    return redirect('/startpage/')
+
+
     #return render(request, "team6/form.html", {})
     return redirect('/startpage/')
 
@@ -189,7 +219,8 @@ def make_reservation(request, object_id):
     return render(request, "team6/resform.html", {'form': form,'car':car})
 
 def my_reservations(request):
-    reservations = Reservation.objects.all()
+    #Car.objects.filter(user=request.session['id'])
+    reservations = Reservation.objects.filter(user=request.session['id'])
     # cars = []
     # for reservation in reservations:
     #     cars.append(Car.objects.get(pk=reservation.carid))
@@ -207,3 +238,8 @@ def test_delete(request):
     else:
         response = HttpResponse("Cookie test failed")
     return response
+
+def allOwners(request):
+    owners = Reg.objects.filter(role='owner')
+    return render(request, "AllOwner.html", {'owners': owners})
+
