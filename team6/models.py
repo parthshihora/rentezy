@@ -55,6 +55,7 @@ class Reservation(models.Model):
     drop_time = models.TimeField(default=datetime.utcnow())
     owner = models.CharField(max_length=200, default="")
     carid = models.ForeignKey(Car, default="")
+    status = models.CharField(max_length=20,default="")
 
 
 # def get_absolute_url(self):

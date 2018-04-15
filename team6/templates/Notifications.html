@@ -71,8 +71,11 @@
 		<div class="collapse show" id="Successful">
 
 	    {% for reservation in reservation %}
-			<div class="card w-75 mx-auto bg-light p-4">
+		<div class="card w-75 mx-auto bg-light p-4">
 
+	    	{% if reservation.status == "Deleted" %}
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+				<h1> Deleted Reservation </h1>
 				<div class="container">
 					<div class="row">
 					    <div class="col-sm-4">
@@ -82,10 +85,59 @@
 			      			<div class="card-body">
 			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
 			    				<p class="card-text">
-			    					Owner: {{ reservation.user.first_name}} <br>
+			    					Customer: {{ reservation.user.first_name}} <br>
 			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
                                     Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
 			    				</p>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+
+			</div>
+
+			{% elif reservation.status == "Modified" %}
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+
+				<h1> Modified Reservation </h1>
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Customer: {{ reservation.user.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+			</div>
+
+			{% else %}
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+				<h1> Your Reserved Car </h1>
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Customer: {{ reservation.user.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+
 
 			    				 <script type="text/javascript">
                                     var id1 = {{ reservation.carid_id }};
@@ -111,6 +163,7 @@
 
 			</div>
 
+			{% endif %}
 		{% endfor %}
 			
 		</div>
@@ -119,16 +172,202 @@
 		<!--Modification Reservation div -->
 
 		<div class="collapse" id="Modified">
-			<div class="card w-75 mx-auto bg-light p-4">
-				Modified data			
+{% for reservation in reservation %}
+		<div class="card w-75 mx-auto bg-light p-4">
+
+	    	{% if reservation.status == "Deleted" %}
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+				<h1> Deleted Reservation </h1>
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Customer: {{ reservation.user.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+
 			</div>
+
+			{% elif reservation.status == "Modified" %}
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+
+				<h1> Modified Reservation </h1>
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Customer: {{ reservation.user.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+			</div>
+
+			{% else %}
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+				<h1> Your Reserved Car </h1>
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Customer: {{ reservation.user.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+
+
+			    				 <script type="text/javascript">
+                                    var id1 = {{ reservation.carid_id }};
+                                    //window.alert("Car id"+id1);
+                                    var l = document.getElementById(id1);
+                                    l.onclick = fun;
+
+                                    function fun(){
+                                    if (confirm('Are you sure you want to Delete?')) {
+                                            var id1 = {{ reservation.carid_id }};
+                                           id1.submit();
+                                       } else {
+                                           return false;
+                                       }
+                                        
+                                    }
+                                </script>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+
+			</div>
+
+			{% endif %}
+		{% endfor %}
 		</div>
 	
 		<!--Deleted reservation div   -->
 		<div class="collapse" id="Deleted">
-			<div class="card w-75 mx-auto bg-light p-4">
-				Deleted data			
+		
+		{% for reservation in reservation %}
+		<div class="card w-75 mx-auto bg-light p-4">
+
+	    	{% if reservation.status == "Deleted" %}
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+				<h1> Deleted Reservation </h1>
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Customer: {{ reservation.user.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+
 			</div>
+
+			{% elif reservation.status == "Modified" %}
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+
+				<h1> Modified Reservation </h1>
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Customer: {{ reservation.user.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+			</div>
+
+			{% else %}
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+				<h1> Your Reserved Car </h1>
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Customer: {{ reservation.user.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+
+
+			    				 <script type="text/javascript">
+                                    var id1 = {{ reservation.carid_id }};
+                                    //window.alert("Car id"+id1);
+                                    var l = document.getElementById(id1);
+                                    l.onclick = fun;
+
+                                    function fun(){
+                                    if (confirm('Are you sure you want to Delete?')) {
+                                            var id1 = {{ reservation.carid_id }};
+                                           id1.submit();
+                                       } else {
+                                           return false;
+                                       }
+                                        
+                                    }
+                                </script>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+
+			</div>
+
+			{% endif %}
+		{% endfor %}
+			
 		</div>
 
 	<script>
