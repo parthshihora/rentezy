@@ -29,6 +29,8 @@
 	  				<li class="nav-item"> <a href="#" class=" nav-link text-white">Hello {{ request.session.username }}  </a>	</li>
                     <li class="nav-item"> <a href = "{% url 'owner_page' %}" class="nav-link text-white" >	Home	</a>	</li>
 					<li class="nav-item"> <a href = "{% url 'logout_view' %}" class="nav-link text-white" >	Log Out	</a>	</li>
+					<li class="nav-item"> <a href = "{% url 'notification' %}" class="nav-link text-white" >	Notification	</a>	</li>
+
 				</ul>
 			</div>
 		</nav>
@@ -36,6 +38,7 @@
 		<div class="container p-3"></div>
 
 	    {% for car in cars %}
+	    	{% if car.Reserved == "Yes" %}
 			<div class="card w-75 rounded mx-auto bg-light" style="padding-bottom: 10px; padding-top: 10px; margin-bottom: 10px;	">
 		
 				<div class="container">
@@ -48,7 +51,9 @@
 			    				<h5 class="card-title">{{ car.modelName }}</h5>
 			    				<p class="card-text">
 			    					Price: {{car.priceperhour}} <br> 
-			    					Pickup Location: {{car.pickuplocation}} <br>	
+			    					Pickup Location: {{car.pickuplocation}} <br>
+			    					Owner : {{ car.user.username }}<br>
+			    					Car is Reserved	
 			    				</p>
 			    				<a href="{% url 'modify_car' car.id %}" class="btn btn-primary">Modify</a>
                                 <a href="{% url 'delete_object' car.id %}" class="btn btn-primary" id= "{{ car.id }}">Delete</a> 
@@ -76,7 +81,51 @@
 			  	</div>
 		
 			</div>
-			
+			{% else %}
+
+				<div class="card w-75 rounded mx-auto bg-light" style="padding-bottom: 10px; padding-top: 10px; margin-bottom: 10px;	">
+		
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-4">
+		  					<img class="card-img-top img-responsive" src="{{ car.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  				</div>
+		  				<div class="col-sm-8">
+			  				<div class="card-body">
+			    				<h5 class="card-title">{{ car.modelName }}</h5>
+			    				<p class="card-text">
+			    					Price: {{car.priceperhour}} <br> 
+			    					Pickup Location: {{car.pickuplocation}} <br>
+			    					Not Reserved
+			    				</p>
+			    				<a href="{% url 'modify_car' car.id %}" class="btn btn-primary">Modify</a>
+                                <a href="{% url 'delete_object' car.id %}" class="btn btn-primary" id= "{{ car.id }}">Delete</a> 
+
+                                <script type="text/javascript">
+                                    var id1 = {{ car.id }};
+                                    //window.alert("Car id"+id1);
+                                    var l = document.getElementById(id1);
+                                    l.onclick = fun;
+
+                                    function fun(){
+                                    if (confirm('Are you sure you want to Delete?')) {
+                                            var id1 = {{ car.id }};
+                                           id1.submit();
+                                       } else {
+                                           return false;
+                                       }
+                                        
+                                    }
+                                </script>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+		
+			</div>
+
+			{% endif %}
 		{% endfor %}
 	</body>
 </html>

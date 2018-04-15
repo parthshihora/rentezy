@@ -1,0 +1,94 @@
+{% load static %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+	<head>
+		<title> Notifications</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  	</head>
+    <body>
+
+   		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   			<div class="container">
+		  		<a class="navbar-brand" href="#">RENTEZY</a>
+	            <ul class="navbar-nav">
+	            	<li class="nav-item">
+	            		<a href="{% url 'myreservations' %}" class="nav-link text-white mr-3">My Reservations</a>
+	            	</li>
+	            	<li class="nav-item">
+	            		<a href="#" class="nav-link text-white"><span class="fa fa-user mr-2"></span>Welcome {{ request.session.username }}</a>
+	            	</li>
+                    <li class="nav-item">
+	            		<a href="{% url 'allcars' %}" class="nav-link text-white"></span>Browse Cars</a>
+	            	</li>
+	            	<li class="nav-item">
+	            		<a href="{% url 'logout_view' %}" class="nav-link text-white">Logout</a>
+	            	</li>	
+
+	            </ul>	
+			</div>
+		</nav>
+
+		<div class="container p-3"></div>
+
+	    {% for reservation in reservation %}
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Owner: {{ reservation.user.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+			    				<a href="{% url 'modify_reservation' reservation.carid_id %}" class="btn btn-primary">Edit Reservation</a>
+
+			    				<a href="{% url 'delete_reservation' reservation.carid_id %}" id="{{reservation.carid_id}}" class="btn btn-primary">Delete Reservation</a>
+
+			    				 <script type="text/javascript">
+                                    var id1 = {{ reservation.carid_id }};
+                                    //window.alert("Car id"+id1);
+                                    var l = document.getElementById(id1);
+                                    l.onclick = fun;
+
+                                    function fun(){
+                                    if (confirm('Are you sure you want to Delete?')) {
+                                            var id1 = {{ reservation.carid_id }};
+                                           id1.submit();
+                                       } else {
+                                           return false;
+                                       }
+                                        
+                                    }
+                                </script>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+
+			</div>
+
+		{% endfor %}
+	</body>
+</html>
