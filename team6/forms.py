@@ -59,10 +59,7 @@ class CarForm(forms.ModelForm):
     car_pic = forms.ImageField()
     class Meta:
         model = Car
-<<<<<<< HEAD
         fields = ['car_pic', 'modelNumber', 'modelName', 'regNumber', 'insNumber', 'priceperhour', 'pickuplocation','cartype','passengerCapacity']
-=======
-        fields = ['car_pic', 'modelNumber', 'modelName', 'regNumber', 'insNumber', 'priceperhour', 'pickuplocation']
 
 
 class FilterForm(forms.ModelForm):
@@ -73,4 +70,3 @@ class FilterForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = ['cartype', 'passengerCapacity']
->>>>>>> 723ab29f3aac0be64c2dc7ffce19746f995b1500
