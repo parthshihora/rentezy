@@ -10,27 +10,42 @@ from .forms import SignUpForm, LoginForm
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 
-
-<<<<<<< HEAD
-
-
-
-
-def allCars(request, type='none', no_of_pass=0, sortby='price'):
-    if type=='none' and no_of_pass == 0:
-        cars = Car.objects.exclude(Reserved="Yes")
-    elif type != 'none' and no_of_pass == 0:
-        cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=type)
-    elif type == 'none' and no_of_pass != 0:
-        cars = Car.objects.exclude(Reserved="Yes").filter(user__car__passengerCapacity__exact=no_of_pass)
-    else:
-        cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=type, user__car__passengerCapacity__exact=no_of_pass)
-=======
 @csrf_exempt
 def allCars(request):
-    print request
     form = FilterForm()
     cars = Car.objects.exclude(Reserved="Yes")
+    if request.method == "POST":
+        car_type=request.POST['cartype']
+        no_of_pass=request.POST['nop']
+        print car_type + no_of_pass
+        if car_type=='none' and no_of_pass == "10":
+            cars = Car.objects.exclude(Reserved="Yes")
+            print("################cars",cars)
+
+        elif car_type != 'none' and no_of_pass == "10":
+            cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type)
+            print("################cars ",cars)
+
+        elif car_type == 'none' and no_of_pass != "10":
+            cars = Car.objects.exclude(Reserved="Yes").filter(passengerCapacity__exact=no_of_pass)
+            print("################cars passenger cap filter",cars)
+
+        else:
+            cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type, passengerCapacity__exact=no_of_pass)
+            print("################cars in else ",cars)
+
+    return render(request, "team6/allcars.html", {'form': form, 'cars': cars})
+
+def notifications(request):
+    reservation = Reservation.objects.filter(owner=request.session['username'])
+    return render(request, "Notifications.html", {'reservation': reservation})
+
+
+
+def filteredcars(request):
+    city=request.GET.get('name')
+    cars = Car.objects.filter(pickuplocation__contains=city,Reserved="No")
+    #cars = cars.objects.exclude(Reserved="Yes")
     if request.method == "POST":
         car_type=request.POST['cartype']
         no_of_pass=request.POST['nop']
@@ -43,21 +58,7 @@ def allCars(request):
             cars = Car.objects.exclude(Reserved="Yes").filter(user__car__passengerCapacity__exact=no_of_pass)
         else:
             cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type, user__car__passengerCapacity__exact=no_of_pass)
->>>>>>> 723ab29f3aac0be64c2dc7ffce19746f995b1500
 
-    return render(request, "team6/allcars.html", {'form': form, 'cars': cars})
-
-def notifications(request):
-    reservation = Reservation.objects.filter(owner=request.session['username'])
-    print("**************",request.session['username'])
-    print("****************",reservation)
-    return render(request, "Notifications.html", {'reservation': reservation})
-
-
-
-def filteredcars(request):
-    city=request.GET.get('name')
-    cars = Car.objects.filter(pickuplocation__contains=city)
     return render(request, "team6/filteredcars.html", {'cars': cars})
 
 
@@ -204,10 +205,13 @@ def logout_view(request):
 
 def delete_reservation(request, object_id):
     car = Car.objects.get(pk=object_id)
+    reservation = Reservation.objects.get(carid=object_id)
     car.Reserved = "No"
+    reservation.status = "Deleted"
     car.save()
-    object = get_object_or_404(Reservation, carid=object_id)
-    object.delete()
+    reservation.save()
+    #object = get_object_or_404(Reservation, carid=object_id)
+    #object.delete()
     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponseRedirect('/myreservations/')
 
@@ -221,6 +225,8 @@ def modify_reservation(request,object_id):
         if form.is_valid():
             reservation = Reservation.objects.get(carid=object_id)
             print("********Reservation",reservation)
+            reservation.status = "Modified"
+            reservation.save()
             form = ResForm(request.POST,instance=reservation)
             form.save()
             return HttpResponseRedirect('/myreservations/')
@@ -232,6 +238,13 @@ def modify_reservation(request,object_id):
 
 def make_reservation(request, object_id):
     car = Car.objects.get(pk=object_id)
+    
+    if(Reservation.objects.filter(carid=object_id).exists()):
+        reservation = Reservation.objects.get(carid=object_id)
+        if(reservation.status=="Deleted"):
+            object = get_object_or_404(Reservation, carid=object_id)
+            object.delete()
+
     # owner = UserData.objects.get(pk=car.user)
     if request.method == 'POST':
         form = ResForm(request.POST)

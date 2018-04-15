@@ -57,12 +57,14 @@ class ResForm(forms.ModelForm):
 
 class CarForm(forms.ModelForm):
     car_pic = forms.ImageField()
+    CARTYPES = [('none', 'No Filter'), ('compact', 'Compact'), ('sedan','Sedan'),('suv','SUV')]
+    NOP = [('0', 'No Filter'), ('4', '4'), ('5', '5'), ('6', '6'), ('7','7')]
+    cartype = forms.ChoiceField(choices=CARTYPES,label='cartype')
+    passengerCapacity = forms.ChoiceField(choices=NOP,label='passengerCapacity')
     class Meta:
         model = Car
-<<<<<<< HEAD
+
         fields = ['car_pic', 'modelNumber', 'modelName', 'regNumber', 'insNumber', 'priceperhour', 'pickuplocation','cartype','passengerCapacity']
-=======
-        fields = ['car_pic', 'modelNumber', 'modelName', 'regNumber', 'insNumber', 'priceperhour', 'pickuplocation']
 
 
 class FilterForm(forms.ModelForm):
@@ -73,4 +75,4 @@ class FilterForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = ['cartype', 'passengerCapacity']
->>>>>>> 723ab29f3aac0be64c2dc7ffce19746f995b1500
+

@@ -46,6 +46,7 @@
 		<div class="container p-3"></div>
 
 	    {% for reservation in reservations %}
+	    	{% if reservation.status != "Deleted" %}
 			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
 
 				<div class="container">
@@ -88,7 +89,7 @@
 			  	</div>
 
 			</div>
-
+			{% endif %}
 		{% endfor %}
 	</body>
 </html>
