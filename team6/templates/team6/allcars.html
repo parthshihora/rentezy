@@ -51,10 +51,12 @@
 		</nav>
 	
 		<div class="row">
-			<div class="col-md-3 mx-auto p-4 mt-3 border-right">
-                <div class="form-group">
-                    <form action="{% url 'allcars' %}" method="post">
-                        				<div class="form-group">
+			<div class="col-md-3 border-right">
+                <div class="form-group p-4 ml-3 mt-3 ">
+
+                    <form action="{% url 'allcars' %}" method="post" class="pl-4">
+                    
+                        <div class="form-group">
 		      					<label for="category" class="mr-2 my-2"> Select car category: <br></label>
 								<select name="cartype" id="category_car" class="mr-4">
 									<option value="none" selected="selected">No Filter</option>
@@ -70,18 +72,19 @@
 									<option value="6">6</option>
 									<option value="7">7</option>
 								</select>
-                               <button type="submit" class="btn">Filter</button>
-					</div>
+                               <br><button type="submit" class="btn btn-dark my-2">Filter</button>
+						</div>
+		
 
                     </form>
-                </div>
+                
 
-                <form class="pl-4">
-					<div class="form-group">	
-		     					<input type="text" size="40" class="mx-auto form-control form-control-sm my-2 small" id="locationTextField" placeholder="Enter pickup location ...">
-		      					<a href="{% url 'filteredcars' %}" class="btn btn-dark mx-auto btn-sm my-2" id="output">Search</a>
+             	   <form class="pl-4">
+						<div class="form-group">	
+		     					<input type="text" size="40" class="mx-auto form-control my-2 small" id="locationTextField" placeholder="Enter pickup location ...">
+		      					<a href="{% url 'filteredcars' %}" class="btn btn-dark mx-auto my-2" id="output">Search</a>
 		      					
-					</div>
+						</div>
 
 				        <script>
 
@@ -115,8 +118,10 @@
 				           }
 				           google.maps.event.addDomListener(window, 'load', init);
 				        </script>
-    			</form>
+    				</form>
+    			</div>
     		</div>
+
    			<div class="col-md-9">
 
 				<div class="container p-3"></div>
@@ -149,7 +154,6 @@
 				{% endfor %}
 			</div>
    		</div>
-        </div>
 		<p id="demo"></p>
 
         <script>
