@@ -140,7 +140,9 @@
 				    				<h5 class="card-title">{{ car.modelName }}</h5>
 				    				<p class="card-text">
 				    					Price: {{car.priceperhour}} <br> 
-				    					Pickup Location: {{car.pickuplocation}} <br>	
+				    					Pickup Location: {{car.pickuplocation}} <br>
+				    					Car Type: {{car.cartype}} <br>
+				    					Passenger Capacity: {{car.passengerCapacity}} <br>			
 				    				</p>
 				    				<a href="{% url 'reserve' car.id %}" class="btn btn-primary">Reserve</a>
 

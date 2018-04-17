@@ -196,6 +196,9 @@ def loginform(request):
             messages.warning(request, 'You are not owner, please register for owner account')
         elif(form.data['role'] == "customer" and regs.role=="owner"):
             messages.warning(request, 'You are not customer, please register for customer account')
+
+        elif(form.data['role'] == "admin"):
+            return redirect('/allowners/')
         
         elif(regs.status == "Not Approved"):
             messages.warning(request, 'You are not  yet Approved')

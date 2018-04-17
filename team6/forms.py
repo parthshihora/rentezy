@@ -34,7 +34,7 @@ class LoginForm(forms.ModelForm):
             self.fields[key].required = True
     password = forms.CharField(widget=forms.PasswordInput)
 
-    CHOICES = [('owner','Owner'),('customer','Customer')]
+    CHOICES = [('owner','Owner'),('customer','Customer'),('admin','Admin')]
     role = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
     class Meta:
         model = Reg
