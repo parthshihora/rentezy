@@ -63,7 +63,6 @@ class CarForm(forms.ModelForm):
     passengerCapacity = forms.ChoiceField(choices=NOP,label='passengerCapacity')
     class Meta:
         model = Car
-
         fields = ['car_pic', 'modelNumber', 'modelName', 'regNumber', 'insNumber', 'priceperhour', 'pickuplocation','cartype','passengerCapacity']
 
 
@@ -75,4 +74,3 @@ class FilterForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = ['cartype', 'passengerCapacity']
-

@@ -24,6 +24,7 @@ def getlocation(request):
         city = "Albany"# set default city
     return city
 
+
 @csrf_exempt
 def allCars(request):
     form = FilterForm()
