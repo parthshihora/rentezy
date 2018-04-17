@@ -52,8 +52,8 @@
 			    				<p class="card-text">
 			    					Price: {{car.priceperhour}} <br> 
 			    					Pickup Location: {{car.pickuplocation}} <br>
-			    					Owner : {{ car.user.username }}<br>
 			    					Car is Reserved	
+			    					Current Location of car : {{ car.user.location }}
 			    				</p>
 			    				<a href="{% url 'modify_car' car.id %}" class="btn btn-primary">Modify</a>
                                 <a href="{% url 'delete_object' car.id %}" class="btn btn-primary" id= "{{ car.id }}">Delete</a> 

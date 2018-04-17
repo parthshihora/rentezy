@@ -9,6 +9,20 @@ from .models import Car, Reservation, UserData, Reg
 from .forms import SignUpForm, LoginForm
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.gis.geoip2 import GeoIP2
+
+def getlocation(request):
+    g = GeoIP2()
+    #ip = request.META.get('REMOTE_ADDR', None)
+    ip = '169.226.13.0'
+    #print("******meta*******",request.META['REMOTE_ADDR'])
+    if (not ip or ip == '127.0.0.1') and request.META.has_key('HTTP_X_FORWARDED_FOR'):
+        ip = request.META['HTTP_X_FORWARDED_FOR']
+    elif ip:
+        city = g.city(ip)['city']
+    else:
+        city = "Albany"# set default city
+    return city
 
 @csrf_exempt
 def allCars(request):
@@ -20,19 +34,18 @@ def allCars(request):
         print car_type + no_of_pass
         if car_type=='none' and no_of_pass == "10":
             cars = Car.objects.exclude(Reserved="Yes")
-            print("################cars",cars)
+            
 
         elif car_type != 'none' and no_of_pass == "10":
             cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type)
-            print("################cars ",cars)
+           
 
         elif car_type == 'none' and no_of_pass != "10":
             cars = Car.objects.exclude(Reserved="Yes").filter(passengerCapacity__exact=no_of_pass)
-            print("################cars passenger cap filter",cars)
-
+            
         else:
             cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type, passengerCapacity__exact=no_of_pass)
-            print("################cars in else ",cars)
+            
 
     return render(request, "team6/allcars.html", {'form': form, 'cars': cars})
 
@@ -113,11 +126,8 @@ def add_car(request):  # carentry car instead of this
         if form.is_valid():
             cars = form.save(commit=False)
             #cars.user = request.user
-            print("^^^^^^^^^^above form")
             cars.user = Reg.objects.get(pk=request.session['id'])
-            print("^^^^^^^^^^below form",cars.user)
             cars.car_pic = request.FILES.get("car_pic")
-            print("very below")
             cars.save()
             # form.save()
             return redirect('/yourcars/')
@@ -155,6 +165,7 @@ def signup(request):
                         userdata.__setattr__('status',"Not Approved")
                     else:
                         userdata.__setattr__('status',"Approved")
+                        
                     form.save()
                     messages.success(request, 'Registration Successful')
         else:
@@ -164,6 +175,7 @@ def signup(request):
 def loginform(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
+        loc=getlocation(request)
         # print form.data['username']
         if form.is_valid():
             usrname = form.cleaned_data['username'].lower()
@@ -173,10 +185,17 @@ def loginform(request):
                 request.session['id'] = regs.id
                 request.session['username'] = form.cleaned_data['username']
                 request.session['password'] = form.cleaned_data['password']
-        if(form.data['role'] == "customer"):
+        if(form.data['role'] == "customer" and regs.role == "customer"):
+            regs.location = loc
+            regs.save()
             return redirect('/allcars/')
-        elif(regs.status == "Approved"):
+        elif(regs.status == "Approved" and  form.data['role'] == "owner" and regs.role=="owner"):
             return redirect('/accounts/profile')
+        elif(regs.status == "Approved" and  form.data['role'] == "owner" and regs.role=="customer"):
+            messages.warning(request, 'You are not owner, please register for owner account')
+        elif(form.data['role'] == "customer" and regs.role=="owner"):
+            messages.warning(request, 'You are not customer, please register for customer account')
+        
         elif(regs.status == "Not Approved"):
             messages.warning(request, 'You are not  yet Approved')
         elif(regs.status == "Rejected"):

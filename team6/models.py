@@ -15,6 +15,7 @@ class Reg(models.Model):
     email = models.EmailField(max_length=200)
     role = models.CharField(max_length=200)
     status = models.CharField(max_length=200,default="")
+    location = models.CharField(max_length=100,default="")
 
 
 class CarOwner(AbstractBaseUser):
@@ -45,7 +46,7 @@ class Car(UserData):
     Reserved = models.CharField(max_length=100,default="No")
     cartype = models.CharField(max_length=25, default="compact")
     passengerCapacity = models.IntegerField(default="")
-
+    
 
 class Reservation(models.Model):
     user = models.ForeignKey(Reg, default="")

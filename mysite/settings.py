@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'team6',
     'bootstrap4',
+    'django_geoip',
     #'datetimewidget'
 ]
 
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     #'django_geoip.middleware.LocationMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -130,6 +132,7 @@ MEDIA_URL = '/media/'#this line is added and it creates a directory named media 
 #where the uploaded images will be stored
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+GEOIP_PATH =os.path.join(BASE_DIR, 'location')
 
 #STATIC_ROOT = os.path.join(BASE_DIR, 'team6')
 
