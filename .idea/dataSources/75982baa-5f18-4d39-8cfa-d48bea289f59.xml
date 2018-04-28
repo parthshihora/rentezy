@@ -18,23 +18,23 @@
     </table>
     <column id="9" parent="6" name="id">
       <Position>1</Position>
-      <DataType>integer|0</DataType>
+      <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="10" parent="6" name="app">
       <Position>2</Position>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="11" parent="6" name="name">
       <Position>3</Position>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="12" parent="6" name="applied">
       <Position>4</Position>
-      <DataType>datetime|0</DataType>
+      <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <key id="13" parent="6">
@@ -43,23 +43,23 @@
     </key>
     <column id="14" parent="7" name="type">
       <Position>1</Position>
-      <DataType>text|0</DataType>
+      <DataType>text|0s</DataType>
     </column>
     <column id="15" parent="7" name="name">
       <Position>2</Position>
-      <DataType>text|0</DataType>
+      <DataType>text|0s</DataType>
     </column>
     <column id="16" parent="7" name="tbl_name">
       <Position>3</Position>
-      <DataType>text|0</DataType>
+      <DataType>text|0s</DataType>
     </column>
     <column id="17" parent="7" name="rootpage">
       <Position>4</Position>
-      <DataType>integer|0</DataType>
+      <DataType>integer|0s</DataType>
     </column>
     <column id="18" parent="7" name="sql">
       <Position>5</Position>
-      <DataType>text|0</DataType>
+      <DataType>text|0s</DataType>
     </column>
     <column id="19" parent="8" name="name">
       <Position>1</Position>

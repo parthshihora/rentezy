@@ -15,8 +15,26 @@ class Reg(models.Model):
     email = models.EmailField(max_length=200)
     role = models.CharField(max_length=200)
     status = models.CharField(max_length=200,default="")
-    location = models.CharField(max_length=100,default="")
+    location = models.CharField(max_length=100,default="",blank=True)
 
+class Reg_Owner(models.Model):
+    username = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+    email = models.EmailField(max_length=200)
+    role = models.CharField(max_length=200)
+    status = models.CharField(max_length=200,default="")
+
+class Reg_Customer(models.Model):
+    username = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+    email = models.EmailField(max_length=200)
+    role = models.CharField(max_length=200)
+    status = models.CharField(max_length=200,default="")
+    location = models.CharField(max_length=100,default="",blank=True)
 
 class CarOwner(AbstractBaseUser):
     firstName = models.CharField(max_length=200)
@@ -57,6 +75,7 @@ class Reservation(models.Model):
     owner = models.CharField(max_length=200, default="")
     carid = models.ForeignKey(Car, default="")
     status = models.CharField(max_length=20,default="")
+
 
 
 # def get_absolute_url(self):

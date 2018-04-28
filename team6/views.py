@@ -5,24 +5,24 @@ from .forms import CarForm, ResForm, FilterForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, get_user_model, logout
 from django.shortcuts import render, redirect
-from .models import Car, Reservation, UserData, Reg
+from .models import Car, Reservation, UserData, Reg, Reg_Customer, Reg_Owner
 from .forms import SignUpForm, LoginForm
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.gis.geoip2 import GeoIP2
+# from django.contrib.gis.geoip2 import GeoIP2
 
-def getlocation(request):
-    g = GeoIP2()
-    #ip = request.META.get('REMOTE_ADDR', None)
-    ip = '169.226.13.0'
-    #print("******meta*******",request.META['REMOTE_ADDR'])
-    if (not ip or ip == '127.0.0.1') and request.META.has_key('HTTP_X_FORWARDED_FOR'):
-        ip = request.META['HTTP_X_FORWARDED_FOR']
-    elif ip:
-        city = g.city(ip)['city']
-    else:
-        city = "Albany"# set default city
-    return city
+# def getlocation(request):
+#     g = GeoIP2()
+#     #ip = request.META.get('REMOTE_ADDR', None)
+#     ip = '169.226.13.0'
+#     #print("******meta*******",request.META['REMOTE_ADDR'])
+#     if (not ip or ip == '127.0.0.1') and request.META.has_key('HTTP_X_FORWARDED_FOR'):
+#         ip = request.META['HTTP_X_FORWARDED_FOR']
+#     elif ip:
+#         city = g.city(ip)['city']
+#     else:
+#         city = "Albany"# set default city
+#     return city
 
 
 @csrf_exempt
@@ -55,7 +55,6 @@ def notifications(request):
     return render(request, "Notifications.html", {'reservation': reservation})
 
 
-
 def filteredcars(request):
     city=request.GET.get('name')
     cars = Car.objects.filter(pickuplocation__contains=city,Reserved="No")
@@ -84,14 +83,14 @@ def objectDelete(request, object_id):
     return HttpResponseRedirect('/yourcars/')
 
 def approvedOwners(request,object_id):
-    owner = Reg.objects.get(pk=object_id)
+    owner = Reg_Owner.objects.get(pk=object_id)
     print("*******",owner)
     owner.status = "Approved"
     owner.save()
     return HttpResponseRedirect('/allowners/')
 
 def rejectOwners(request,object_id):
-    owner = Reg.objects.get(pk=object_id)
+    owner = Reg_Owner.objects.get(pk=object_id)
     print("*******",owner)
     owner.status = "Rejected"
     owner.save()
@@ -176,7 +175,7 @@ def signup(request):
 def loginform(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
-        loc=getlocation(request)
+        # loc=getlocation(request)
         # print form.data['username']
         if form.is_valid():
             usrname = form.cleaned_data['username'].lower()
@@ -187,8 +186,8 @@ def loginform(request):
                 request.session['username'] = form.cleaned_data['username']
                 request.session['password'] = form.cleaned_data['password']
         if(form.data['role'] == "customer" and regs.role == "customer"):
-            regs.location = loc
-            regs.save()
+            # regs.location = loc
+            # regs.save()
             return redirect('/allcars/')
         elif(regs.status == "Approved" and  form.data['role'] == "owner" and regs.role=="owner"):
             return redirect('/accounts/profile')

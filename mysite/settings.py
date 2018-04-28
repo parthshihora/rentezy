@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'team6',
     'bootstrap4',
-    'django_geoip',
+    # 'django_geoip',
     #'datetimewidget'
 ]
 
