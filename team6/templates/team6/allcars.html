@@ -36,6 +36,9 @@
 	            	<li class="nav-item">
 	            		<a href="{% url 'myreservations' %}" class="nav-link text-white mr-3">My Reservations</a>
 	            	</li>
+	            	<li class="nav-item">
+	            		<a href="{% url 'mytrips' %}" class="nav-link text-white mr-3">My Trips</a>
+	            	</li>
 	            	<li class="nav-item dropdown">
 	            		<a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">Welcome, {{ request.session.username }} </a>
 	            		<div class="dropdown-menu">
@@ -72,11 +75,26 @@
 									<option value="6">6</option>
 									<option value="7">7</option>
 								</select>
-                               <br><button type="submit" class="btn btn-dark my-2">Filter</button>
+                               <br><button type="submit" class="btn btn-dark my-2">Filter</button><br>
+                               
+                               <label for="sorting" class="mr-2 my-2"> Sort: <br></label>
+								<select name="sortby" id="sort_car" class="mr-4">
+									<option value="lowtohigh" selected="selected">Price low to high</option>
+									<option value="hightolow">Price hight to low</option>
+								</select>
+                         <!--      <input type="hidden" name="sort" value="sort"> -->
+                    		<br><button type="submit" class="btn btn-dark my-2">Sort</button>
 						</div>
 		
 
                     </form>
+
+                    <form action="{% url 'allcars' %}" method="post" class="pl-4">
+                    	<div class="form-group">
+                    		
+                    	</div>
+                    </form>
+
                 
 
              	   <form class="pl-4">

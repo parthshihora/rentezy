@@ -10,6 +10,8 @@ from .forms import SignUpForm, LoginForm
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.gis.geoip2 import GeoIP2
+from datetime import datetime
+#import datetime
 
 def getlocation(request):
     g = GeoIP2()
@@ -25,6 +27,20 @@ def getlocation(request):
     return city
 
 
+def mytrips(request):
+    today = datetime.today().strftime('%Y-%m-%d')
+    #reservations = Reservation.objects.filter(user=request.session['id'])
+    #date = reservations.drop_date
+    #reservations = Reservation.objects.filter(user=request.session['id'])
+    #ddate = reservation.drop_date
+    #print("**********",date)
+
+    #reservations = Reservation.objects.filter(user=request.session['id'],drop_date__range=['2018-04-23',today])
+    reservations = Reservation.objects.filter(user=request.session['id'],drop_date__lte=today)
+
+
+    return render(request, "mytrips.html", {'reservations': reservations})
+
 @csrf_exempt
 def allCars(request):
     form = FilterForm()
@@ -32,17 +48,27 @@ def allCars(request):
     if request.method == "POST":
         car_type=request.POST['cartype']
         no_of_pass=request.POST['nop']
+        sorting = request.POST['sortby']
         print car_type + no_of_pass
-        if car_type=='none' and no_of_pass == "10":
-            cars = Car.objects.exclude(Reserved="Yes")
-            
+        if car_type=='none' and no_of_pass == "10" and sorting=="lowtohigh":
+            cars = Car.objects.exclude(Reserved="Yes").order_by('priceperhour')
+    
+        elif car_type=='none' and no_of_pass == "10" and sorting=="hightolow":
+            cars = Car.objects.exclude(Reserved="Yes").order_by('-priceperhour')
+    
 
-        elif car_type != 'none' and no_of_pass == "10":
-            cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type)
+        elif car_type != 'none' and no_of_pass == "10" and sorting=="lowtohigh":
+            cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type).order_by("priceperhour")
+
+        elif car_type != 'none' and no_of_pass == "10" and sorting=="hightolow":
+            cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type).order_by("-priceperhour")
            
 
-        elif car_type == 'none' and no_of_pass != "10":
-            cars = Car.objects.exclude(Reserved="Yes").filter(passengerCapacity__exact=no_of_pass)
+        elif car_type == 'none' and no_of_pass != "10" and sorting=="lowtohigh":
+            cars = Car.objects.exclude(Reserved="Yes").filter(passengerCapacity__exact=no_of_pass).order_by("priceperhour")
+
+        elif car_type == 'none' and no_of_pass != "10" and sorting=="hightolow":
+            cars = Car.objects.exclude(Reserved="Yes").filter(passengerCapacity__exact=no_of_pass).order_by("-priceperhour")
             
         else:
             cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type, passengerCapacity__exact=no_of_pass)
@@ -281,6 +307,10 @@ def make_reservation(request, object_id):
             reservation.carid_id = car.id
             car.Reserved = "Yes"
             reservation.owner = car.user.username
+            drop_date = str(form.cleaned_data['drop_date'])
+            print("**********",drop_date)
+            drop_date = datetime.strptime(drop_date, "%Y-%m-%d")
+            reservation.drop_date = drop_date
             car.save()
             reservation.save()
             return redirect('/myreservations/')

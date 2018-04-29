@@ -52,7 +52,7 @@ class Reservation(models.Model):
     user = models.ForeignKey(Reg, default="")
     pickup_date = models.DateField(default=datetime.utcnow())
     pickup_time = models.TimeField(default=datetime.utcnow())
-    drop_date = models.DateField(default=datetime.utcnow())
+    drop_date = models.DateField(default=str(datetime.utcnow()))
     drop_time = models.TimeField(default=datetime.utcnow())
     owner = models.CharField(max_length=200, default="")
     carid = models.ForeignKey(Car, default="")
