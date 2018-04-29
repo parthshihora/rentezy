@@ -9,6 +9,7 @@ from .models import *
 from .forms import OwnerSignUpForm, CustomerSignUpForm, OwnerLoginForm, CustomerLoginForm, AdminLoginForm
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
+<<<<<<< HEAD
 # from django.contrib.gis.geoip2 import GeoIP2
 
 # def getlocation(request):
@@ -23,7 +24,39 @@ from django.http import HttpResponseRedirect, HttpResponse
 #     else:
 #         city = "Albany"# set default city
 #     return city
+=======
+from django.contrib.gis.geoip2 import GeoIP2
+from datetime import datetime
+#import datetime
 
+def getlocation(request):
+    g = GeoIP2()
+    #ip = request.META.get('REMOTE_ADDR', None)
+    ip = '169.226.13.0'
+    #print("******meta*******",request.META['REMOTE_ADDR'])
+    if (not ip or ip == '127.0.0.1') and request.META.has_key('HTTP_X_FORWARDED_FOR'):
+        ip = request.META['HTTP_X_FORWARDED_FOR']
+    elif ip:
+        city = g.city(ip)['city']
+    else:
+        city = "Albany"# set default city
+    return city
+>>>>>>> 8aa5ac248ab12c1805c2792a885a78f3aedd6d17
+
+
+def mytrips(request):
+    today = datetime.today().strftime('%Y-%m-%d')
+    #reservations = Reservation.objects.filter(user=request.session['id'])
+    #date = reservations.drop_date
+    #reservations = Reservation.objects.filter(user=request.session['id'])
+    #ddate = reservation.drop_date
+    #print("**********",date)
+
+    #reservations = Reservation.objects.filter(user=request.session['id'],drop_date__range=['2018-04-23',today])
+    reservations = Reservation.objects.filter(user=request.session['id'],drop_date__lte=today)
+
+
+    return render(request, "mytrips.html", {'reservations': reservations})
 
 @csrf_exempt
 def allCars(request):
@@ -32,17 +65,27 @@ def allCars(request):
     if request.method == "POST":
         car_type=request.POST['cartype']
         no_of_pass=request.POST['nop']
+        sorting = request.POST['sortby']
         print car_type + no_of_pass
-        if car_type=='none' and no_of_pass == "10":
-            cars = Car.objects.exclude(Reserved="Yes")
-            
+        if car_type=='none' and no_of_pass == "10" and sorting=="lowtohigh":
+            cars = Car.objects.exclude(Reserved="Yes").order_by('priceperhour')
+    
+        elif car_type=='none' and no_of_pass == "10" and sorting=="hightolow":
+            cars = Car.objects.exclude(Reserved="Yes").order_by('-priceperhour')
+    
 
-        elif car_type != 'none' and no_of_pass == "10":
-            cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type)
+        elif car_type != 'none' and no_of_pass == "10" and sorting=="lowtohigh":
+            cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type).order_by("priceperhour")
+
+        elif car_type != 'none' and no_of_pass == "10" and sorting=="hightolow":
+            cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type).order_by("-priceperhour")
            
 
-        elif car_type == 'none' and no_of_pass != "10":
-            cars = Car.objects.exclude(Reserved="Yes").filter(passengerCapacity__exact=no_of_pass)
+        elif car_type == 'none' and no_of_pass != "10" and sorting=="lowtohigh":
+            cars = Car.objects.exclude(Reserved="Yes").filter(passengerCapacity__exact=no_of_pass).order_by("priceperhour")
+
+        elif car_type == 'none' and no_of_pass != "10" and sorting=="hightolow":
+            cars = Car.objects.exclude(Reserved="Yes").filter(passengerCapacity__exact=no_of_pass).order_by("-priceperhour")
             
         else:
             cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type, passengerCapacity__exact=no_of_pass)
@@ -335,8 +378,16 @@ def make_reservation(request, object_id):
             reservation.customer = Reg_Customer.objects.get(pk=request.session['id'])
             reservation.carid_id = car.id
             car.Reserved = "Yes"
+<<<<<<< HEAD
             # reservation.owner = car.user.username
             reservation.owner = Reg_Owner.objects.get(pk=car.owner_id)
+=======
+            reservation.owner = car.user.username
+            drop_date = str(form.cleaned_data['drop_date'])
+            print("**********",drop_date)
+            drop_date = datetime.strptime(drop_date, "%Y-%m-%d")
+            reservation.drop_date = drop_date
+>>>>>>> 8aa5ac248ab12c1805c2792a885a78f3aedd6d17
             car.save()
             reservation.save()
             return redirect('/myreservations/')
