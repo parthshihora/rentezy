@@ -1,0 +1,115 @@
+{% load static %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+	<head>
+		<title> All Owners</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  	</head>
+    <body>
+
+   		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   			<div class="container">
+		  		<a class="navbar-brand" href="#">RENTEZY</a>
+	            <ul class="navbar-nav">
+	
+	            	<li class="nav-item">
+	            		<a href="#" class="nav-link text-white"><span class="fa fa-user mr-2"></span>Welcome {{ request.session.username }}</a>
+	            	</li>
+	            	<li class="nav-item">
+	            		<a href="{% url 'logout_view' %}" class="nav-link text-white">Logout</a>
+	            	</li>	
+
+	            </ul>	
+			</div>
+		</nav>
+
+		<div class="container p-3"></div>
+
+	    {% for owner in owners %}
+	    	{% if owner.status == "Not Approved" %}
+	    	
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+
+				<div class="container">
+					<div class="row">
+					   
+			  			<div class="col-sm-6">
+			      			<div class="card-body">
+			    				<p class="card-text">
+			    					Username: {{ owner.username}} <br>
+                                    First Name: {{ owner.first_name }} <br>
+			    					Last Name: {{ owner.last_name}} <br>
+			    					Email : {{ owner.email}} <br>
+			    					<a href="{% url 'approvedowners' owner.id %}" class="btn btn-primary">Approve</a>
+			    					<a href="{% url 'rejectowners' owner.id  %}" class="btn btn-primary">Reject</a>
+			    				</p>
+			  				</div>
+			  			</div>
+			  			</div>
+			  		</div>
+			  	</div>
+
+			  	{% elif owner.status == "Rejected" %}
+			  	<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+
+				<div class="container">
+					<div class="row">
+					 
+			  			<div class="col-sm-6">
+			      			<div class="card-body">
+			    				<p class="card-text">
+			    					Username: {{ owner.username}} <br>
+                                    First Name: {{ owner.first_name }} <br>
+			    					Last Name: {{ owner.last_name}} <br>
+			    					Email : {{ owner.email}} <br>
+			    					<a href="{% url 'approvedowners' owner.id %}" class="btn btn-primary">Approve</a>
+			    					<h5>Rejected</h5>
+			    				</p>
+			  				</div>
+			  			</div>
+			  			</div>
+			  		</div>
+			  	</div>
+
+
+
+			  	{% else %}
+			  	<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+
+				<div class="container">
+					<div class="row">
+					  
+			  			<div class="col-sm-6">
+			      			<div class="card-body">
+			    				<p class="card-text">
+			    					Username: {{ owner.username}} <br>
+                                    First Name: {{ owner.first_name }} <br>
+			    					Last Name: {{ owner.last_name}} <br>
+			    					Email : {{ owner.email}} <br>
+			    					<h5>Owner Approved</h5>
+			    				</p>
+			  				</div>
+			  			</div>
+			  			</div>
+			  		</div>
+			  	</div>
+
+		{% endif %}
+		{% endfor %}
+	</body>
+</html>
