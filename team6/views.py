@@ -5,8 +5,8 @@ from .forms import CarForm, ResForm, FilterForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, get_user_model, logout
 from django.shortcuts import render, redirect
-from .models import Car, Reservation, UserData, Reg, Reg_Customer, Reg_Owner
-from .forms import SignUpForm, LoginForm
+from .models import *
+from .forms import OwnerSignUpForm, CustomerSignUpForm, OwnerLoginForm, CustomerLoginForm, AdminLoginForm
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 # from django.contrib.gis.geoip2 import GeoIP2
@@ -51,7 +51,7 @@ def allCars(request):
     return render(request, "team6/allcars.html", {'form': form, 'cars': cars})
 
 def notifications(request):
-    reservation = Reservation.objects.filter(owner=request.session['username'])
+    reservation = Reservation.objects.filter(owner=request.session['id'])
     return render(request, "Notifications.html", {'reservation': reservation})
 
 
@@ -109,10 +109,6 @@ def modifyCar(request, object_id):
     else:
         car = Car.objects.get(pk=object_id)
         form = CarForm(instance=car)
-    # form = CarForm()
-
-    # print("****Modify",object.modelNumber)
-    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return render(request, "carform.html", {'form': form})
 
 
@@ -125,8 +121,7 @@ def add_car(request):  # carentry car instead of this
         form = CarForm(request.POST, request.FILES);
         if form.is_valid():
             cars = form.save(commit=False)
-            #cars.user = request.user
-            cars.user = Reg.objects.get(pk=request.session['id'])
+            cars.owner = Reg_Owner.objects.get(pk=request.session['id'])
             cars.car_pic = request.FILES.get("car_pic")
             cars.save()
             # form.save()
@@ -142,26 +137,26 @@ def start_page(request):
 
 def your_cars(request):  # CarView class instead of this
     # user = Car.user
-    cars = Car.objects.filter(user=request.session['id'])
+    cars = Car.objects.filter(owner=request.session['id'])
     return render(request, "team6/owner_cars.html", {'cars': cars})
 
 
-def signup(request):
+def ownersignup(request):
         errors = []
         if request.method == 'POST':
-            form = SignUpForm(request.POST)
+            form = OwnerSignUpForm(request.POST)
             if form.is_valid():
                 userdata = form.save(commit=False)
                 cleaned_username = form.cleaned_data.get('username').lower()
                 cleaned_password = form.cleaned_data.get('password')
-                role = form.cleaned_data.get('role')
-                regs_count = Reg.objects.filter(username=cleaned_username).count()
+                role = 'owner'
+                regs_count = Reg_Owner.objects.filter(username=cleaned_username).count()
                 if regs_count >= 1:
                     errors.append('User Name already exists');
                 else:
                     userdata.__setattr__('username',cleaned_username)
                     userdata.__setattr__('password',cleaned_password)
-                    if(role=="owner"):
+                    if role == "owner":
                         userdata.__setattr__('status',"Not Approved")
                     else:
                         userdata.__setattr__('status',"Approved")
@@ -169,43 +164,112 @@ def signup(request):
                     form.save()
                     messages.success(request, 'Registration Successful')
         else:
-            form = SignUpForm()
-        return render(request, 'register.html', {'form': form, 'error_msg': errors})
+            form = OwnerSignUpForm()
+        return render(request, 'ownersignup.html', {'form': form, 'error_msg': errors})
 
-def loginform(request):
+
+def customersignup(request):
+    errors = []
+    if request.method == 'POST':
+        form = CustomerSignUpForm(request.POST)
+        if form.is_valid():
+            userdata = form.save(commit=False)
+            cleaned_username = form.cleaned_data.get('username').lower()
+            cleaned_password = form.cleaned_data.get('password')
+            role = 'owner'
+            regs_count = Reg_Customer.objects.filter(username=cleaned_username).count()
+            if regs_count >= 1:
+                errors.append('User Name already exists');
+            else:
+                userdata.__setattr__('username', cleaned_username)
+                userdata.__setattr__('password', cleaned_password)
+                if (role == "owner"):
+                    userdata.__setattr__('status', "Not Approved")
+                else:
+                    userdata.__setattr__('status', "Approved")
+                form.save()
+                messages.success(request, 'Registration Successful')
+    else:
+        form = CustomerSignUpForm()
+    return render(request, 'customersignup.html', {'form': form, 'error_msg': errors})
+
+
+def ownerloginform(request):
     if request.method == "POST":
-        form = LoginForm(request.POST)
+        form = OwnerLoginForm(request.POST)
         # loc=getlocation(request)
         # print form.data['username']
         if form.is_valid():
             usrname = form.cleaned_data['username'].lower()
-            regs = Reg.objects.get(username=usrname)
-            #status = form.cleaned_data['status']
-            if regs.username == usrname and regs.password == form.cleaned_data['password'] :
+            try:
+                regs = Reg_Owner.objects.get(username=usrname)
+                print regs
+                # regs = Reg_Owner.objects.get(username=usrname)
+                # status = form.cleaned_data['status']
+                if regs.username == usrname and regs.password == form.cleaned_data['password']:
+                    request.session['id'] = regs.id
+                    request.session['username'] = form.cleaned_data['username']
+                    request.session['password'] = form.cleaned_data['password']
+                    regs.role = 'owner'
+                else:
+                    messages.warning(request, 'Enter a valid username and password combination')
+                if regs.status == "Approved":
+                    return redirect('/accounts/profile')
+                elif regs.status == "Not Approved":
+                    messages.warning(request, 'You are not  yet Approved')
+                elif regs.status == "Rejected":
+                    messages.warning(request, 'You are rejected, please contact admin')
+            except Exception as e:
+                    messages.warning(request, 'Enter a valid username and password combination')
+    else:
+        form = OwnerLoginForm()
+    return render(request, 'ownerlogin.html', {'form': form})
+
+
+def customerloginform(request):
+    if request.method == "POST":
+        form = CustomerLoginForm(request.POST)
+        # loc=getlocation(request)
+        # print form.data['username']
+        if form.is_valid():
+            usrname = form.cleaned_data['username'].lower()
+            try:
+                regs = Reg_Customer.objects.get(username=usrname)
+                # status = form.cleaned_data['status']
+                if regs.username == usrname and regs.password == form.cleaned_data['password']:
+                    request.session['id'] = regs.id
+                    request.session['username'] = form.cleaned_data['username']
+                    request.session['password'] = form.cleaned_data['password']
+                    regs.role = 'customer'
+                if (regs.role == "customer"):
+                    # regs.location = loc
+                    # regs.save()
+                    return redirect('/allcars/')
+            except Exception as e:
+                messages.warning(request, 'Enter a valid username and password combination')
+    else:
+        form = CustomerLoginForm()
+    return render(request, 'customerlogin.html', {'form': form})
+
+
+def adminloginform(request):
+    if request.method == "POST":
+        form = AdminLoginForm(request.POST)
+        # loc=getlocation(request)
+        # print form.data['username']
+        if form.is_valid():
+            usrname = form.cleaned_data['username'].lower()
+            regs = Reg_Admin.objects.get(username=usrname)
+            # status = form.cleaned_data['status']
+            if regs.username == usrname and regs.password == form.cleaned_data['password']:
                 request.session['id'] = regs.id
                 request.session['username'] = form.cleaned_data['username']
                 request.session['password'] = form.cleaned_data['password']
-        if(form.data['role'] == "customer" and regs.role == "customer"):
-            # regs.location = loc
-            # regs.save()
-            return redirect('/allcars/')
-        elif(regs.status == "Approved" and  form.data['role'] == "owner" and regs.role=="owner"):
-            return redirect('/accounts/profile')
-        elif(regs.status == "Approved" and  form.data['role'] == "owner" and regs.role=="customer"):
-            messages.warning(request, 'You are not owner, please register for owner account')
-        elif(form.data['role'] == "customer" and regs.role=="owner"):
-            messages.warning(request, 'You are not customer, please register for customer account')
-
-        elif(form.data['role'] == "admin"):
+                regs.role = 'admin'
             return redirect('/allowners/')
-        
-        elif(regs.status == "Not Approved"):
-            messages.warning(request, 'You are not  yet Approved')
-        elif(regs.status == "Rejected"):
-            messages.warning(request, 'You are rejected, please contact admin')
     else:
-        form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+        form = AdminLoginForm()
+    return render(request, 'adminlogin.html', {'form': form})
 
 
 def logout_view(request):
@@ -214,15 +278,7 @@ def logout_view(request):
 
     except KeyError:
         pass
-    #logout(request)
-
-        #return HttpResponseRedirect('/startpage/')
-
-    #return render(request, "team6/form.html", {})
     return redirect('/startpage/')
-
-
-    #return render(request, "team6/form.html", {})
     return redirect('/startpage/')
 
 def delete_reservation(request, object_id):
@@ -276,10 +332,11 @@ def make_reservation(request, object_id):
             #owner = UserData.objects.get(pk=car.user)
             reservation = form.save(commit=False)
             #car.user = Reg.objects.get(pk=request.session['id'])
-            reservation.user = Reg.objects.get(pk=request.session['id'])
+            reservation.customer = Reg_Customer.objects.get(pk=request.session['id'])
             reservation.carid_id = car.id
             car.Reserved = "Yes"
-            reservation.owner = car.user.username
+            # reservation.owner = car.user.username
+            reservation.owner = Reg_Owner.objects.get(pk=car.owner_id)
             car.save()
             reservation.save()
             return redirect('/myreservations/')
@@ -290,7 +347,7 @@ def make_reservation(request, object_id):
 
 def my_reservations(request):
     #Car.objects.filter(user=request.session['id'])
-    reservations = Reservation.objects.filter(user=request.session['id'])
+    reservations = Reservation.objects.filter(customer=request.session['id'])
     # cars = []
     # for reservation in reservations:
     #     cars.append(Car.objects.get(pk=reservation.carid))
@@ -310,6 +367,6 @@ def test_delete(request):
     return response
 
 def allOwners(request):
-    owners = Reg.objects.filter(role='owner')
+    owners = Reg_Owner.objects.all()
     return render(request, "AllOwner.html", {'owners': owners})
 

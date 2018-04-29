@@ -17,14 +17,22 @@ class Reg(models.Model):
     status = models.CharField(max_length=200,default="")
     location = models.CharField(max_length=100,default="",blank=True)
 
+class Reg_Admin(models.Model):
+    username = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+    email = models.EmailField(max_length=200)
+    role = models.CharField(max_length=200, default="admin")
+
 class Reg_Owner(models.Model):
     username = models.CharField(max_length=200)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     password = models.CharField(max_length=200)
     email = models.EmailField(max_length=200)
-    role = models.CharField(max_length=200)
     status = models.CharField(max_length=200,default="")
+    role = models.CharField(max_length=200,default="owner")
 
 class Reg_Customer(models.Model):
     username = models.CharField(max_length=200)
@@ -32,26 +40,19 @@ class Reg_Customer(models.Model):
     last_name = models.CharField(max_length=200)
     password = models.CharField(max_length=200)
     email = models.EmailField(max_length=200)
-    role = models.CharField(max_length=200)
     status = models.CharField(max_length=200,default="")
     location = models.CharField(max_length=100,default="",blank=True)
-
-class CarOwner(AbstractBaseUser):
-    firstName = models.CharField(max_length=200)
-    lastname = models.CharField(max_length=200)
-    email = models.EmailField(max_length=254)
-    password = models.CharField(max_length=200)
-
+    role = models.CharField(max_length=200,default="customer")
 
 class UserData(models.Model):
-    user = models.ForeignKey(Reg, editable=False)
+    owner = models.ForeignKey(Reg_Owner, editable=False)
     class Meta:
         abstract = True
 
 
 class Car(UserData):
     # user = models.ForeignKey(User,on_delete=models.CASCADE)
-    user = models.ForeignKey(Reg, default="")
+    owner = models.ForeignKey(Reg_Owner, on_delete=models.CASCADE, default="")
     # user = models.OneToOneField(User)
     car_pic = models.FileField()
     # car_pic =   models.ImageField(upload_to = 'static/pic_folder/',default='static/pic_folder/no.jpeg')
@@ -67,39 +68,11 @@ class Car(UserData):
     
 
 class Reservation(models.Model):
-    user = models.ForeignKey(Reg, default="")
+    customer = models.ForeignKey(Reg_Customer, default="")
     pickup_date = models.DateField(default=datetime.utcnow())
     pickup_time = models.TimeField(default=datetime.utcnow())
     drop_date = models.DateField(default=datetime.utcnow())
     drop_time = models.TimeField(default=datetime.utcnow())
-    owner = models.CharField(max_length=200, default="")
+    owner = models.ForeignKey(Reg_Owner, default="")
     carid = models.ForeignKey(Car, default="")
     status = models.CharField(max_length=20,default="")
-
-
-
-# def get_absolute_url(self):
-
-
-#    return reverse('team6:home')
-
-
-'''class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=500, blank=True)
-    location = models.CharField(max_length=30, blank=True)
-    #birth_date = models.DateField(null=True, blank=True)
-
-
-@receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-    instance.profile.save()
-
-@receiver(post_save, sender=User, dispatch_uid='save_new_user_profile')
-def save_profile(sender, instance, created, **kwargs):
-    user = instance
-    if created:
-        profile = Profile(user=user)
-        profile.save()'''
