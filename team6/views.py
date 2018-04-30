@@ -9,22 +9,7 @@ from .models import *
 from .forms import OwnerSignUpForm, CustomerSignUpForm, OwnerLoginForm, CustomerLoginForm, AdminLoginForm
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
-<<<<<<< HEAD
-# from django.contrib.gis.geoip2 import GeoIP2
-
-# def getlocation(request):
-#     g = GeoIP2()
-#     #ip = request.META.get('REMOTE_ADDR', None)
-#     ip = '169.226.13.0'
-#     #print("******meta*******",request.META['REMOTE_ADDR'])
-#     if (not ip or ip == '127.0.0.1') and request.META.has_key('HTTP_X_FORWARDED_FOR'):
-#         ip = request.META['HTTP_X_FORWARDED_FOR']
-#     elif ip:
-#         city = g.city(ip)['city']
-#     else:
-#         city = "Albany"# set default city
-#     return city
-=======
+ 
 from django.contrib.gis.geoip2 import GeoIP2
 from datetime import datetime
 #import datetime
@@ -32,7 +17,7 @@ from datetime import datetime
 def getlocation(request):
     g = GeoIP2()
     #ip = request.META.get('REMOTE_ADDR', None)
-    ip = '169.226.13.0'
+    ip = '134.201.250.155'
     #print("******meta*******",request.META['REMOTE_ADDR'])
     if (not ip or ip == '127.0.0.1') and request.META.has_key('HTTP_X_FORWARDED_FOR'):
         ip = request.META['HTTP_X_FORWARDED_FOR']
@@ -41,7 +26,6 @@ def getlocation(request):
     else:
         city = "Albany"# set default city
     return city
->>>>>>> 8aa5ac248ab12c1805c2792a885a78f3aedd6d17
 
 
 def mytrips(request):
@@ -272,7 +256,7 @@ def ownerloginform(request):
 def customerloginform(request):
     if request.method == "POST":
         form = CustomerLoginForm(request.POST)
-        # loc=getlocation(request)
+        loc=getlocation(request)
         # print form.data['username']
         if form.is_valid():
             usrname = form.cleaned_data['username'].lower()
@@ -284,9 +268,10 @@ def customerloginform(request):
                     request.session['username'] = form.cleaned_data['username']
                     request.session['password'] = form.cleaned_data['password']
                     regs.role = 'customer'
+
                 if (regs.role == "customer"):
-                    # regs.location = loc
-                    # regs.save()
+                    regs.location = loc
+                    regs.save()
                     return redirect('/allcars/')
             except Exception as e:
                 messages.warning(request, 'Enter a valid username and password combination')
@@ -378,19 +363,20 @@ def make_reservation(request, object_id):
             reservation.customer = Reg_Customer.objects.get(pk=request.session['id'])
             reservation.carid_id = car.id
             car.Reserved = "Yes"
-<<<<<<< HEAD
             # reservation.owner = car.user.username
             reservation.owner = Reg_Owner.objects.get(pk=car.owner_id)
-=======
-            reservation.owner = car.user.username
-            drop_date = str(form.cleaned_data['drop_date'])
-            print("**********",drop_date)
-            drop_date = datetime.strptime(drop_date, "%Y-%m-%d")
-            reservation.drop_date = drop_date
->>>>>>> 8aa5ac248ab12c1805c2792a885a78f3aedd6d17
-            car.save()
-            reservation.save()
-            return redirect('/myreservations/')
+            pickup_date = form.cleaned_data['pickup_date']
+            drop_date1 = form.cleaned_data['drop_date']
+            if(pickup_date>drop_date1):
+                print("wrroongggg  datee***************")
+                messages.info(request,object_id, 'Please enter correct dates')
+            else:
+                drop_date2 = str(form.cleaned_data['drop_date'])
+                drop_date = datetime.strptime(drop_date2, "%Y-%m-%d")
+                reservation.drop_date = drop_date
+                car.save()
+                reservation.save()
+                return redirect('/myreservations/')
     else:
         form = ResForm()
         car.Reserved = "Reserved"

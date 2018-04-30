@@ -25,6 +25,7 @@ class Reg_Admin(models.Model):
     email = models.EmailField(max_length=200)
     role = models.CharField(max_length=200, default="admin")
 
+
 class Reg_Owner(models.Model):
     username = models.CharField(max_length=200)
     first_name = models.CharField(max_length=200)
@@ -43,6 +44,7 @@ class Reg_Customer(models.Model):
     status = models.CharField(max_length=200,default="")
     location = models.CharField(max_length=100,default="",blank=True)
     role = models.CharField(max_length=200,default="customer")
+    location = models.CharField(max_length=200)
 
 class UserData(models.Model):
     owner = models.ForeignKey(Reg_Owner, editable=False)
@@ -76,3 +78,5 @@ class Reservation(models.Model):
     owner = models.ForeignKey(Reg_Owner, default="")
     carid = models.ForeignKey(Car, default="")
     status = models.CharField(max_length=20,default="")
+
+
