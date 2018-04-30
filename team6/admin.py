@@ -8,6 +8,7 @@ admin.site.register(Reservation)
 admin.site.register(Reg_Customer)
 admin.site.register(Reg_Owner)
 admin.site.register(Reg_Admin)
+admin.site.register(Feedback)
 
 class MyModelAdmin(admin.ModelAdmin):
     #fields = ("name",)

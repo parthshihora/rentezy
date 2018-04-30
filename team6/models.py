@@ -33,6 +33,9 @@ class Reg_Owner(models.Model):
     email = models.EmailField(max_length=200)
     status = models.CharField(max_length=200,default="")
     role = models.CharField(max_length=200,default="owner")
+    sum_rating = models.IntegerField(default=0)
+    num_feedbacks = models.IntegerField(default=0)
+
 
 class Reg_Customer(models.Model):
     username = models.CharField(max_length=200)
@@ -43,6 +46,9 @@ class Reg_Customer(models.Model):
     status = models.CharField(max_length=200,default="")
     location = models.CharField(max_length=100,default="",blank=True)
     role = models.CharField(max_length=200,default="customer")
+    sum_rating = models.IntegerField(default=0)
+    num_feedbacks = models.IntegerField(default=0)
+
 
 class UserData(models.Model):
     owner = models.ForeignKey(Reg_Owner, editable=False)
@@ -76,3 +82,12 @@ class Reservation(models.Model):
     owner = models.ForeignKey(Reg_Owner, default="")
     carid = models.ForeignKey(Car, default="")
     status = models.CharField(max_length=20,default="")
+
+
+class Feedback(models.Model):
+    customer = models.ForeignKey(Reg_Customer, default="")
+    owner = models.ForeignKey(Reg_Owner, default="")
+    direction = models.BooleanField(default=True)
+    message = models.CharField(max_length=250,default="")
+    rating = models.IntegerField(default=1)
+    time = models.DateField(default=datetime.utcnow())

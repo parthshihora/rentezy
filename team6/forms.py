@@ -102,3 +102,16 @@ class FilterForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = ['cartype', 'passengerCapacity']
+
+
+class UserFeedbackForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UserFeedbackForm,self).__init__(*args, **kwargs)
+        for key in self.fields:
+            self.fields[key].required = True
+
+    CHOICES = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
+    rating = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
+    class Meta:
+        model = Feedback
+        fields = ('message', 'rating',)
