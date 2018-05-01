@@ -9,26 +9,15 @@ from .models import *
 from .forms import *
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
-
-# from django.contrib.gis.geoip2 import GeoIP2
-
-# def getlocation(request):
-#     g = GeoIP2()
-#     #ip = request.META.get('REMOTE_ADDR', None)
-#     ip = '169.226.13.0'
-#     #print("******meta*******",request.META['REMOTE_ADDR'])
-#     if (not ip or ip == '127.0.0.1') and request.META.has_key('HTTP_X_FORWARDED_FOR'):
-#         ip = request.META['HTTP_X_FORWARDED_FOR']
-#     elif ip:
-#         city = g.city(ip)['city']
-#     else:
-#         city = "Albany"# set default city
-#     return city
 from django.contrib.gis.geoip2 import GeoIP2
 from datetime import datetime
+import threading
 #import datetime
+# from django.contrib.gis.geoip2 import GeoIP2
 
 def getlocation(request):
+    threading.Timer(120,getlocation,[request]).start()
+    print datetime.utcnow()
     g = GeoIP2()
     #ip = request.META.get('REMOTE_ADDR', None)
     ip = '134.201.250.155'
@@ -37,9 +26,12 @@ def getlocation(request):
         ip = request.META['HTTP_X_FORWARDED_FOR']
     elif ip:
         city = g.city(ip)['city']
+        latitude = g.city(ip)['latitude']
+        longitude = g.city(ip)['longitude']
+        location = [latitude,longitude,city]
     else:
         city = "Albany"# set default city
-    return city
+    return location
 
 
 def mytrips(request):
@@ -64,6 +56,7 @@ def mytrips(request):
 def allCars(request):
     if 'id' not in request.session:
         return redirect('/errorpage/')
+
     form = FilterForm()
     cars = Car.objects.exclude(Reserved="Yes")
     if request.method == "POST":
@@ -83,7 +76,6 @@ def allCars(request):
 
         elif car_type != 'none' and no_of_pass == "10" and sorting=="hightolow":
             cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type).order_by("-priceperhour")
-           
 
         elif car_type == 'none' and no_of_pass != "10" and sorting=="lowtohigh":
             cars = Car.objects.exclude(Reserved="Yes").filter(passengerCapacity__exact=no_of_pass).order_by("priceperhour")
@@ -306,9 +298,16 @@ def customerloginform(request):
                     request.session['password'] = form.cleaned_data['password']
                     request.session['role'] = 'customer'
                     regs.role = 'customer'
+                    print "inside first IF"
+                    print regs.role
+                    print loc
 
                 if (regs.role == "customer"):
-                    regs.location = loc
+                    print loc[0]
+                    print loc
+                    regs.latitude = loc[0]
+                    regs.longitude = loc[1]
+                    regs.location = loc[2]
                     regs.save()
                     return redirect('/allcars/')
             except Exception as e:
@@ -508,3 +507,12 @@ def displayfeedbacks(request):
 
 def errorpage(request):
     return render(request, 'errorpage.html')
+
+
+def showmap(request, object_id):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
+    customer = Reg_Customer.objects.get(pk=object_id)
+    url = 'https://www.google.com/maps/embed/v1/place?key= AIzaSyD2OG1L2BQGatYPDcAKj6hq9uv_sdUlwO4 &q='' &center='+customer.latitude+','+customer.longitude+' &zoom=15 &maptype=roadmap'
+    print url
+    return render(request, 'showmap.html', {'url': url})

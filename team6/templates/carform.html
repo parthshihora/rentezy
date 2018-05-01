@@ -72,7 +72,7 @@
 										            	
 										                <div class="form-group row">
 										                	
-										                    	<label class="form-label col-sm-4">{{ field.label }}:</label> 
+										                    	<label class="form-label col-sm-4" id="{{ field.label }}">{{ field.label }}:</label>
 										                    	<div class="form-field col-sm-8" > {{ field }}
 										                    	</div>
 										                   
@@ -103,7 +103,7 @@
 
 			  <script>
             function init() {
-                var input = document.getElementByClassName('loc');
+                var input = document.getElementById('id_pickuplocation');
                 var autocomplete = new google.maps.places.Autocomplete(input);
             }
  

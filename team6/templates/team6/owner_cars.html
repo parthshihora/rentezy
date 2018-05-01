@@ -61,9 +61,10 @@
 			    					Pickup Location: {{car.pickuplocation}} <br>
 			    					Car is Reserved	
 			    					Current Location of car : {{ car.owner.location }}
-			    				</p>
+                               </p>
 			    				<a href="{% url 'modify_car' car.id %}" class="btn btn-primary">Modify</a>
-                                <a href="{% url 'delete_object' car.id %}" class="btn btn-primary" id= "{{ car.id }}">Delete</a> 
+                                <a href="{% url 'delete_object' car.id %}" class="btn btn-primary" id= "{{ car.id }}">Delete</a>
+
 
                                 <script type="text/javascript">
                                     var id1 = {{ car.id }};

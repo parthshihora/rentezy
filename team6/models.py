@@ -48,6 +48,8 @@ class Reg_Customer(models.Model):
     location = models.CharField(max_length=100,default="",blank=True)
     role = models.CharField(max_length=200,default="customer")
     location = models.CharField(max_length=200)
+    latitude = models.CharField(max_length=200, default="")
+    longitude = models.CharField(max_length=200, default="")
     sum_rating = models.IntegerField(default=0)
     num_feedbacks = models.IntegerField(default=0)
 
