@@ -6,10 +6,24 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, get_user_model, logout
 from django.shortcuts import render, redirect
 from .models import *
-from .forms import OwnerSignUpForm, CustomerSignUpForm, OwnerLoginForm, CustomerLoginForm, AdminLoginForm
+from .forms import *
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
- 
+
+# from django.contrib.gis.geoip2 import GeoIP2
+
+# def getlocation(request):
+#     g = GeoIP2()
+#     #ip = request.META.get('REMOTE_ADDR', None)
+#     ip = '169.226.13.0'
+#     #print("******meta*******",request.META['REMOTE_ADDR'])
+#     if (not ip or ip == '127.0.0.1') and request.META.has_key('HTTP_X_FORWARDED_FOR'):
+#         ip = request.META['HTTP_X_FORWARDED_FOR']
+#     elif ip:
+#         city = g.city(ip)['city']
+#     else:
+#         city = "Albany"# set default city
+#     return city
 from django.contrib.gis.geoip2 import GeoIP2
 from datetime import datetime
 #import datetime
@@ -29,6 +43,8 @@ def getlocation(request):
 
 
 def mytrips(request):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     today = datetime.today().strftime('%Y-%m-%d')
     #reservations = Reservation.objects.filter(user=request.session['id'])
     #date = reservations.drop_date
@@ -37,13 +53,17 @@ def mytrips(request):
     #print("**********",date)
 
     #reservations = Reservation.objects.filter(user=request.session['id'],drop_date__range=['2018-04-23',today])
-    reservations = Reservation.objects.filter(user=request.session['id'],drop_date__lte=today)
-
+    if request.session['role'] == 'customer':
+        reservations = Reservation.objects.filter(customer=request.session['id'],drop_date__lte=today)
+    elif request.session['role'] == 'owner':
+        reservations = Reservation.objects.filter(owner=request.session['id'], drop_date__lte=today)
 
     return render(request, "mytrips.html", {'reservations': reservations})
 
 @csrf_exempt
 def allCars(request):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     form = FilterForm()
     cars = Car.objects.exclude(Reserved="Yes")
     if request.method == "POST":
@@ -78,11 +98,15 @@ def allCars(request):
     return render(request, "team6/allcars.html", {'form': form, 'cars': cars})
 
 def notifications(request):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     reservation = Reservation.objects.filter(owner=request.session['id'])
     return render(request, "Notifications.html", {'reservation': reservation})
 
 
 def filteredcars(request):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     city=request.GET.get('name')
     cars = Car.objects.filter(pickuplocation__contains=city,Reserved="No")
     #cars = cars.objects.exclude(Reserved="Yes")
@@ -110,6 +134,8 @@ def objectDelete(request, object_id):
     return HttpResponseRedirect('/yourcars/')
 
 def approvedOwners(request,object_id):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     owner = Reg_Owner.objects.get(pk=object_id)
     print("*******",owner)
     owner.status = "Approved"
@@ -117,6 +143,8 @@ def approvedOwners(request,object_id):
     return HttpResponseRedirect('/allowners/')
 
 def rejectOwners(request,object_id):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     owner = Reg_Owner.objects.get(pk=object_id)
     print("*******",owner)
     owner.status = "Rejected"
@@ -124,6 +152,8 @@ def rejectOwners(request,object_id):
     return HttpResponseRedirect('/allowners/')    
 
 def modifyCar(request, object_id):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     # object = get_object_or_404(Car, pk=object_id)
     if request.POST:
         form = CarForm(request.POST, request.FILES)
@@ -140,10 +170,14 @@ def modifyCar(request, object_id):
 
 
 def owner_profile(request):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     return render(request, "ownerprofile.html")
 
 
 def add_car(request):  # carentry car instead of this
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     if request.method == "POST":
         form = CarForm(request.POST, request.FILES);
         if form.is_valid():
@@ -163,6 +197,8 @@ def start_page(request):
 
 
 def your_cars(request):  # CarView class instead of this
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     # user = Car.user
     cars = Car.objects.filter(owner=request.session['id'])
     return render(request, "team6/owner_cars.html", {'cars': cars})
@@ -237,6 +273,7 @@ def ownerloginform(request):
                     request.session['id'] = regs.id
                     request.session['username'] = form.cleaned_data['username']
                     request.session['password'] = form.cleaned_data['password']
+                    request.session['role'] = 'owner'
                     regs.role = 'owner'
                 else:
                     messages.warning(request, 'Enter a valid username and password combination')
@@ -267,6 +304,7 @@ def customerloginform(request):
                     request.session['id'] = regs.id
                     request.session['username'] = form.cleaned_data['username']
                     request.session['password'] = form.cleaned_data['password']
+                    request.session['role'] = 'customer'
                     regs.role = 'customer'
 
                 if (regs.role == "customer"):
@@ -293,6 +331,7 @@ def adminloginform(request):
                 request.session['id'] = regs.id
                 request.session['username'] = form.cleaned_data['username']
                 request.session['password'] = form.cleaned_data['password']
+                request.session['role'] = 'admin'
                 regs.role = 'admin'
             return redirect('/allowners/')
     else:
@@ -303,13 +342,18 @@ def adminloginform(request):
 def logout_view(request):
     try:
         del request.session['id']
+        del request.session['role']
+        del request.session['username']
+        del request.session['password']
 
     except KeyError:
         pass
     return redirect('/startpage/')
-    return redirect('/startpage/')
+
 
 def delete_reservation(request, object_id):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     car = Car.objects.get(pk=object_id)
     reservation = Reservation.objects.get(carid=object_id)
     car.Reserved = "No"
@@ -323,6 +367,8 @@ def delete_reservation(request, object_id):
 
 
 def modify_reservation(request,object_id):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     #reservation = Reservation.objects.get(pk=object_id)
     car = Car.objects.get(pk=object_id)
     #print("************",car)
@@ -343,6 +389,8 @@ def modify_reservation(request,object_id):
 
 
 def make_reservation(request, object_id):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     car = Car.objects.get(pk=object_id)
     
     if(Reservation.objects.filter(carid=object_id).exists()):
@@ -365,6 +413,7 @@ def make_reservation(request, object_id):
             car.Reserved = "Yes"
             # reservation.owner = car.user.username
             reservation.owner = Reg_Owner.objects.get(pk=car.owner_id)
+
             pickup_date = form.cleaned_data['pickup_date']
             drop_date1 = form.cleaned_data['drop_date']
             if(pickup_date>drop_date1):
@@ -377,12 +426,15 @@ def make_reservation(request, object_id):
                 car.save()
                 reservation.save()
                 return redirect('/myreservations/')
+
     else:
         form = ResForm()
         car.Reserved = "Reserved"
     return render(request, "team6/resform.html", {'form': form,'car':car})
 
 def my_reservations(request):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
     #Car.objects.filter(user=request.session['id'])
     reservations = Reservation.objects.filter(customer=request.session['id'])
     # cars = []
@@ -407,3 +459,52 @@ def allOwners(request):
     owners = Reg_Owner.objects.all()
     return render(request, "AllOwner.html", {'owners': owners})
 
+
+def adduserfeedback(request, object_id):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
+    if request.method == "POST":
+        form = UserFeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = form.save(commit=False)
+            # True == Customer to owner feedback
+            # False == Owner to Customer feedback
+            if request.session['role'] == 'owner':
+                user = Reg_Customer.objects.get(pk=object_id)
+                feedback.__setattr__('owner', Reg_Owner.objects.get(pk=request.session['id']))
+                feedback.__setattr__('time', timezone.now())
+                feedback.__setattr__('direction', False)
+                user.sum_rating = user.sum_rating + int(form.data['rating'])
+                user.num_feedbacks = int(user.num_feedbacks)+1
+                feedback.__setattr__('customer', user)
+                user.save()
+            elif request.session['role'] == 'customer':
+                user = Reg_Owner.objects.get(pk=object_id)
+                feedback.__setattr__('customer', Reg_Customer.objects.get(pk=request.session['id']))
+                feedback.__setattr__('time', timezone.now())
+                feedback.__setattr__('direction', True)
+                user.sum_rating = user.sum_rating + int(form.data['rating'])
+                user.num_feedbacks = int(user.num_feedbacks)+1
+                feedback.__setattr__('owner', user)
+                user.save()
+            feedback.save()
+            return redirect('/myfeedbacks/')
+    else:
+        form = UserFeedbackForm()
+    return render(request, 'addfeedback.html', {'form': form})
+
+
+def displayfeedbacks(request):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
+    if request.session['role'] == 'customer':
+        feedbacks = Feedback.objects.filter(customer=request.session['id'], direction=False)
+    elif request.session['role'] == 'owner':
+        feedbacks = Feedback.objects.filter(owner=request.session['id'], direction=True)
+    else:
+        feedbacks = Feedback.objects.all()
+    return render(request, "myfeedbacks.html", {'feedbacks': feedbacks})
+
+
+def errorpage(request):
+    return render(request, 'errorpage.html')

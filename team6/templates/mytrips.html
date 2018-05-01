@@ -64,7 +64,7 @@
 			    				<a href="{% url 'modify_reservation' reservation.carid_id %}" class="btn btn-primary">Edit Reservation</a>
 
 			    				<a href="{% url 'delete_reservation' reservation.carid_id %}" id="{{reservation.carid_id}}" class="btn btn-primary">Delete Reservation</a>
-
+                               <a href="{% url 'addfeedback' reservation.owner_id %}" class="btn btn-primary">Add Feedback</a>
 			    				 <script type="text/javascript">
                                     var id1 = {{ reservation.carid_id }};
                                     //window.alert("Car id"+id1);

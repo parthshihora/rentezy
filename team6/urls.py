@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^rejectowners/(?P<object_id>.*)', views.rejectOwners, name='rejectowners'),
     url(r'^notifications/$', views.notifications, name='notification'),
     url(r'^mytrips/$', views.mytrips, name='mytrips'),
-
-
+    url(r'^addfeedback/(?P<object_id>.*)', views.adduserfeedback, name='addfeedback'),
+    url(r'^myfeedbacks/$', views.displayfeedbacks, name='myfeedbacks'),
+    url(r'^errorpage/$', views.errorpage, name='errorpage'),
 ]
