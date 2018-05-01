@@ -2,20 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cd440179-52e1-4076-8965-ec9490c6bd5e" name="Default" comment="Updated My Reservations and Make Reservations">
-      <change afterPath="$PROJECT_DIR$/team6/migrations/0064_merge_20180429_1805.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/team6/migrations/0065_auto_20180429_1940.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/team6/templates/addfeedback.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/team6/templates/errorpage.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/team6/templates/myfeedbacks.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team6/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/team6/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team6/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/team6/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team6/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/team6/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team6/templates/mytrips.html" beforeDir="false" afterPath="$PROJECT_DIR$/team6/templates/mytrips.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team6/templates/ownerprofile.html" beforeDir="false" afterPath="$PROJECT_DIR$/team6/templates/ownerprofile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team6/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/team6/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team6/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/team6/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team6/templates/myfeedbacks.html" beforeDir="false" afterPath="$PROJECT_DIR$/team6/templates/myfeedbacks.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -53,11 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/team6/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="486" column="30" lean-forward="true" selection-start-line="486" selection-start-column="30" selection-end-line="486" selection-end-column="30" />
+            <state relative-caret-position="139">
+              <caret line="491" column="31" selection-start-line="491" selection-start-column="31" selection-end-line="491" selection-end-column="31" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -83,11 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="myfeedbacks.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="myfeedbacks.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/team6/templates/myfeedbacks.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1938">
-              <caret line="114" column="47" selection-start-line="114" selection-start-column="47" selection-end-line="114" selection-end-column="47" />
+            <state relative-caret-position="204">
+              <caret line="110" column="142" selection-start-line="110" selection-start-column="142" selection-end-line="110" selection-end-column="142" />
             </state>
           </provider>
         </entry>
@@ -181,8 +169,8 @@
         <option value="$PROJECT_DIR$/team6/templates/addfeedback.html" />
         <option value="$PROJECT_DIR$/team6/urls.py" />
         <option value="$PROJECT_DIR$/team6/templates/errorpage.html" />
-        <option value="$PROJECT_DIR$/team6/templates/myfeedbacks.html" />
         <option value="$PROJECT_DIR$/team6/views.py" />
+        <option value="$PROJECT_DIR$/team6/templates/myfeedbacks.html" />
       </list>
     </option>
   </component>
@@ -324,17 +312,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="manage.py@rentezy" order="7" sideWeight="0.49934897" visible="true" weight="0.39034483" />
+      <window_info active="true" anchor="bottom" id="manage.py@rentezy" order="7" sideWeight="0.49934897" visible="true" weight="0.39034483" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50065106" side_tool="true" weight="0.39034483" />
       <window_info anchor="bottom" id="Database Changes" order="14" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32827586" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32984293" />
       <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="4" />
@@ -721,13 +708,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/team6/templates/myfeedbacks.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1938">
-          <caret line="114" column="47" selection-start-line="114" selection-start-column="47" selection-end-line="114" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/team6/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -754,11 +734,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/team6/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="486" column="30" lean-forward="true" selection-start-line="486" selection-start-column="30" selection-end-line="486" selection-end-column="30" />
+        <state relative-caret-position="139">
+          <caret line="491" column="31" selection-start-line="491" selection-start-column="31" selection-end-line="491" selection-end-column="31" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/team6/templates/myfeedbacks.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="110" column="142" selection-start-line="110" selection-start-column="142" selection-end-line="110" selection-end-column="142" />
         </state>
       </provider>
     </entry>
