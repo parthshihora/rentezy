@@ -25,6 +25,7 @@ class Reg_Admin(models.Model):
     email = models.EmailField(max_length=200)
     role = models.CharField(max_length=200, default="admin")
 
+
 class Reg_Owner(models.Model):
     username = models.CharField(max_length=200)
     first_name = models.CharField(max_length=200)
@@ -46,6 +47,7 @@ class Reg_Customer(models.Model):
     status = models.CharField(max_length=200,default="")
     location = models.CharField(max_length=100,default="",blank=True)
     role = models.CharField(max_length=200,default="customer")
+    location = models.CharField(max_length=200)
     sum_rating = models.IntegerField(default=0)
     num_feedbacks = models.IntegerField(default=0)
 
@@ -84,6 +86,7 @@ class Reservation(models.Model):
     status = models.CharField(max_length=20,default="")
 
 
+
 class Feedback(models.Model):
     customer = models.ForeignKey(Reg_Customer, default="")
     owner = models.ForeignKey(Reg_Owner, default="")
@@ -91,3 +94,4 @@ class Feedback(models.Model):
     message = models.CharField(max_length=250,default="")
     rating = models.IntegerField(default=1)
     time = models.DateField(default=datetime.utcnow())
+
