@@ -40,4 +40,5 @@ urlpatterns = [
     url(r'^addfeedback/(?P<object_id>.*)', views.adduserfeedback, name='addfeedback'),
     url(r'^myfeedbacks/$', views.displayfeedbacks, name='myfeedbacks'),
     url(r'^errorpage/$', views.errorpage, name='errorpage'),
+    url(r'^showmap/(?P<object_id>.*)', views.showmap, name='showmap'),
 ]

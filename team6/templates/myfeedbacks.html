@@ -105,10 +105,10 @@
                                     {% if feedback.direction %}
     				    				<h5 class="card-title">Feedback for Owner: {{ feedback.owner.first_name }} {{ feedback.owner.last_name }} </h5>
                                         <p class="card-text">
-                                            Feedback by Customer: {{ feedback.owner.first_name }} {{ feedback.owner.last_name }}
+                                            Feedback by Customer: {{ feedback.customer.first_name }} {{ feedback.customer.last_name }}
                                         </p>
                                     {% else %}
-                                        <h5 class="card-title"> Feedback for Customer: {{ feedback.owner.first_name }} {{ feedback.owner.last_name }}</h5>
+                                        <h5 class="card-title"> Feedback for Customer: {{ feedback.customer.first_name }} {{ feedback.customer.last_name }}</h5>
                                         <p class="card-text">
                                             Feedback by Owner: {{ feedback.owner.first_name }} {{ feedback.owner.last_name }}
                                         </p>
