@@ -36,6 +36,7 @@ class Reg_Owner(models.Model):
     role = models.CharField(max_length=200,default="owner")
     sum_rating = models.IntegerField(default=0)
     num_feedbacks = models.IntegerField(default=0)
+    license = models.FileField(default="")
 
 
 class Reg_Customer(models.Model):

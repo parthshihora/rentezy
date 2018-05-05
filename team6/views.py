@@ -1,6 +1,8 @@
+from django.conf import settings
+from django.core.mail import send_mail
+
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-
 from .forms import CarForm, ResForm, FilterForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, get_user_model, logout
@@ -14,6 +16,11 @@ from datetime import datetime
 import threading
 #import datetime
 # from django.contrib.gis.geoip2 import GeoIP2
+
+def OwnerDocs(request,object_id):
+    owner = Reg_Owner.objects.get(pk=object_id)
+    return render(request, "team6/ownerdoc.html", {'owner': owner})
+
 
 def getlocation(request):
     threading.Timer(120,getlocation,[request]).start()
@@ -92,7 +99,8 @@ def allCars(request):
 def notifications(request):
     if 'id' not in request.session:
         return redirect('/errorpage/')
-    reservation = Reservation.objects.filter(owner=request.session['id'])
+   # reservation = Reservation.objects.filter(owner=request.session['id'])
+    reservation = Reservation.objects.filter(owner=request.session['id'],drop_date__gte=today)
     return render(request, "Notifications.html", {'reservation': reservation})
 
 
@@ -199,7 +207,7 @@ def your_cars(request):  # CarView class instead of this
 def ownersignup(request):
         errors = []
         if request.method == 'POST':
-            form = OwnerSignUpForm(request.POST)
+            form = OwnerSignUpForm(request.POST,request.FILES)
             if form.is_valid():
                 userdata = form.save(commit=False)
                 cleaned_username = form.cleaned_data.get('username').lower()
@@ -215,7 +223,7 @@ def ownersignup(request):
                         userdata.__setattr__('status',"Not Approved")
                     else:
                         userdata.__setattr__('status',"Approved")
-                        
+                    userdata.license = request.FILES.get("license")  
                     form.save()
                     messages.success(request, 'Registration Successful')
         else:
@@ -375,12 +383,32 @@ def modify_reservation(request,object_id):
         form = ResForm(request.POST)
         if form.is_valid():
             reservation = Reservation.objects.get(carid=object_id)
-            print("********Reservation",reservation)
             reservation.status = "Modified"
-            reservation.save()
-            form = ResForm(request.POST,instance=reservation)
-            form.save()
-            return HttpResponseRedirect('/myreservations/')
+
+            pickup_date = form.cleaned_data['pickup_date']
+            drop_date1 = form.cleaned_data['drop_date']
+            if(pickup_date>drop_date1):
+                messages.info(request,object_id, 'Please enter correct dates')
+            else:
+                drop_date2 = str(form.cleaned_data['drop_date'])
+                drop_date = datetime.strptime(drop_date2, "%Y-%m-%d")
+                reservation.drop_date = drop_date
+               # car.save()
+                form = ResForm(request.POST,instance=reservation)
+                form.save()
+                reservation.save()
+                subject = "Notifications from Rentezy, Reservation of your car has been Modified"
+                message1 = "Reservation of your car "+ car.modelName +" hase been modified by " + reservation.customer.first_name + " "+ reservation.customer.first_name
+                message2 = "\nYou can contact your customer on " + reservation.customer.email
+                message3 = "\nReservation Details\n"
+                message4 = "Pickup Date:"+str(reservation.pickup_date) + "\n" + "Drop Date:"+str(reservation.drop_date) 
+                message = message1 + message2 + message3 + message4
+                reservation.save()
+                from_email = settings.EMAIL_HOST_USER
+                to_email = car.owner.email
+                to_list = [to_email]
+                send_mail(subject,message,from_email,to_list,fail_silently=True)
+                return HttpResponseRedirect('/myreservations/')
     else:
         #reservation = Reservation.objects.get(pk=object_id)
         form = ResForm()
@@ -416,7 +444,6 @@ def make_reservation(request, object_id):
             pickup_date = form.cleaned_data['pickup_date']
             drop_date1 = form.cleaned_data['drop_date']
             if(pickup_date>drop_date1):
-                print("wrroongggg  datee***************")
                 messages.info(request,object_id, 'Please enter correct dates')
             else:
                 drop_date2 = str(form.cleaned_data['drop_date'])
@@ -424,6 +451,18 @@ def make_reservation(request, object_id):
                 reservation.drop_date = drop_date
                 car.save()
                 reservation.save()
+                subject = "Notifications from Rentezy, Your car has been reserved"
+                message1 = "Your car "+ car.modelName +" hase been reserved by " + reservation.customer.first_name + " "+ reservation.customer.first_name
+                message2 = "\nYou can contact your customer on " + reservation.customer.email
+                message3 = "\nReservation Details\n"
+                message4 = "Pickup Date:"+str(reservation.pickup_date) + "\n" + "Drop Date:"+str(reservation.drop_date) 
+                message = message1 + message2 + message3 + message4
+
+                from_email = settings.EMAIL_HOST_USER
+                to_email = car.owner.email
+                to_list = [to_email]
+
+                send_mail(subject,message,from_email,to_list,fail_silently=True)
                 return redirect('/myreservations/')
 
     else:
@@ -435,7 +474,8 @@ def my_reservations(request):
     if 'id' not in request.session:
         return redirect('/errorpage/')
     #Car.objects.filter(user=request.session['id'])
-    reservations = Reservation.objects.filter(customer=request.session['id'])
+    today = datetime.today().strftime('%Y-%m-%d')
+    reservations = Reservation.objects.filter(customer=request.session['id'],drop_date__gte=today)
     # cars = []
     # for reservation in reservations:
     #     cars.append(Car.objects.get(pk=reservation.carid))
@@ -470,24 +510,36 @@ def adduserfeedback(request, object_id):
             # False == Owner to Customer feedback
             if request.session['role'] == 'owner':
                 user = Reg_Customer.objects.get(pk=object_id)
-                feedback.__setattr__('owner', Reg_Owner.objects.get(pk=request.session['id']))
-                feedback.__setattr__('time', timezone.now())
-                feedback.__setattr__('direction', False)
-                user.sum_rating = user.sum_rating + int(form.data['rating'])
-                user.num_feedbacks = int(user.num_feedbacks)+1
-                feedback.__setattr__('customer', user)
-                user.save()
+                print("in owner feedbacks***")
+                feedbacks = Feedback.objects.filter(owner_id=request.session['id'],customer_id=user.id,direction=False)
+                if(feedbacks):
+                    messages.info(request,object_id, 'You have already give feedback to this customer')
+                else:
+                    feedback.__setattr__('owner', Reg_Owner.objects.get(pk=request.session['id']))
+                    feedback.__setattr__('time', timezone.now())
+                    feedback.__setattr__('direction', False)
+                    user.sum_rating = user.sum_rating + int(form.data['rating'])
+                    user.num_feedbacks = int(user.num_feedbacks)+1
+                    feedback.__setattr__('customer', user)
+                    user.save()
+                    feedback.save()
+                    return redirect('/myfeedbacks/')
             elif request.session['role'] == 'customer':
                 user = Reg_Owner.objects.get(pk=object_id)
-                feedback.__setattr__('customer', Reg_Customer.objects.get(pk=request.session['id']))
-                feedback.__setattr__('time', timezone.now())
-                feedback.__setattr__('direction', True)
-                user.sum_rating = user.sum_rating + int(form.data['rating'])
-                user.num_feedbacks = int(user.num_feedbacks)+1
-                feedback.__setattr__('owner', user)
-                user.save()
-            feedback.save()
-            return redirect('/myfeedbacks/')
+                feedbacks = Feedback.objects.filter(customer_id=request.session['id'],owner_id=user.id,direction=True)
+                if(feedbacks):
+                    print("feedback is given already*******")
+                    messages.info(request,object_id, 'You have already give feedback to this car owner')
+                else:
+                    feedback.__setattr__('customer', Reg_Customer.objects.get(pk=request.session['id']))
+                    feedback.__setattr__('time', timezone.now())
+                    feedback.__setattr__('direction', True)
+                    user.sum_rating = user.sum_rating + int(form.data['rating'])
+                    user.num_feedbacks = int(user.num_feedbacks)+1
+                    feedback.__setattr__('owner', user)
+                    user.save()
+                    feedback.save()
+                    return redirect('/myfeedbacks/')
     else:
         form = UserFeedbackForm()
     return render(request, 'addfeedback.html', {'form': form})

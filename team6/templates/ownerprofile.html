@@ -54,6 +54,10 @@
 					
 					<li class="nav-item"> <a href = "{% url 'notification' %}" class="nav-link text-white" >Notifications</a></li>
 
+					<li class="nav-item">
+	            		<a href="{% url 'myfeedbacks' %}" class="nav-link text-white mr-3">My Feedbacks</a>
+	            	</li>
+
 	            	<li class="nav-item dropdown">
 	            		<a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">
 	            			Hello {{ request.session.username }}  

@@ -41,4 +41,5 @@ urlpatterns = [
     url(r'^myfeedbacks/$', views.displayfeedbacks, name='myfeedbacks'),
     url(r'^errorpage/$', views.errorpage, name='errorpage'),
     url(r'^showmap/(?P<object_id>.*)', views.showmap, name='showmap'),
+    url(r'^ownerdocuments/(?P<object_id>.*)', views.OwnerDocs, name='opendocs'),
 ]

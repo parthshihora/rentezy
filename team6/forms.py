@@ -23,7 +23,7 @@ class OwnerSignUpForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     class Meta:
         model = Reg_Owner
-        fields = ('username', 'first_name', 'last_name', 'password', 'email',)
+        fields = ('username', 'first_name', 'last_name', 'password', 'email','license')
 
 
 class CustomerSignUpForm(forms.ModelForm):
