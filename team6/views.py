@@ -466,7 +466,7 @@ def make_reservation(request, object_id):
                 c_m1 = "You have reserved  "+ car.modelName
                 c_m2 = "\nOwner of you car is "+ reservation.owner.first_name + " " + reservation.owner.last_name
                 c_m3 = "\nReservation Details\n"
-                c_m4 = "Pickup Date:"+str(reservation.pickup_date) + "\n" + "Drop Date:"+str(reservation.drop_date) + "\n" + car.pickuplocation
+                c_m4 = "Pickup Date:"+str(reservation.pickup_date) + "\n" + "Drop Date:"+str(reservation.drop_date) + "\nPickup location:" + car.pickuplocation
                 c_m = c_m1 + c_m2 + c_m3 + c_m4
                 c_email  = reservation.customer.email
                 c_to_list = [c_email]
