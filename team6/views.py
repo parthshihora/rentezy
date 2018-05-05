@@ -452,7 +452,7 @@ def make_reservation(request, object_id):
                 car.save()
                 reservation.save()
                 subject = "Notifications from Rentezy, Your car has been reserved"
-                message1 = "Your car "+ car.modelName +" hase been reserved by " + reservation.customer.first_name + " "+ reservation.customer.first_name
+                message1 = "Your car "+ car.modelName +" hase been reserved by " + reservation.customer.first_name + " "+ reservation.customer.last_name
                 message2 = "\nYou can contact your customer on " + reservation.customer.email
                 message3 = "\nReservation Details\n"
                 message4 = "Pickup Date:"+str(reservation.pickup_date) + "\n" + "Drop Date:"+str(reservation.drop_date) 
@@ -462,6 +462,16 @@ def make_reservation(request, object_id):
                 to_email = car.owner.email
                 to_list = [to_email]
 
+                c_subject = "Thank you for renting car with Rentezy" # Mail to customer
+                c_m1 = "You have reserved  "+ car.modelName
+                c_m2 = "\nOwner of you car is "+ reservation.owner.first_name + " " + reservation.owner.last_name
+                c_m3 = "\nReservation Details\n"
+                c_m4 = "Pickup Date:"+str(reservation.pickup_date) + "\n" + "Drop Date:"+str(reservation.drop_date) + "\n" + car.pickuplocation
+                c_m = c_m1 + c_m2 + c_m3 + c_m4
+                c_email  = reservation.customer.email
+                c_to_list = [c_email]
+
+                send_mail(subject,c_m,from_email,c_to_list,fail_silently=True) # Mail to customer
                 send_mail(subject,message,from_email,to_list,fail_silently=True)
                 return redirect('/myreservations/')
 
