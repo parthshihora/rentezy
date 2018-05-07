@@ -50,8 +50,6 @@
 			<div class="container-fluid">
 	  			<a class="navbar-brand" href="#">RENTEZY</a>
 				<ul class="navbar-nav ml-auto">
-<<<<<<< HEAD
-{#                    <li class="nav-item"> <a href = "{% url 'owner_page' %}" class="nav-link text-white border-right" ><span class="fa fa-home fa-2x mr-2"></span></a>	</li>#}
                     <li class="nav-item"> <a href = '/yourcars' class="nav-link font-weight-bold border-right">My Cars </a> </li>
                     <li class="nav-item"> <a href = '/addcar' class="nav-link text-white border-right">Add Car </a> </li>
                     <li class="nav-item"> <a href = '/mytrips' class="nav-link text-white border-right">My Trips </a> </li>
@@ -59,37 +57,7 @@
                     <li class="nav-item"> <a href="{% url 'myfeedbacks' %}" class="nav-link text-white border-right">My Feedbacks </a> </li>
 	            	<li class="nav-item "> <a href="#" class="nav-link text-white border-right" >Hello {{ request.session.username }} </a>
 	            	<li class="nav-item "> <a href="{% url 'logout_view' %}" class="nav-link text-white"><span class="fa fa-power-off pt-1"></span></a></li>
-=======
-<<<<<<< HEAD
-					<li class="nav-item"> <a href = "{% url 'owner_page' %}" class="nav-link text-white" ><span class="fa fa-home fa-2x mr-2"></span></a>	</li>
-					
-					<li class="nav-item"> <a href = "{% url 'notification' %}" class="nav-link text-white" >Notifications</a></li>
 
-					<li class="nav-item">
-	            		<a href="{% url 'myfeedbacks' %}" class="nav-link text-white mr-3">My Feedbacks</a>
-	            	</li>
-	            	<li class="nav-item">
-	            		<a href="{% url 'mytrips' %}" class="nav-link text-white mr-3">Past Trips</a>
-	            	</li> 
-
-	            	<li class="nav-item dropdown">
-	            		<a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">
-	            			Hello {{ request.session.username }}  
-	            		</a>
-=======
-                    <li class="nav-item"> <a href = "{% url 'owner_page' %}" class="nav-link text-white" ><span class="fa fa-home fa-2x mr-2"></span></a>	</li>
-                    <li class="nav-item"> <a href = '/yourcars' class="nav-link text-white">My Cars |</a> </li>
-                    <li class="nav-item"> <a href = '/addcar' class="nav-link text-white">Add Car |</a> </li>
-                    <li class="nav-item"> <a href = '/mytrips' class="nav-link text-white">My Trips |</a> </li>
-                    <li class="nav-item"> <a href = "{% url 'notification' %}" class="nav-link text-white" >Notifications |</a> </li>
-                    <li class="nav-item"> <a href="{% url 'myfeedbacks' %}" class="nav-link text-white mr-3">My Feedbacks |</a> </li>
-	            	<li class="nav-item dropdown"> <a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">Hello {{ request.session.username }} </a>
->>>>>>> 387493ab689aaf451aac8f45ee3ca0a88f1fd1b8
-	            		<div class="dropdown-menu">
-	            			<a href="{% url 'logout_view' %}" class="dropdown-item">Logout</a>
-	            		</div>	
-	            	</li>
->>>>>>> 055ff0d7923420dc4204ad11eee414983965de29
 				</ul>
 			</div>
 		</nav>
