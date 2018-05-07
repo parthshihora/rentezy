@@ -33,20 +33,38 @@
 			</ul>
 		{% endif %}
 
-   		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   		{% if request.session.role == "owner" %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div class="container-fluid">
 	  			<a class="navbar-brand" href="#">RENTEZY</a>
 				<ul class="navbar-nav ml-auto">
                     <li class="nav-item"> <a href = '/yourcars' class="nav-link text-white border-right">My Cars </a> </li>
                     <li class="nav-item"> <a href = '/addcar' class="nav-link text-white border-right">Add Car </a> </li>
-                    <li class="nav-item"> <a href = '/mytrips' class="nav-link border-right text-white ">My Trips </a> </li>
+                    <li class="nav-item"> <a href = '/mytrips' class="nav-link font-weight-bold border-right">My Trips </a> </li>
                     <li class="nav-item"> <a href = "{% url 'notification' %}" class="nav-link text-white border-right" >Notifications </a> </li>
-                    <li class="nav-item"> <a href="{% url 'myfeedbacks' %}" class="font-weight-bold nav-link border-right">My Feedbacks </a> </li>
-	            	<li class="nav-item "> <a href="#" class="nav-link text-white border-right" >Welcome {{ request.session.username }} </a>
+                    <li class="nav-item"> <a href="{% url 'myfeedbacks' %}" class="nav-link text-white border-right">My Feedbacks </a> </li>
+	            	<li class="nav-item "> <a href="#" class="nav-link text-white border-right" >Hello {{ request.session.username }} </a>
 	            	<li class="nav-item "> <a href="{% url 'logout_view' %}" class="nav-link text-white"><span class="fa fa-power-off pt-1"></span></a></li>
 				</ul>
 			</div>
 		</nav>
+		{% endif %}
+
+		{% if request.session.role == "customer" %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-fluid">
+	  			<a class="navbar-brand" href="#">RENTEZY</a>
+				<ul class="navbar-nav ml-auto">
+                   
+                    <li class="nav-item"> <a href = '/mytrips' class="nav-link font-weight-bold border-right">My Trips </a> </li>
+                    <li class="nav-item"> <a href = "{% url 'notification' %}" class="nav-link text-white border-right" >Notifications </a> </li>
+                    <li class="nav-item"> <a href="{% url 'myfeedbacks' %}" class="nav-link text-white border-right">My Feedbacks </a> </li>
+	            	<li class="nav-item "> <a href="#" class="nav-link text-white border-right" >Hello {{ request.session.username }} </a>
+	            	<li class="nav-item "> <a href="{% url 'logout_view' %}" class="nav-link text-white"><span class="fa fa-power-off pt-1"></span></a></li>
+				</ul>
+			</div>
+		</nav>
+		{% endif %}
 	
 		<div class="row">
    			<div class="col">

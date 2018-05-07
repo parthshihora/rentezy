@@ -59,6 +59,10 @@ def mytrips(request):
     #reservations = Reservation.objects.filter(user=request.session['id'],drop_date__range=['2018-04-23',today])
     if request.session['role'] == 'customer':
         reservations = Reservation.objects.filter(customer=request.session['id'],drop_date__lte=today)
+        for r in reservations:
+            car = r.carid
+            car.Reserved = "No"
+            car.save()
     elif request.session['role'] == 'owner':
         reservations = Reservation.objects.filter(owner=request.session['id'], drop_date__lte=today)
 
