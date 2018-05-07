@@ -45,6 +45,8 @@
 
 <h1> Trips page </h1>
 	    {% for reservation in reservations %}
+	    {% if request.session.role == "owner" %}
+	    <p> In owner</p>
 	    	{% if reservation.status != "Deleted" %}
 			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
 
@@ -57,38 +59,18 @@
 			      			<div class="card-body">
 			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
 			    				<p class="card-text">
-			    					Owner: {{ reservation.carid.user.first_name}} <br>
+			    					Owner: {{ reservation.customer.first_name}} <br>
 			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
                                     Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
 			    				</p>
-			    				<a href="{% url 'modify_reservation' reservation.carid_id %}" class="btn btn-primary">Edit Reservation</a>
-
-			    				<a href="{% url 'delete_reservation' reservation.carid_id %}" id="{{reservation.carid_id}}" class="btn btn-primary">Delete Reservation</a>
-
+	
 			    				
 			    				{% if request.session.role == "owner" %}
-			    				<p> I am owner</p>
                                		<a href="{% url 'addfeedback' reservation.customer_id %}" class="btn btn-primary">Add Feedback</a>
                                {% endif %}
-                               {% if reservation.session.role == "customer" %}
+                               {% if request.session.role == "customer" %}
                                		<a href="{% url 'addfeedback' reservation.owner_id %}" class="btn btn-primary">Add Feedback</a>
                                {% endif %}
-			    				 <script type="text/javascript">
-                                    var id1 = {{ reservation.carid_id }};
-                                    //window.alert("Car id"+id1);
-                                    var l = document.getElementById(id1);
-                                    l.onclick = fun;
-
-                                    function fun(){
-                                    if (confirm('Are you sure you want to Delete?')) {
-                                            var id1 = {{ reservation.carid_id }};
-                                           id1.submit();
-                                       } else {
-                                           return false;
-                                       }
-                                        
-                                    }
-                                </script>
 
 			  				</div>
 			  			</div>
@@ -97,6 +79,44 @@
 
 			</div>
 			{% endif %}
+			{% endif %}
+
+
+			{% if request.session.role == "customer" %}
+	    	{% if reservation.status != "Deleted" %}
+			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Customer: {{ reservation.owner.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+	
+			    				
+			    				{% if request.session.role == "owner" %}
+                               		<a href="{% url 'addfeedback' reservation.customer_id %}" class="btn btn-primary">Add Feedback</a>
+                               {% endif %}
+                               {% if request.session.role == "customer" %}
+                               		<a href="{% url 'addfeedback' reservation.owner_id %}" class="btn btn-primary">Add Feedback</a>
+                               {% endif %}
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+
+			</div>
+			{% endif %}
+			{% endif %}
+	
 		{% endfor %}
 	</body>
 </html>
