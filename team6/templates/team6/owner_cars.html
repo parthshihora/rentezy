@@ -67,7 +67,9 @@
 			    					Price: {{car.priceperhour}} <br> 
 			    					Pickup Location: {{car.pickuplocation}} <br>
                                </p>
-			    				<a href="{% url 'modify_car' car.id %}" class="btn btn-primary">Modify</a>
+			    			<!--	<a href="{% url 'modify_car' car.id %}" class="btn btn-primary" onclick=""myFunction()"">Modify</a> -->
+			    			<a href="" class="btn btn-primary" onclick="myFunction()">Modify</a>
+			    		
                                 <a href="{% url 'delete_object' car.id %}" class="btn btn-primary" id= "{{ car.id }}">Delete</a>
 
 
@@ -86,6 +88,9 @@
                                        }
                                         
                                     }
+                                    function myFunction() {
+ 										   alert("This car is Reserved, You can't modify it at the moment");
+												}
                                 </script>
 
 			  				</div>
@@ -109,7 +114,7 @@
 			    				<p class="card-text">
 			    					Price: {{car.priceperhour}} <br> 
 			    					Pickup Location: {{car.pickuplocation}} <br>
-			    					Not Reserved
+			    					
 			    				</p>
 			    				<a href="{% url 'modify_car' car.id %}" class="btn btn-primary">Modify</a>
                                 <a href="{% url 'delete_object' car.id %}" class="btn btn-primary" id= "{{ car.id }}">Delete</a> 
