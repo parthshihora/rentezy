@@ -23,21 +23,16 @@
     <body>
 
    		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<div class="container">
+			<div class="container-fluid">
 	  			<a class="navbar-brand" href="#">RENTEZY</a>
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"> <a href = "{% url 'owner_page' %}" class="nav-link text-white" ><span class="fa fa-home fa-2x mr-2"></span></a>	</li>
-
-					<li class="nav-item"> <a href = "{% url 'notification' %}" class="nav-link text-white" >Notifications</a></li>
-
-	            	<li class="nav-item dropdown">
-	            		<a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">
-	            			Hello {{ request.session.username }}
-	            		</a>
-	            		<div class="dropdown-menu">
-	            			<a href="{% url 'logout_view' %}" class="dropdown-item">Logout</a>
-	            		</div>
-	            	</li>
+                    <li class="nav-item"> <a href = '/yourcars' class="nav-link text-white border-right">My Cars </a> </li>
+                    <li class="nav-item"> <a href = '/addcar' class="nav-link text-white border-right">Add Car </a> </li>
+                    <li class="nav-item"> <a href = '/mytrips' class="nav-link border-right text-white">My Trips </a> </li>
+                    <li class="nav-item"> <a href = "{% url 'notification' %}" class="font-weight-bold  nav-link border-right" >Notifications </a> </li>
+                    <li class="nav-item"> <a href="{% url 'myfeedbacks' %}" class="nav-link text-white border-right">My Feedbacks </a> </li>
+	            	<li class="nav-item "> <a href="#" class="nav-link text-white border-right" >Hello {{ request.session.username }} </a>
+	            	<li class="nav-item "> <a href="{% url 'logout_view' %}" class="nav-link text-white"><span class="fa fa-power-off pt-1"></span></a></li>
 				</ul>
 			</div>
 		</nav>
@@ -69,7 +64,8 @@
 					    				<p class="card-text">
 					    					Customer: {{ reservation.customer.first_name}} {{ reservation.customer.last_name}} <br>
 					    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
-		                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+                                           Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+                                           Current Location: {{reservation.customer.location}} <a href="{% url 'showmap' reservation.customer_id %}" class="btn btn-default">Show on Map</a>
 					    				</p>
 					  				</div>
 					  			</div>

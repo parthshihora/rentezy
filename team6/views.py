@@ -100,6 +100,7 @@ def notifications(request):
     if 'id' not in request.session:
         return redirect('/errorpage/')
    # reservation = Reservation.objects.filter(owner=request.session['id'])
+    today = datetime.today().strftime('%Y-%m-%d')
     reservation = Reservation.objects.filter(owner=request.session['id'],drop_date__gte=today)
     return render(request, "Notifications.html", {'reservation': reservation})
 
@@ -575,6 +576,11 @@ def showmap(request, object_id):
     if 'id' not in request.session:
         return redirect('/errorpage/')
     customer = Reg_Customer.objects.get(pk=object_id)
-    url = 'https://www.google.com/maps/embed/v1/place?key= AIzaSyD2OG1L2BQGatYPDcAKj6hq9uv_sdUlwO4 &q='' &center='+customer.latitude+','+customer.longitude+' &zoom=15 &maptype=roadmap'
-    print url
-    return render(request, 'showmap.html', {'url': url})
+    print customer.latitude, customer.longitude
+    # mapdetails = {'url' : 'https://maps.googleapis.com/maps/api/js?key= AIzaSyD2OG1L2BQGatYPDcAKj6hq9uv_sdUlwO4&callback=initMap', 'lat': customer.latitude, 'long':customer.longitude}
+    # # url = 'https://www.google.com/maps/embed/v1/place?key= AIzaSyD2OG1L2BQGatYPDcAKj6hq9uv_sdUlwO4 &q='' &center='+customer.latitude+','+customer.longitude+' &zoom=15 &maptype=roadmap'
+    # mapdetails['url'] = "https://maps.googleapis.com/maps/api/js?key= AIzaSyD2OG1L2BQGatYPDcAKj6hq9uv_sdUlwO4 &callback=initMap"
+    # mapdetails['lat'] = customer.latitude
+    # mapdetails['long'] = customer.longitude
+    url = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAn3ejrJbVbRHwWgyuKug41VxShwB-PeSw&callback=initMap"
+    return render(request, 'showmap.html', {'url': url, 'lat': customer.latitude, 'longitude': customer.longitude})
