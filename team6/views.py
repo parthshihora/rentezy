@@ -26,8 +26,9 @@ def getlocation(request):
     threading.Timer(120,getlocation,[request]).start()
     print datetime.utcnow()
     g = GeoIP2()
-    ip = request.META.get('REMOTE_ADDR', None)
+    #ip = request.META.get('REMOTE_ADDR', None)
     #ip = '134.201.250.155'
+    ip='170.123.234.133'
     #print("******meta*******",request.META['REMOTE_ADDR'])
     if (not ip or ip == '127.0.0.1') and request.META.has_key('HTTP_X_FORWARDED_FOR'):
         ip = request.META['HTTP_X_FORWARDED_FOR']
