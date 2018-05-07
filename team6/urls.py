@@ -9,9 +9,12 @@ urlpatterns = [
     # url(r'^register/', views.register_view, name='register'),
     # url(r'^ownerreg/', views.OwnerRegister, name='owner_reg'),
     url(r'^login/$', auth_views.login, name='login'),
-    url(r'^loginpage/$', views.loginform, name='loginpage'),
+    url(r'^adminloginpage/$', views.adminloginform, name='adminloginpage'),
+    url(r'^ownerloginpage/$', views.ownerloginform, name='ownerloginpage'),
+    url(r'^customerloginpage/$', views.customerloginform, name='customerloginpage'),
     url(r'^accounts/profile/$', views.owner_profile, name='owner_page'),
-    url(r'^signup/$', views.signup, name='signup'),
+    url(r'^ownersignup/$', views.ownersignup, name='ownersignup'),
+    url(r'^customersignup/$', views.customersignup, name='customersignup'),
     url(r'^yourcars/$', views.your_cars, name='your_cars'),
     url(r'^addcar/$', views.add_car, name='add_car'),
     url(r'^logout/$', views.logout_view, name='logout_view'),
@@ -34,6 +37,10 @@ urlpatterns = [
     url(r'^rejectowners/(?P<object_id>.*)', views.rejectOwners, name='rejectowners'),
     url(r'^notifications/$', views.notifications, name='notification'),
     url(r'^mytrips/$', views.mytrips, name='mytrips'),
-
-
+    url(r'^addfeedback/(?P<object_id>.*)', views.adduserfeedback, name='addfeedback'),
+    url(r'^myfeedbacks/$', views.displayfeedbacks, name='myfeedbacks'),
+    url(r'^errorpage/$', views.errorpage, name='errorpage'),
+    url(r'^showmap/(?P<object_id>.*)', views.showmap, name='showmap'),
+    url(r'^ownerdocuments/(?P<object_id>.*)', views.OwnerDocs, name='opendocs'),
+    
 ]

@@ -1,0 +1,141 @@
+<!--
+{% block content %}
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}		Do not delete
+        {{ form.as_p }}
+    <button type="submit">Sign up</button>
+  </form>
+{% endblock %}
+-->
+
+{% load bootstrap4 %}
+{% load staticfiles	%}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+	<head>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  		<style type="text/css">
+
+
+  		</style>
+
+	</head>
+
+	<body>
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+    <div class="container">
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a href="startpage.html" class="navbar-brand">RENTEZY</a>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a href="/startpage" class="nav-link text-white">Home</a>
+          </li>
+          <li class="nav-item dropdown ">
+            <a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" data-target="login-dropdown">Login</a>
+				<ul class="dropdown-menu" id="login-dropdown">
+					<li>		<a class="btn btn-light mr-3 dropdown-item" href="/customerloginpage">
+								Login as Customer
+								</a>
+					</li>
+					<li>		<a class="btn btn-light mr-3 dropdown-item" href="/ownerloginpage">
+								Login as Owner
+								</a>
+					</li>
+				</ul>
+
+          </li>
+          <li class="nav-item dropdown ">
+            <a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" data-target="sigup-dropdown">Registration</a>
+        		<ul class="dropdown-menu" id="sigup-dropdown">
+					<li>		<a class="btn text-dark dropdown-item" href="/customersignup">
+								Register as Customer
+								</a>
+					</li>
+					<li>        <a class="btn text-dark dropdown-item" href="/ownersignup">
+								Register as Owner
+								</a>
+					</li>
+				</ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+			<div class="container py-5 my-5">
+			    <div class="row">
+			        <div class="col-md-12">
+			            <div class="row">
+			                <div class="col-md-5 mx-auto">
+			                    <div class="card border-secondary">
+			                        <div class="card-header">
+			                            <h3 class="mb-0 my-2">Register as Owner</h3>
+			                        </div>
+			                        <div class="card-body">
+			                            <form class="form" role="form" autocomplete="off" method="post" enctype="multipart/form-data">
+
+											{% csrf_token %}
+
+										        {% for field in form %}
+										         	{% if field.errors %}
+										                <div class="form-group error row">
+										                    <label class="form-label col-sm-4">{{ field.label }}:</label>
+										                    <div class="form-field col-sm-8">{{ field }}
+										                        <small class="help-inline text-muted">
+										                            {% for error in  field.errors %}{{ error }}{% endfor %}
+										                        </small>
+										                    </div>
+										                </div>
+										            {% else %}
+										                <div class="form-group row">
+										                    <label class="form-label col-sm-4">{{ field.label }}:</label>
+										                    <div class="form-field col-sm-8">{{ field }}
+										                      <!--  {% if field.help_text %}
+										                            <br><small class="help-inline text-muted">{{ field.help_text }}</small>
+										                        {% endif %} -->
+										                    </div>
+										                </div>
+										           {% endif %}
+										        {% endfor %}
+
+
+			                                <div class="form-group">
+			                                    <button type="submit" class="btn btn-success btn-md float-right">Sign Up</button>
+			                                </div>
+			                            </form>
+                                        {% if messages %}
+                                            <ul class="messages">
+                                                {% for message in messages %}
+                                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                            <a href="{%url 'ownerloginpage' %}"> Click Here to go to login</a>
+                                        {% endif %}
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <!--/row-->
+
+			        </div>
+			        <!--/col-->
+			    </div>
+			    <!--/row-->
+			</div>
+			<!--/container-->
+
+	</body>
+</html>

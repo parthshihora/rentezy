@@ -23,25 +23,21 @@
 	</head>
 
 	<body>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-fluid">
 	  			<a class="navbar-brand" href="#">RENTEZY</a>
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"> <a href = "{% url 'owner_page' %}" class="nav-link text-white" ><span class="fa fa-home fa-2x mr-2"></span></a>	</li>
-					
-					<li class="nav-item"> <a href = "{% url 'notification' %}" class="nav-link text-white" >Notifications</a></li>
-
-	            	<li class="nav-item dropdown">
-	            		<a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">
-	            			Hello {{ request.session.username }}  
-	            		</a>
-	            		<div class="dropdown-menu">
-	            			<a href="{% url 'logout_view' %}" class="dropdown-item">Logout</a>
-	            		</div>	
-	            	</li>
+                    <li class="nav-item"> <a href = '/yourcars' class="nav-link text-white border-right">My Cars </a> </li>
+                    <li class="nav-item"> <a href = '/addcar' class="nav-link border-right font-weight-bold">Add Car </a> </li>
+                    <li class="nav-item"> <a href = '/mytrips' class="nav-link text-white border-right">My Trips </a> </li>
+                    <li class="nav-item"> <a href = "{% url 'notification' %}" class="nav-link text-white border-right" >Notifications </a> </li>
+                    <li class="nav-item"> <a href="{% url 'myfeedbacks' %}" class="nav-link text-white border-right">My Feedbacks </a> </li>
+	            	<li class="nav-item "> <a href="#" class="nav-link text-white border-right" >Hello {{ request.session.username }} </a>
+	            	<li class="nav-item "> <a href="{% url 'logout_view' %}" class="nav-link text-white"><span class="fa fa-power-off pt-1"></span></a></li>
 				</ul>
 			</div>
 		</nav>
+
 
 			<div class="container py-5">
 			    <div class="row">
@@ -72,7 +68,7 @@
 										            	
 										                <div class="form-group row">
 										                	
-										                    	<label class="form-label col-sm-4">{{ field.label }}:</label> 
+										                    	<label class="form-label col-sm-4" id="{{ field.label }}">{{ field.label }}:</label>
 										                    	<div class="form-field col-sm-8" > {{ field }}
 										                    	</div>
 										                   
@@ -103,7 +99,7 @@
 
 			  <script>
             function init() {
-                var input = document.getElementByClassName('loc');
+                var input = document.getElementById('id_pickuplocation');
                 var autocomplete = new google.maps.places.Autocomplete(input);
             }
  
