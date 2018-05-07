@@ -312,9 +312,6 @@ def customerloginform(request):
                     request.session['password'] = form.cleaned_data['password']
                     request.session['role'] = 'customer'
                     regs.role = 'customer'
-                    print "inside first IF"
-                    print regs.role
-                    print loc
 
                 if (regs.role == "customer"):
                     print loc[0]
@@ -346,7 +343,10 @@ def adminloginform(request):
                 request.session['password'] = form.cleaned_data['password']
                 request.session['role'] = 'admin'
                 regs.role = 'admin'
-            return redirect('/allowners/')
+                return redirect('/allowners/')
+            else:
+                messages.warning(request, 'Enter a valid username and password combination')
+
     else:
         form = AdminLoginForm()
     return render(request, 'adminlogin.html', {'form': form})

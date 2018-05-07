@@ -22,7 +22,7 @@
   	</head>
     <body>
 
-				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div class="container-fluid">
 	  			<a class="navbar-brand" href="#">RENTEZY</a>
 				<ul class="navbar-nav ml-auto">
@@ -39,7 +39,18 @@
 		</nav>
 
 		<div class="container p-3"></div>
-
+        {% if cars.count == 0 %}
+            	<div class="container border-dark border">
+					<div class="row border-dark">
+                        <div class="card-body border-dark">
+                        <h5 class="card-title">No cars found</h5>
+                        <p class="card-text">
+                            Please <a href = '/addcar' class="anchor-link">Click Here </a> </li> to add a car
+                       </p>
+                    </div>
+                </div>
+                </div>
+        {% else %}
 	    {% for car in cars %}
 	    	{% if car.Reserved == "Yes" %}
 			<div class="card w-75 rounded mx-auto bg-light" style="padding-bottom: 10px; padding-top: 10px; margin-bottom: 10px;	">
@@ -83,7 +94,7 @@
 			  	</div>
 		
 			</div>
-			{% else %}
+	    		{% else %}
 
 				<div class="card w-75 rounded mx-auto bg-light" style="padding-bottom: 10px; padding-top: 10px; margin-bottom: 10px;	">
 		
@@ -129,5 +140,6 @@
 
 			{% endif %}
 		{% endfor %}
+        {% endif %}
 	</body>
 </html>
