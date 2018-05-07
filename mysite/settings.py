@@ -37,7 +37,7 @@ SECRET_KEY = 'o!us2goj_d-xc@hx-p&r#@)w$1g)!7t-!11+cys-q0i6o1)u_%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['seteamproject.pythonanywhere.com']
 #APPEND_SLASH=False
 
 # Application definition
@@ -136,9 +136,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')#this line is added and it serves as the root address of 
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')#this line is added and it serves as the root address of
 #uploaded file
- 
+
 MEDIA_URL = '/media/'#this line is added and it creates a directory named media in your appfolder
 #where the uploaded images will be stored
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
