@@ -284,7 +284,7 @@ def ownerloginform(request):
                 else:
                     messages.warning(request, 'Enter a valid username and password combination')
                 if regs.status == "Approved":
-                    return redirect('/accounts/profile')
+                    return redirect('/yourcars/')
                 elif regs.status == "Not Approved":
                     messages.warning(request, 'You are not  yet Approved')
                 elif regs.status == "Rejected":
@@ -458,7 +458,7 @@ def make_reservation(request, object_id):
                 car.save()
                 reservation.save()
                 subject = "Notifications from Rentezy, Your car has been reserved"
-                message1 = "Your car "+ car.modelName +" hase been reserved by " + reservation.customer.first_name + " "+ reservation.customer.last_name
+                message1 = "Your car "+ car.modelName + " haowse been reserved by " + reservation.customer.first_name + " "+ reservation.customer.last_name
                 message2 = "\nYou can contact your customer on " + reservation.customer.email
                 message3 = "\nReservation Details\n"
                 message4 = "Pickup Date:"+str(reservation.pickup_date) + "\n" + "Drop Date:"+str(reservation.drop_date) 

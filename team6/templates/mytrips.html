@@ -41,14 +41,18 @@
 			</div>
 		</nav>
 
-		<div class="container p-3"></div>
+		<div class="container p-3">
+			<div class="row ml-4 mx-auto">
+				<h4 class="ml-4 pl-5">My travel history</h4>
+			</div>
+		</div>
 
-<h1> Trips page </h1>
+
 	    {% for reservation in reservations %}
 	    {% if request.session.role == "owner" %}
 	    <p> In owner</p>
 	    	{% if reservation.status != "Deleted" %}
-			<div class="card w-75 rounded mx-auto bg-light p-4 mt-3">
+			<div class="card w-75 rounded mx-auto bg-light p-4">
 
 				<div class="container">
 					<div class="row">
@@ -63,6 +67,7 @@
 			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
                                     Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
 			    				</p>
+<<<<<<< HEAD
 	
 			    				
 			    				{% if request.session.role == "owner" %}
@@ -107,6 +112,27 @@
                                {% if request.session.role == "customer" %}
                                		<a href="{% url 'addfeedback' reservation.owner_id %}" class="btn btn-primary">Add Feedback</a>
                                {% endif %}
+=======
+			    				<a href="{% url 'modify_reservation' reservation.carid_id %}" class="btn btn-primary">Edit Reservation</a>
+			    				<a href="{% url 'delete_reservation' reservation.carid_id %}" id="{{reservation.carid_id}}" class="btn btn-primary">Delete Reservation</a>
+                               <a href="{% url 'addfeedback' reservation.owner_id %}" class="btn btn-primary">Add Feedback</a>
+			    				 <script type="text/javascript">
+                                    var id1 = {{ reservation.carid_id }};
+                                    //window.alert("Car id"+id1);
+                                    var l = document.getElementById(id1);
+                                    l.onclick = fun;
+
+                                    function fun(){
+                                    if (confirm('Are you sure you want to Delete?')) {
+                                            var id1 = {{ reservation.carid_id }};
+                                           id1.submit();
+                                       } else {
+                                           return false;
+                                       }
+                                        
+                                    }
+                                </script>
+>>>>>>> 387493ab689aaf451aac8f45ee3ca0a88f1fd1b8
 
 			  				</div>
 			  			</div>

@@ -32,9 +32,11 @@
 	            	<li class="nav-item">
 	            		<a href="{% url 'allcars' %}" class="nav-link text-white"><span class="fa fa-home fa-2x mr-2"></span></a>
 	            	</li>
-
 	            	<li class="nav-item">
 	            		<a href="{% url 'myreservations' %}" class="nav-link text-white mr-3">My Reservations</a>
+	            	</li>
+	            	<li class="nav-item">
+	            		<a href="{% url 'mytrips' %}" class="nav-link text-white mr-3">My Trips</a>
 	            	</li>
 	            	<li class="nav-item dropdown">
 	            		<a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">Welcome, {{ request.session.username }} </a>
@@ -42,91 +44,124 @@
 	            			<a href="{% url 'logout_view' %}" class="dropdown-item">Logout</a>
 	            		</div>
 	            	</li>
-	            </ul>	
+	            </ul>
 			</div>
 		</nav>
-
 		<div class="row">
 			<div class="col-md-3 border-right">
-                <div class="form-group p-4 ml-3 mt-3 ">
+                <div class="form-group px-4">
 
+					<h5 class="mt-4 mb-3 pl-4">Filter cars</h5>
                     <form action="{% url 'allcars' %}" method="post" class="pl-4">
-                    
-                        <div class="form-group">
-		      					<label for="category" class="mr-2 my-2"> Select car category: <br></label>
-								<select name="cartype" id="category_car" class="mr-4">
-									<option value="none" selected="selected">No Filter</option>
-									<option value="compact">Compact</option>
-									<option value="sedan">Sedan</option>
-									<option value="suv">SUVs</option>
-								</select>
-		      					<label for="category" class="mr-2 my-2"> Number of passengers: </label>
-								<select name="nop" id="category_nop" class="mr-4">
-									<option value="10" selected="selected">No Filter</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-								</select>
-                               <br><button type="submit" class="btn btn-dark my-2">Filter</button>
+
+                        <div class="form">
+
+                        		<div class="card w-100 mb-3">
+								  <div class="card-body">
+								    <h6 class="card-title">Select car category</h6>
+								    <p class="card-text">
+								    	<select name="cartype" id="category_car">
+											<option value="none" selected="selected">No Filter</option>
+											<option value="compact">Compact</option>
+											<option value="sedan">Sedan</option>
+											<option value="suv">SUVs</option>
+										</select>
+		      						</p>
+								    <h6 class="card-title">Number of passengers</h6>
+								    <p class="card-text">
+										<select name="nop" id="category_nop">
+											<option value="10" selected="selected">No Filter</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+										</select>
+		      						</p>
+	                               <button type="submit" class="btn btn-dark px-5">Filter</button>
+								  </div>
+								</div>
+
+                        		<div class="card w-100">
+								  <div class="card-body">
+								    <h6 class="card-title">Sort by price</h6>
+								    <p class="card-text">
+										<select name="sortby" id="sort_car" class="mr-4">
+											<option value="lowtohigh" selected="selected">Price low to high</option>
+											<option value="hightolow">Price hight to low</option>
+										</select>
+		      						</p>
+	                               <button type="submit" class="btn btn-dark px-5">Sort</button>
+								  </div>
+								</div>
 						</div>
-		
 
                     </form>
-                
 
-             	   <form class="pl-4">
-						<div class="form-group">	
-		     					<input type="text" size="40" class="mx-auto form-control my-2 small" id="locationTextField" placeholder="Enter pickup location ...">
-		      					<a href="{% url 'filteredcars' %}" class="btn btn-dark mx-auto my-2" id="output">Search</a>
-		      					
-						</div>
+                     <form action="{% url 'allcars' %}" method="post" class="pl-4">
+			         	<div class="form-group">
 
-				        <script>
-
-				        	function updateQueryStringParam(uri, key, value) {
-				  				var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-				  				var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-				  				if (uri.match(re)) {
-				    				return uri.replace(re, '$1' + key + "=" + value + '$2');
-				  					}
-				  				else {
-				    				return uri + separator + key + "=" + value;
-				  					}
-								}
-
-				            function init() {
-				                var input = document.getElementById('locationTextField');
-				                var autocomplete = new google.maps.places.Autocomplete(input);
-				                google.maps.event.addListener(autocomplete, 'place_changed',
-				   
-				   			function f1() {
-				      			var place = autocomplete.getPlace();
-				      			//var lat = place.geometry.location.lat();
-				      			//var lng = place.geometry.location.lng();
-				      			var city = place.address_components[0].short_name;
-				      			output = document.getElementById("output");
-								output.href = updateQueryStringParam(output.href, 'name', city);
-								//output.innerHTML = city;
-				      			//document.getElementById("output").innerHTML = city;
-				    			
-				   			 });
-				           }
-				           google.maps.event.addDomListener(window, 'load', init);
-				        </script>
-    				</form>
+			         	</div>
+			         </form>
     			</div>
     		</div>
 
-    		
    			<div class="col-md-9">
 
-				<div class="container p-3"></div>
+				<div class="container">
+					<div class="row mt-4 mb-3">
+						<div class="col">
+							<form class="form-inline">
+							    <div class="input-group">
+									<input type="text" size="70" class="mx-auto form-control my-2 small" id="locationTextField" placeholder="Enter pickup location...">
+			   				        <div class="input-group-postend">
+					   					<a href="{% url 'filteredcars' %}" class="btn btn-dark mx-auto my-2 px-4" id="output">Search</a>
+							        </div>
+
+							    </div>
+							</form>
+							        <script>
+
+							        	function updateQueryStringParam(uri, key, value) {
+							  				var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+							  				var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+							  				if (uri.match(re)) {
+							    				return uri.replace(re, '$1' + key + "=" + value + '$2');
+							  					}
+							  				else {
+							    				return uri + separator + key + "=" + value;
+							  					}
+											}
+
+							            function init() {
+							                var input = document.getElementById('locationTextField');
+							                var autocomplete = new google.maps.places.Autocomplete(input);
+							                google.maps.event.addListener(autocomplete, 'place_changed',
+
+							   			function f1() {
+							      			var place = autocomplete.getPlace();
+							      			//var lat = place.geometry.location.lat();
+							      			//var lng = place.geometry.location.lng();
+							      			var city = place.address_components[0].short_name;
+							      			output = document.getElementById("output");
+											output.href = updateQueryStringParam(output.href, 'name', city);
+											//output.innerHTML = city;
+							      			//document.getElementById("output").innerHTML = city;
+
+							   			});
+							           }
+							           google.maps.event.addDomListener(window, 'load', init);
+							        </script>
+
+						</div>
+					</div>
+				</div>
+
+
 
 			    {% for car in cars %}
 			    	{% if car.Reserved == "No" %}
-				<div class="card w-75 rounded mr-2-auto bg-light py-2 mb-2">
-			
+				<div class="card w-75 rounded bg-light py-2 mb-2 ml-3">
+
 					<div class="container">
 						<div class="row">
 							<div class="col-sm-4">
@@ -136,8 +171,10 @@
 				  				<div class="card-body">
 				    				<h5 class="card-title">{{ car.modelName }}</h5>
 				    				<p class="card-text">
-				    					Price: {{car.priceperhour}} <br> 
-				    					Pickup Location: {{car.pickuplocation}} <br>	
+				    					Price: {{car.priceperhour}} <br>
+				    					Pickup Location: {{car.pickuplocation}} <br>
+				    					Car Type: {{car.cartype}} <br>
+				    					Passenger Capacity: {{car.passengerCapacity}} <br>
 				    				</p>
 				    				<a href="{% url 'reserve' car.id %}" class="btn btn-primary">Reserve</a>
 
@@ -145,13 +182,12 @@
 				  			</div>
 				  		</div>
 				  	</div>
-			
+
 				</div>
 				{% endif %}
 				{% endfor %}
 			</div>
    		</div>
-        </div>
 		<p id="demo"></p>
 
         <script>
