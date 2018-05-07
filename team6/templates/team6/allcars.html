@@ -182,144 +182,66 @@
 </button>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Rentezy renting policy</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Terms of Use<br>
-		Last updated:  6 May,2018<br>
-		<br>
-		<ul>
-			<li>	<b>Introduction:</b><br>
-					Rentezy provides this site for use and follows all applicable laws and regulations and few terms. By accessing our site means that you are accepting our terms and conditions unconditionally. So, plese read the terms and conditions carefully. Please do not use our site if you do not agree to those terms. Rentezy reserves right to change these terms of use, so please check the terms frequently to avoid any issues. The date for the latest update in the change of terms will be posted above. All changes are effective immediately after we post them.<br>
-			</li>
-			<li>	<b>Privacy policy:</b><br>
-					Rentezy will never misuse the data provided by the user of the site. We take your privacy seriously. Rentezy is free to use any content or information contained in any communication you may send to us for the improvement of our site without any acknowledgement.<br>
-			</li>
-			<li>	<b>Reservations and Transactions:</b><br>
-					<ol>
-						<li>	Customers:<br>
-								Rentezy monitors all the reservations that are made through the site. It has the right to cancel any reservation anytime (even after it is confirmed) for no reason. Any feedback given to a owner can also be deleted for no reason. All the transactions are made through the site not directly. Rentezy is not responsible for any transaction made directly with the owner.<br>
-						</li>
-						<li>	Owner:<br>
-								Rentezy has the right to approve or not approve the owners. Rentezy can delete a particular car of any owner for no reason. Rentezy is not responsible for any damages of the car. Any feedback given to the customer can be removed for no reason. Rentezy has the right to cancel any reservation anytime.<br>
-						</li>
-					</ol>
-			</li>
-			<li>	<b>Communications:</b><br>
-					By using our site, you accept to receive any kind of mails or notices from Rentezy. You agree that any notice ,mails or any other communications that we send you electronically will satisy any legal communication requirements.<br>
-			</li>
-			<li>	<b>Intellectual Property:</b><br>
-					The overall design of the site is copyrighted by Rentezy. You can copy or download the content provided by the site only for your personal use by not removing any copyright notices from the content. Any other such use is strictly prohibited. If you feel that there is content which violates your intellectual property rights, you can contact us.<br>
-			</li>
-			<li>	<b>Warranty:</b><br>
-					Rentezy does not provide warranty for any products available on our site and is provided as available.<br>
-			</li>
-			<li>	<b>General:</b><br>
-					Please go through all the terms and conditions provided by us and abide by those terms if you use our site. Headings does not define or describe the scope of that section but just for reference purposes only. These terms and conditions set the entire agreement between the customers, owners and Rentezy with your use of the site.<br>
-			</li>
-		</ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Disagree</button>
-       <a href="{% url 'reserve' car.id %}" class="btn btn-primary">Agree</a>
-      </div>
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Rentezy renting policy</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            Terms of Use<br>
+            Last updated:  6 May,2018<br>
+            <br>
+            <ul>
+            <li>	<b>Introduction:</b><br>
+                Rentezy provides this site for use and follows all applicable laws and regulations and few terms. By accessing our site means that you are accepting our terms and conditions unconditionally. So, plese read the terms and conditions carefully. Please do not use our site if you do not agree to those terms. Rentezy reserves right to change these terms of use, so please check the terms frequently to avoid any issues. The date for the latest update in the change of terms will be posted above. All changes are effective immediately after we post them.<br>
+            </li>
+            <li>	<b>Privacy policy:</b><br>
+                Rentezy will never misuse the data provided by the user of the site. We take your privacy seriously. Rentezy is free to use any content or information contained in any communication you may send to us for the improvement of our site without any acknowledgement.<br>
+            </li>
+            <li>	<b>Reservations and Transactions:</b><br>
+                <ol>
+                    <li>	Customers:<br>
+                            Rentezy monitors all the reservations that are made through the site. It has the right to cancel any reservation anytime (even after it is confirmed) for no reason. Any feedback given to a owner can also be deleted for no reason. All the transactions are made through the site not directly. Rentezy is not responsible for any transaction made directly with the owner.<br>
+                    </li>
+                    <li>	Owner:<br>
+                            Rentezy has the right to approve or not approve the owners. Rentezy can delete a particular car of any owner for no reason. Rentezy is not responsible for any damages of the car. Any feedback given to the customer can be removed for no reason. Rentezy has the right to cancel any reservation anytime.<br>
+                    </li>
+                </ol>
+            </li>
+            <li>	<b>Communications:</b><br>
+                By using our site, you accept to receive any kind of mails or notices from Rentezy. You agree that any notice ,mails or any other communications that we send you electronically will satisy any legal communication requirements.<br>
+            </li>
+            <li>	<b>Intellectual Property:</b><br>
+                The overall design of the site is copyrighted by Rentezy. You can copy or download the content provided by the site only for your personal use by not removing any copyright notices from the content. Any other such use is strictly prohibited. If you feel that there is content which violates your intellectual property rights, you can contact us.<br>
+            </li>
+            <li>	<b>Warranty:</b><br>
+                Rentezy does not provide warranty for any products available on our site and is provided as available.<br>
+            </li>
+            <li>	<b>General:</b><br>
+                Please go through all the terms and conditions provided by us and abide by those terms if you use our site. Headings does not define or describe the scope of that section but just for reference purposes only. These terms and conditions set the entire agreement between the customers, owners and Rentezy with your use of the site.<br>
+            </li>
+            </ul>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Disagree</button>
+            <a href="{% url 'reserve' car.id %}" class="btn btn-primary">Agree</a>
+            </div>
+            </div>
+            </div>
+            </div>
+
+            </div>
+            </div>
+        </div>
     </div>
-  </div>
+
 </div>
-				    				 
-				  				</div>
-				  			</div>
-				  		</div>
-				  	</div>
-
-				</div>
-				{% endif %}
-				{% endfor %}
-			</div>
-   		</div>
-		<p id="demo"></p>
-
-        <!-- <script>
-        var x = document.getElementById("demo");
-        var myVar = setInterval(getLocation ,1000);
-
-        /* function myTimer() {
-            var d = new Date();
-            document.getElementById("demo").innerHTML = d.toLocaleTimeString();
-        } */
-        function getLocation() {
-            if (navigator.geolocation) {
-              var pos =  navigator.geolocation.watchPosition(showPosition);
-
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";}
-            }
-
-        function showPosition(position) {
-            var d = new Date();
-            x.innerHTML="Latitude: " + position.coords.latitude +
-            "<br>Longitude: " + position.coords.longitude
-            + "<br> Time is"+ d.toLocaleTimeString();
-
-        }
-        getLocation();
-        </script> -->
-
-<!--              	   <form class="pl-4">
-						<div class="form">
-
-                        		<div class="card w-100">
-								  <div class="card-body">
-								    <h6 class="card-title">Enter pickup location</h6>
-								    <p class="card-text">
-										<input type="text" size="40" class="mx-auto form-control my-2 small" id="locationTextField">
-		      						</p>
-			      					<a href="{% url 'filteredcars' %}" class="btn btn-dark mx-auto my-2" id="output">Search</a>
-								  </div>
-								</div>
-
-						</div>
-
-				        <script>
-
-				        	function updateQueryStringParam(uri, key, value) {
-				  				var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-				  				var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-				  				if (uri.match(re)) {
-				    				return uri.replace(re, '$1' + key + "=" + value + '$2');
-				  					}
-				  				else {
-				    				return uri + separator + key + "=" + value;
-				  					}
-								}
-
-				            function init() {
-				                var input = document.getElementById('locationTextField');
-				                var autocomplete = new google.maps.places.Autocomplete(input);
-				                google.maps.event.addListener(autocomplete, 'place_changed',
-
-				   			function f1() {
-				      			var place = autocomplete.getPlace();
-				      			//var lat = place.geometry.location.lat();
-				      			//var lng = place.geometry.location.lng();
-				      			var city = place.address_components[0].short_name;
-				      			output = document.getElementById("output");
-								output.href = updateQueryStringParam(output.href, 'name', city);
-								//output.innerHTML = city;
-				      			//document.getElementById("output").innerHTML = city;
-
-				   			});
-				           }
-				           google.maps.event.addDomListener(window, 'load', init);
-				        </script>
-    				</form>
- -->
-
+{% endif %}
+{% endfor %}
+</div>
+</div>
 	</body>
 </html>

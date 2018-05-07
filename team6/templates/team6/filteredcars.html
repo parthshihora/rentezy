@@ -188,31 +188,5 @@
 				{% endfor %}
 			</div>
    		</div>
-		<p id="demo"></p>
-
-        <script>
-        var x = document.getElementById("demo");
-        var myVar = setInterval(getLocation ,1000);
-
-        /* function myTimer() {
-            var d = new Date();
-            document.getElementById("demo").innerHTML = d.toLocaleTimeString();
-        } */
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.watchPosition(showPosition);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";}
-            }
-
-        function showPosition(position) {
-            var d = new Date();
-            x.innerHTML="Latitude: " + position.coords.latitude +
-            "<br>Longitude: " + position.coords.longitude
-            + "<br> Time is"+ d.toLocaleTimeString();
-
-        }
-        getLocation();
-        </script>
 	</body>
 </html>
