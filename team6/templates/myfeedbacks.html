@@ -26,15 +26,15 @@
     <body>
 
     	{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-   <!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
-    <p> Feedbakck already give </p>
-    {% endfor %}
-</ul>
-{% endif %}
+			<ul class="messages">
+    		{% for message in messages %}
+    			<p> Feedbakck already give </p>
+    		{% endfor %}
+			</ul>
+		{% endif %}
 
    		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<<<<<<< HEAD
 			<div class="container-fluid">
 	  			<a class="navbar-brand" href="#">RENTEZY</a>
 				<ul class="navbar-nav ml-auto">
@@ -46,6 +46,32 @@
 	            	<li class="nav-item "> <a href="#" class="nav-link text-white border-right" >Welcome {{ request.session.username }} </a>
 	            	<li class="nav-item "> <a href="{% url 'logout_view' %}" class="nav-link text-white"><span class="fa fa-power-off pt-1"></span></a></li>
 				</ul>
+=======
+   			<div class="container">
+		  		<a class="navbar-brand" href="#">RENTEZY</a>
+	            <ul class="navbar-nav">
+	            	<li class="nav-item">
+	            		<a href="{% url 'allcars' %}" class="nav-link text-white"><span class="fa fa-home fa-2x mr-2"></span></a>
+	            	</li>
+
+	            	<li class="nav-item">
+	            		<a href="{% url 'myreservations' %}" class="nav-link text-white mr-3">My Reservations</a>
+	            	</li>
+	     <!--       	<li class="nav-item">
+	            		<a href="{% url 'mytrips' %}" class="nav-link text-white mr-3">My Trips</a>
+	            	</li> -->
+	            	<li class="nav-item dropdown">
+	            		<a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">Welcome {{ request.session.username }} </a>
+	            		<div class="dropdown-menu">
+	            			<a href="{% url 'logout_view' %}" class="dropdown-item">Logout</a>
+	            		</div>
+	            	</li>
+<!--	            	<li class="nav-item">
+	            		<a href="{% url 'logout_view' %}" class="nav-link text-white">Logout</a>
+	            	</li>	
+-->
+	            </ul>	
+>>>>>>> 055ff0d7923420dc4204ad11eee414983965de29
 			</div>
 		</nav>
 	
@@ -57,8 +83,11 @@
 
    			<div class="col-md-9">
 				<div class="container p-3"></div>
+
+				<p> {{request.session.role }}</p>
 			    {% for feedback in feedbacks %}
 			    	{% if request.session.role == "owner" %}
+			    	<p>Nice move chaman</p>
                 <div class="card w-75 rounded mr-2-auto bg-light py-2 mb-2">
 					<div class="container">
 						<div class="row">
@@ -67,15 +96,18 @@
 				    				<h5 class="card-title">Customer: {{ feedback.customer.first_name }} {{ feedback.customer.last_name }}</h5>
 				    				<p class="card-text">
 				    					Feedback: {{feedback.message}} <br>
-				    					Rating {{feedback.rating}} <br>
+				    					Rating: {{feedback.rating}}/5 <br>
 				    					Time: {{feedback.time}} <br>
+				    					
 				    				</p>
 				  				</div>
 				  			</div>
 				  		</div>
 				  	</div>
 				</div>
+
                    {% elif request.session.role == "customer" %}
+				
                 <div class="card w-75 rounded mr-2-auto bg-light py-2 mb-2">
 					<div class="container">
 						<div class="row">
@@ -84,7 +116,7 @@
 				    				<h5 class="card-title">Owner: {{ feedback.owner.first_name }} {{ feedback.owner.last_name }} </h5>
 				    				<p class="card-text">
 				    					Feedback: {{feedback.message}} <br>
-				    					Rating {{feedback.rating}} <br>
+				    					Rating:{{feedback.rating}} /5 <br>
 				    					Time: {{feedback.time}} <br>
 				    				</p>
 				  				</div>
@@ -92,35 +124,8 @@
 				  		</div>
 				  	</div>
 				</div>
-                   {% else %}
-                <div class="card w-75 rounded mr-2-auto bg-light py-2 mb-2">
-					<div class="container">
-						<div class="row">
-			  				<div class="col-sm-8">
-				  				<div class="card-body">
-                                    {% if feedback.direction %}
-    				    				<h5 class="card-title">Feedback for Owner: {{ feedback.owner.first_name }} {{ feedback.owner.last_name }} </h5>
-                                        <p class="card-text">
-                                            Feedback by Customer: {{ feedback.customer.first_name }} {{ feedback.customer.last_name }}
-                                        </p>
-                                    {% else %}
-                                        <h5 class="card-title"> Feedback for Customer: {{ feedback.customer.first_name }} {{ feedback.customer.last_name }}</h5>
-                                        <p class="card-text">
-                                            Feedback by Owner: {{ feedback.owner.first_name }} {{ feedback.owner.last_name }}
-                                        </p>
-                                    {% endif %}
-				    				<p class="card-text">
-				    					Feedback: {{feedback.message}} <br>
-				    					Rating {{feedback.rating}} <br>
-				    					Time: {{feedback.time}} <br>
-				    				</p>
-				  				</div>
-				  			</div>
-				  		</div>
-				  	</div>
-				</div>
-
-				{% endif %}
+				{% endif %}   
+				
 				{% endfor %}
 			</div>
    		</div>

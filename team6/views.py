@@ -41,6 +41,11 @@ def getlocation(request):
     return location
 
 
+'''def pasttrips(request):
+    if 'id' not in request.session:
+        return redirect('/errorpage/')
+    today = datetime.today().strftime('%Y-%m-%d')'''
+
 def mytrips(request):
     if 'id' not in request.session:
         return redirect('/errorpage/')
@@ -562,9 +567,10 @@ def displayfeedbacks(request):
     if request.session['role'] == 'customer':
         feedbacks = Feedback.objects.filter(customer=request.session['id'], direction=False)
     elif request.session['role'] == 'owner':
+        print("in owner feedbacks****")
         feedbacks = Feedback.objects.filter(owner=request.session['id'], direction=True)
-    else:
-        feedbacks = Feedback.objects.all()
+    #else:
+    #    feedbacks = Feedback.objects.all()
     return render(request, "myfeedbacks.html", {'feedbacks': feedbacks})
 
 
