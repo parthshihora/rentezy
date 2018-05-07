@@ -13,21 +13,13 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="{% static 'css/main.css' %}">
 
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        	<link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-		
-		
 
-		<style>
-			.s-item:hover{
-				cursor:pointer;
-				opacity:0.9;
-			}
-		</style>
-  	</head>
+	</head>
     <body>
 
    		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -35,164 +27,144 @@
 	  			<a class="navbar-brand" href="#">RENTEZY</a>
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"> <a href = "{% url 'owner_page' %}" class="nav-link text-white" ><span class="fa fa-home fa-2x mr-2"></span></a>	</li>
-					
+
 					<li class="nav-item"> <a href = "{% url 'notification' %}" class="nav-link text-white" >Notifications</a></li>
 
 	            	<li class="nav-item dropdown">
 	            		<a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">
-	            			Hello {{ request.session.username }}  
+	            			Hello {{ request.session.username }}
 	            		</a>
 	            		<div class="dropdown-menu">
 	            			<a href="{% url 'logout_view' %}" class="dropdown-item">Logout</a>
-	            		</div>	
+	            		</div>
 	            	</li>
 				</ul>
 			</div>
 		</nav>
 
+		<div class="container">
+			<nav>
+			  <div class="nav nav-tabs justify-content-center mt-5" id="nav-tab" role="tablist">
+			    <a class="nav-item nav-link active mx-2 text-success" id="nav-success-tab" data-toggle="tab" href="#nav-success" role="tab" aria-controls="nav-success" aria-selected="true">Successful reservations</a>
+			    <a class="nav-item nav-link mx-2 text-dark" id="nav-modified-tab" data-toggle="tab" href="#nav-modified" role="tab" aria-controls="nav-modified" aria-selected="false">Modified reservations</a>
+			    <a class="nav-item nav-link mx-2 text-danger" id="nav-deleted-tab" data-toggle="tab" href="#nav-deleted" role="tab" aria-controls="nav-deleted" aria-selected="false">Deleted reservations</a>
+			  </div>
+			</nav>
 
-		<div>
-			<div class="d-flex flex-row text-white text-center mt-5 w-75 mx-auto">
-				<div class="s-item p-4 bg-success mr-2" data-toggle="collapse" data-target="#Successful">
-					Successful reservations
+			<div class="tab-content" id="nav-tabContent">
+	            <div class="tab-pane fade show active" id="nav-success" role="tabpanel" aria-labelledby="nav-success-tab">
+
+					{% for reservation in reservation %}
+			    	{% if reservation.status != "Deleted" and reservation.status != "Modified" %}
+
+					<div class="card w-75 mx-auto bg-light text-black py-3 mt-3">
+
+						<div class="container">
+							<div class="row">
+							    <div class="col-sm-4">
+		 		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+				  				</div>
+					  			<div class="col-sm-8">
+					      			<div class="card-body">
+					    				<p class="card-text">
+					    					Customer: {{ reservation.customer.first_name}} {{ reservation.customer.last_name}} <br>
+					    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+		                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+					    				</p>
+					  				</div>
+					  			</div>
+					  		</div>
+					  	</div>
+
+					</div>
+
+		 			{% endif %}
+					{% endfor %}
+
 				</div>
-				<div class="s-item p-4 bg-info mr-2" data-target="#Modified" data-toggle="collapse">
-					Modified reservations
+
+    			<div class="tab-pane fade" id="nav-modified" role="tabpanel" aria-labelledby="nav-modified-tab">
+
+		 		    {% for reservation in reservation %}
+					{% if reservation.status == "Modified" %}
+
+					<div class="card w-75 mx-auto bg-light text-black py-3 mt-3">
+
+						<div class="container">
+							<div class="row">
+							    <div class="col-sm-4">
+		 		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+				  				</div>
+					  			<div class="col-sm-8">
+					      			<div class="card-body">
+					    				<p class="card-text">
+					    					Customer: {{ reservation.customer.first_name}} {{ reservation.customer.last_name}}<br>
+					    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+		                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+					    				</p>
+
+					  				</div>
+					  			</div>
+					  		</div>
+					  	</div>
+					</div>
+
+		 			{% endif %}
+					{% endfor %}
+
 				</div>
-				<div class="s-item p-4 bg-secondary" data-target="#Deleted" data-toggle="collapse">
-					Deleted reservations
+				<div class="tab-pane fade" id="nav-deleted" role="tabpanel" aria-labelledby="nav-deleted-tab">
+		 		    {% for reservation in reservation %}
+					{% if reservation.status == "Deleted" %}
+
+					<div class="card w-75 mx-auto bg-light text-black py-3 mt-3">
+
+						<div class="container">
+							<div class="row">
+							    <div class="col-sm-4">
+		 		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+				  				</div>
+					  			<div class="col-sm-8">
+					      			<div class="card-body">
+					    				<p class="card-text">
+					    					Customer: {{ reservation.customer.first_name}} {{ reservation.customer.last_name}} <br>
+					    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+		                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+					    				</p>
+
+
+					    				 <script type="text/javascript">
+		                                    var id1 = {{ reservation.carid_id }};
+		                                    //window.alert("Car id"+id1);
+		                                    var l = document.getElementById(id1);
+		                                    l.onclick = fun;
+
+		                                    function fun(){
+		                                    if (confirm('Are you sure you want to Delete?')) {
+		                                            var id1 = {{ reservation.carid_id }};
+		                                           id1.submit();
+		                                       } else {
+		                                           return false;
+		                                       }
+
+		                                    }
+		                                </script>
+
+					  				</div>
+					  			</div>
+					  		</div>
+					  	</div>
+
+					</div>
+
+				{% endif %}
+				{% endfor %}
+
+
 				</div>
-			</div>
-		</div>
-
-
-		<!--Successful reservation div   -->
-		<div class="collapse show" id="Successful">
-
-		    {% for reservation in reservation %}
-	    	{% if reservation.status != "Deleted" and reservation.status != "Modified" %}
-
-			<div class="card w-75 mx-auto bg-success text-white p-4 mt-3">
-							
-				<div class="container">
-					<div class="row">
-					    <div class="col-sm-4">
-		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
-		  			   </div>
-			  			<div class="col-sm-8">
-			      			<div class="card-body">
-			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
-			    				<p class="card-text">
-			    					Customer: {{ reservation.user.first_name}} <br>
-			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
-                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
-                                    Current Location: {{reservation.customer.location}} <a href="{% url 'showmap' reservation.customer_id %}" class="btn btn-default">Show on Map</a>
-
-			    				</p>
-			  				</div>
-			  			</div>
-			  		</div>
-			  	</div>
 
 			</div>
 
-			{% endif %}
-			{% endfor %}
-
 		</div>
-
-
-		<!-- Modified reservation div -->
-		<div class="collapse" id="Modified">
-
-		    {% for reservation in reservation %}
-			{% if reservation.status == "Modified" %}
-
-			<div class="card w-75 mx-auto bg-info p-4 mt-3">
-			
-				<div class="container">
-					<div class="row">
-					    <div class="col-sm-4">
-		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
-		  			   </div>
-			  			<div class="col-sm-8">
-			      			<div class="card-body">
-			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
-			    				<p class="card-text">
-			    					Customer: {{ reservation.user.first_name}} <br>
-			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
-                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
-			    				</p>
-
-			  				</div>
-			  			</div>
-			  		</div>
-			  	</div>
-			</div>
-
-			{% endif %} 	
-			{% endfor %}
-
-		</div>
-
-		<!-- Deleted reservation div -->
-		<div id="Deleted" class="collapse">
-
-		    {% for reservation in reservation %}
-			{% if reservation.status == "Deleted" %}
-
-			<div class="card w-75 mx-auto bg-secondary p-4 mt-3 text-white">
-			
-				<div class="container">
-					<div class="row">
-					    <div class="col-sm-4">
-		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
-		  			   </div>
-			  			<div class="col-sm-8">
-			      			<div class="card-body">
-			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
-			    				<p class="card-text">
-			    					Customer: {{ reservation.user.first_name}} <br>
-			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
-                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
-			    				</p>
-
-
-			    				 <script type="text/javascript">
-                                    var id1 = {{ reservation.carid_id }};
-                                    //window.alert("Car id"+id1);
-                                    var l = document.getElementById(id1);
-                                    l.onclick = fun;
-
-                                    function fun(){
-                                    if (confirm('Are you sure you want to Delete?')) {
-                                            var id1 = {{ reservation.carid_id }};
-                                           id1.submit();
-                                       } else {
-                                           return false;
-                                       }
-                                        
-                                    }
-                                </script>
-
-			  				</div>
-			  			</div>
-			  		</div>
-			  	</div>
-			
-			</div>		
-
-			{% endif %}
-			{% endfor %}
-		
-		</div>
-			
-
-		<script>
-			$('.s-item').click(function(){
-				$('.collapse').collapse('hide');
-			});
-		</script>
-
 	</body>
 </html>

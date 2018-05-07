@@ -14,35 +14,37 @@
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	
-		<style type="text/css">
-		.thumbnail{
-			position: relative;
-		}
-		.caption{
-			position: absolute;
-			top:25%;
-			left:0%;
-			width: 100%;	
-		}
-		body
-		{
-			background: url('../../static/img/main_img.jpg') no-repeat;
+  		<style type="text/css">
+  		.carousel-item{
+  			height:500px;
+  		}
+  		.carousel-image-1{
+  			background: url('../static/img/pexels-photo-627678.jpeg');
+  			background-size: cover;
+  		}
+  		.carousel-image-2{
+  			background: url('../static/img/pexels-photo-707046.jpeg');
 			background-size: cover;
-			background-attachment: fixed;
-		}
-		.inner-header{
-			padding-top: 170px;
-		}
+  		}
+  		.carousel-image-3{
+  			background: url('../static/img/pexels-photo-947031.jpeg');
+  			background-size:cover;
+  		}
 		.dark-overlay{
 			top:0;
 			left:0;
 			background-size: cover;
-			background-position: absolute;
+			background-position: relative;
 			min-height: 100%;
 		}
 		.text-overlay{
 			background-color: rgba(0,0,0,0.5);
 		}
+		.myicon{
+			font-size: 30px;
+			color: white;
+		}
+
   		</style>
 
 	</head>
@@ -50,6 +52,204 @@
 
 	<body>
 
+	  <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+    <div class="container">
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a href="startpage.html" class="navbar-brand">RENTEZY</a>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a href="/startpage" class="nav-link text-white">Home</a>
+          </li>
+          <li class="nav-item dropdown ">
+            <a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" data-target="login-dropdown">Login</a>
+				<ul class="dropdown-menu" id="login-dropdown">
+					<li>		<a class="btn btn-light mr-3 dropdown-item" href="/customerloginpage">
+								Login as Customer
+								</a>
+					</li>
+					<li>		<a class="btn btn-light mr-3 dropdown-item" href="/ownerloginpage">
+								Login as Owner
+								</a>
+					</li>
+				</ul>
+
+          </li>
+          <li class="nav-item dropdown ">
+            <a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" data-target="sigup-dropdown">Registration</a>
+        		<ul class="dropdown-menu" id="sigup-dropdown">
+					<li>		<a class="btn text-dark dropdown-item" href="/customersignup">
+								Register as Customer
+								</a>
+					</li>
+					<li>        <a class="btn text-dark dropdown-item" href="/ownersignup">
+								Register as Owner
+								</a>
+					</li>
+				</ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+	<!-- Home Section -->
+	<header id="home">
+
+		<section id="showcase">
+	    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+	      <ol class="carousel-indicators">
+	        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+	        <li data-target="#myCarousel" data-slide-to="1"></li>
+	        <li data-target="#myCarousel" data-slide-to="2"></li>
+	      </ol>
+	      <div class="carousel-inner">
+	        <div class="carousel-item carousel-image-1 active">
+	          <div class="container dark-overlay">
+          	    <div class="carousel-caption d-none d-sm-block mb-5 text-overlay">
+		              <h1 class="display-4">Heading One</h1>
+	    	          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae consequuntur architecto eius magni nobis nulla eaque. Deserunt sunt, distinctio quos.</p>
+	            </div>
+	          </div>
+	        </div>
+
+	        <div class="carousel-item carousel-image-2">
+	          <div class="container dark-overlay">
+	            <div class="carousel-caption d-none d-sm-block mb-5 text-overlay">
+	              <h1 class="display-4">Heading Two</h1>
+	              <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae consequuntur architecto eius magni nobis nulla eaque. Deserunt sunt, distinctio quos.</p>
+	            </div>
+	          </div>
+	        </div>
+
+	        <div class="carousel-item carousel-image-3">
+	          <div class="container dark-overlay">
+	            <div class="carousel-caption d-none d-sm-block mb-5 text-overlay">
+	              <h1 class="display-4">Heading Three</h1>
+	              <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae consequuntur architecto eius magni nobis nulla eaque. Deserunt sunt, distinctio quos.</p>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+
+	      <a href="#myCarousel" data-slide="prev" class="carousel-control-prev">
+	        <span class="carousel-control-prev-icon"></span>
+	      </a>
+
+	      <a href="#myCarousel" data-slide="next" class="carousel-control-next">
+	        <span class="carousel-control-next-icon"></span>
+	      </a>
+	    </div>
+	  </section>
+
+	</header>
+
+
+  <!-- ABOUT US -->
+
+	<header id="about-us">
+	  <section class="py-5 text-center bg-light">
+	    <div class="container pb-5">
+	      <div class="row">
+	        <div class="col">
+	            <h3 class="text-dark">
+	              Meet the website developers
+	          	</h3>
+	        </div>
+	       </div>
+	    </div>
+
+		<div class="card-deck mx-3">
+		  <div class="card">
+		    <img class="card-img-top" src="../static/img/pexels-photo-627678.jpeg" alt="Card image cap">
+		    <div class="card-body">
+		    	Prachi Vachhani
+		    </div>
+		  </div>
+		  <div class="card">
+		    <img class="card-img-top" src="../static/img/pexels-photo-627678.jpeg" alt="Card image cap">
+		    <div class="card-body">
+				Jayesh Yeola
+		    </div>
+		  </div>
+		  <div class="card">
+		    <img class="card-img-top" src="../static/img/pexels-photo-627678.jpeg" alt="Card image cap">
+		    <div class="card-body">
+		    	Parth Shihora
+		    </div>
+		  </div>
+		  <div class="card">
+		    <img class="card-img-top" src="../static/img/pexels-photo-627678.jpeg" alt="Card image cap">
+		    <div class="card-body">
+		    	Vikram Varoo
+		    </div>
+		  </div>
+		  <div class="card">
+		    <img class="card-img-top" src="../static/img/pexels-photo-627678.jpeg" alt="Card image cap">
+		    <div class="card-body">
+		    	Nihal Reddy
+		    </div>
+		  </div>
+		</div>
+	  </section>
+	</header>
+
+	<footer id="contact-us" class="bg-dark text-white pt-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<p>
+						<b>Contact Us at</b>
+						<br><br>
+						<div class="row">
+							<div class="col-md-6 pl-5">
+								Address:
+							</div>
+							<div class="col-md-6">
+								University at Albany, New York
+								<br>
+								1400 Washington Avenue
+								<br>
+								Albany, New York, 12222
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 pl-5">
+								Contact Us at:
+							</div>
+							<div class="col-md-6">
+                                rentezyapp@gmail.com
+							</div>
+						</div>
+					</p>
+				</div>
+				<div class="col-md-6">
+					<div class="container ml-3">
+						<div class="row ">
+							<b>Follow us at</b>
+						</div>
+					</div>
+					<div class="d-flex flex-row mt-2">
+						<div class="p-4"><a href="#"><i class="fa fa-facebook myicon"></i></a></div>
+						<div class="p-4"><a href="#"><i class="fa fa-twitter myicon"></i></a></div>
+						<div class="p-4"><a href="#"><i class="fa fa-instagram myicon"></i></a></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<p class="lead ml-auto">
+                    Rentezy<sup> &copy; </sup>
+				</p>
+			</div>
+		</div>
+	</footer>
+
+
+
+
+<!--
 		<div class="dark-overlay">
 			<div class="inner-header">
 				<div class="container p-5 w-75 rounded text-overlay text-white">
@@ -57,23 +257,56 @@
 						<div class="col">
 							<h1 class="display-4 mb-2">	Welcome to Rentezy	</h1>
 							<h3 class="mb-3"> Car Rentals </h3>
-							<a class="btn btn-light mr-3" href="http://127.0.0.1:8000/customerloginpage/">
-								Login as Customer
-							</a>
-                            <a class="btn btn-light mr-3" href="http://127.0.0.1:8000/ownerloginpage/">
-								Login as Owner
-							</a>
-							<a class="btn btn-light mr-3" href="http://127.0.0.1:8000/customersignup/">
-								Register as Customer
-							</a>
-                            <a class="btn btn-light" href="http://127.0.0.1:8000/ownersignup/">
-								Register as Owner
-							</a>
+							<div class="container">
+								<div class="row justify-content-center">
+									<div class="dropdown">
+
+
+											<button class="btn dropdown-toggle px-5 mr-4" data-toggle="dropdown" data-target="login-dropdown">
+												Login
+											</button>
+											<ul class="dropdown-menu" id="login-dropdown">
+												<li>		<a class="btn btn-light mr-3 dropdown-item" href="http://127.0.0.1:8000/customerloginpage/">
+																Login as Customer
+															</a>
+												</li>
+												<li>		<a class="btn btn-light mr-3 dropdown-item" href="http://127.0.0.1:8000/ownerloginpage/">
+																Login as Owner
+															</a>
+												</li>
+											</ul>
+
+
+									</div>
+									<div class="dropdown">
+
+
+											<button class="btn dropdown-toggle px-5 ml-4" data-toggle="dropdown" data-target="sigup-dropdown">
+												Register
+											</button>
+											<ul class="dropdown-menu" id="sigup-dropdown">
+												<li>		<a class="btn text-dark dropdown-item" href="http://127.0.0.1:8000/customersignup/">
+																Register as Customer
+															</a>
+
+												</li>
+												<li>        <a class="btn text-dark dropdown-item" href="http://127.0.0.1:8000/ownersignup/">
+																Register as Owner
+															</a>
+
+												</li>
+											</ul>
+
+
+
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>
-		</div>
+		</div> -->
 
 <!--
 		<div class="container-fluid">
