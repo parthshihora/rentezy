@@ -1,0 +1,196 @@
+{% load static %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+	<head>
+		<title> Notifications</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+		
+		
+
+		<style>
+			.s-item:hover{
+				cursor:pointer;
+				opacity:0.9;
+			}
+		</style>
+  	</head>
+    <body>
+
+   		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container">
+	  			<a class="navbar-brand" href="#">RENTEZY</a>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"> <a href = "{% url 'owner_page' %}" class="nav-link text-white" ><span class="fa fa-home fa-2x mr-2"></span></a>	</li>
+					
+					<li class="nav-item"> <a href = "{% url 'notification' %}" class="nav-link text-white" >Notifications</a></li>
+
+	            	<li class="nav-item dropdown">
+	            		<a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">
+	            			Hello {{ request.session.username }}  
+	            		</a>
+	            		<div class="dropdown-menu">
+	            			<a href="{% url 'logout_view' %}" class="dropdown-item">Logout</a>
+	            		</div>	
+	            	</li>
+				</ul>
+			</div>
+		</nav>
+
+
+		<div>
+			<div class="d-flex flex-row text-white text-center mt-5 w-75 mx-auto">
+				<div class="s-item p-4 bg-success mr-2" data-toggle="collapse" data-target="#Successful">
+					Successful reservations
+				</div>
+				<div class="s-item p-4 bg-info mr-2" data-target="#Modified" data-toggle="collapse">
+					Modified reservations
+				</div>
+				<div class="s-item p-4 bg-secondary" data-target="#Deleted" data-toggle="collapse">
+					Deleted reservations
+				</div>
+			</div>
+		</div>
+
+
+		<!--Successful reservation div   -->
+		<div class="collapse show" id="Successful">
+
+		    {% for reservation in reservation %}
+	    	{% if reservation.status != "Deleted" and reservation.status != "Modified" %}
+
+			<div class="card w-75 mx-auto bg-success text-white p-4 mt-3">
+							
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Customer: {{ reservation.user.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+
+			</div>
+
+			{% endif %}
+			{% endfor %}
+
+		</div>
+
+
+		<!-- Modified reservation div -->
+		<div class="collapse" id="Modified">
+
+		    {% for reservation in reservation %}
+			{% if reservation.status == "Modified" %}
+
+			<div class="card w-75 mx-auto bg-info p-4 mt-3">
+			
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Customer: {{ reservation.user.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+			</div>
+
+			{% endif %} 	
+			{% endfor %}
+
+		</div>
+
+		<!-- Deleted reservation div -->
+		<div id="Deleted" class="collapse">
+
+		    {% for reservation in reservation %}
+			{% if reservation.status == "Deleted" %}
+
+			<div class="card w-75 mx-auto bg-secondary p-4 mt-3 text-white">
+			
+				<div class="container">
+					<div class="row">
+					    <div class="col-sm-4">
+		  					    <img class="card-img-top img-responsive" src="{{ reservation.carid.car_pic.url }}" alt="Card image cap" style="width: 100%">
+		  			   </div>
+			  			<div class="col-sm-8">
+			      			<div class="card-body">
+			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
+			    				<p class="card-text">
+			    					Customer: {{ reservation.user.first_name}} <br>
+			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
+                                    Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+			    				</p>
+
+
+			    				 <script type="text/javascript">
+                                    var id1 = {{ reservation.carid_id }};
+                                    //window.alert("Car id"+id1);
+                                    var l = document.getElementById(id1);
+                                    l.onclick = fun;
+
+                                    function fun(){
+                                    if (confirm('Are you sure you want to Delete?')) {
+                                            var id1 = {{ reservation.carid_id }};
+                                           id1.submit();
+                                       } else {
+                                           return false;
+                                       }
+                                        
+                                    }
+                                </script>
+
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+			
+			</div>		
+
+			{% endif %}
+			{% endfor %}
+		
+		</div>
+			
+
+		<script>
+			$('.s-item').click(function(){
+				$('.collapse').collapse('hide');
+			});
+		</script>
+
+	</body>
+</html>

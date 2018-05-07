@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+#import UploadfileappConfig
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +27,7 @@ SECRET_KEY = 'o!us2goj_d-xc@hx-p&r#@)w$1g)!7t-!11+cys-q0i6o1)u_%'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+#APPEND_SLASH=False
 
 # Application definition
 
@@ -37,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
+    'team6',
+    'bootstrap4',
+    'django_geoip',
+    #'datetimewidget'
 ]
 
 MIDDLEWARE = [
@@ -48,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     #'django_geoip.middleware.LocationMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -119,3 +124,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')#this line is added and it serves as the root address of 
+#uploaded file
+ 
+MEDIA_URL = '/media/'#this line is added and it creates a directory named media in your appfolder
+#where the uploaded images will be stored
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+GEOIP_PATH =os.path.join(BASE_DIR, 'location')
+
+#STATIC_ROOT = os.path.join(BASE_DIR, 'team6')
+
+

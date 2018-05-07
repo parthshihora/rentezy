@@ -1,0 +1,115 @@
+{% load bootstrap4 %}
+{% load staticfiles	%}
+				
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+	<head>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+		 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+
+  		<style type="text/css">
+
+  		</style>
+
+	</head>
+
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container">
+	  			<a class="navbar-brand" href="#">RENTEZY</a>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"> <a href = "{% url 'owner_page' %}" class="nav-link text-white" ><span class="fa fa-home fa-2x mr-2"></span></a>	</li>
+					
+					<li class="nav-item"> <a href = "{% url 'notification' %}" class="nav-link text-white" >Notifications</a></li>
+
+	            	<li class="nav-item dropdown">
+	            		<a href="#" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">
+	            			Hello {{ request.session.username }}  
+	            		</a>
+	            		<div class="dropdown-menu">
+	            			<a href="{% url 'logout_view' %}" class="dropdown-item">Logout</a>
+	            		</div>	
+	            	</li>
+				</ul>
+			</div>
+		</nav>
+
+			<div class="container py-5">
+			    <div class="row">
+			        <div class="col-md-12">
+			            <div class="row">
+			                <div class="col-md-5 mx-auto">
+			                    <div class="card border-secondary">
+			                        <div class="card-header">
+			                            <h3 class="mb-0 my-2">Car Details</h3>
+			                        </div>
+			                        <div class="card-body">
+
+										<form method="POST" class="post-form" enctype='multipart/form-data'>
+												{% csrf_token %}
+										        {% for field in form %}
+										       
+										         	{% if field.errors %}
+										                <div class="form-group error row">
+										                    <label class="form-label col-sm-4">{{ field.label }}:</label> 
+										                    <div class="form-field col-sm-8">{{ field }}
+										                        <small class="help-inline text-muted">
+										                            {% for error in  field.errors %}{{ error }}{% endfor %}
+										                        </small>
+										                    </div>
+										                </div>
+										            {% else %}
+										            
+										            	
+										                <div class="form-group row">
+										                	
+										                    	<label class="form-label col-sm-4">{{ field.label }}:</label> 
+										                    	<div class="form-field col-sm-8" > {{ field }}
+										                    	</div>
+										                   
+										                    
+										      		
+										               </div>	
+										      		
+										             
+										           {% endif %}
+										        {% endfor %}
+										    
+
+			                                <div class="form-group">
+			                                    <button type="submit" class=" save btn btn-success btn-md float-right">Save</button>
+			                                </div>
+										</form>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <!--/row-->
+
+			        </div>
+			        <!--/col-->
+			    </div>
+			    <!--/row-->
+			</div>
+
+			  <script>
+            function init() {
+                var input = document.getElementByClassName('loc');
+                var autocomplete = new google.maps.places.Autocomplete(input);
+            }
+ 
+            google.maps.event.addDomListener(window, 'load', init);
+        </script>
+			<!--/container-->
+
+	</body>
+</html>
