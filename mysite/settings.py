@@ -37,7 +37,7 @@ SECRET_KEY = 'o!us2goj_d-xc@hx-p&r#@)w$1g)!7t-!11+cys-q0i6o1)u_%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['seteamproject.pythonanywhere.com']
+ALLOWED_HOSTS = ['seteamproject.pythonanywhere.com','127.0.0.1']
 #APPEND_SLASH=False
 
 # Application definition
