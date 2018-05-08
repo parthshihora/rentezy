@@ -66,6 +66,8 @@
 			    				<p class="card-text">
 			    					Price: {{car.priceperhour}} <br> 
 			    					Pickup Location: {{car.pickuplocation}} <br>
+                                   Car Type: {{car.cartype}} <br>
+                                   Capacity: {{car.passengerCapacity}} <br>
                                </p>
 			    			<!--	<a href="{% url 'modify_car' car.id %}" class="btn btn-primary" onclick=""myFunction()"">Modify</a> -->
 			    			<a href="" class="btn btn-primary" onclick="myFunction()">Modify</a>
@@ -114,7 +116,8 @@
 			    				<p class="card-text">
 			    					Price: {{car.priceperhour}} <br> 
 			    					Pickup Location: {{car.pickuplocation}} <br>
-			    					
+                                   Car Type: {{car.cartype}} <br>
+                                   Capacity: {{car.passengerCapacity}} <br>
 			    				</p>
 			    				<a href="{% url 'modify_car' car.id %}" class="btn btn-primary">Modify</a>
                                 <a href="{% url 'delete_object' car.id %}" class="btn btn-primary" id= "{{ car.id }}">Delete</a> 

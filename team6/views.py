@@ -31,8 +31,10 @@ def getlocation(request):
     #ip = '134.201.250.155'
     #ip='170.123.234.133'
     #print("******meta*******",request.META['REMOTE_ADDR'])
+
     if (not ip or ip == '127.0.0.1') and request.META.has_key('HTTP_X_FORWARDED_FOR'):
         ip = request.META['HTTP_X_FORWARDED_FOR']
+        location = ['42.6680631','-73.8807209','albany']
     elif ip:
         city = g.city(ip)['city']
         latitude = g.city(ip)['latitude']
@@ -40,6 +42,7 @@ def getlocation(request):
         location = [latitude,longitude,city]
     else:
         city = "Albany"# set default city
+        location = ['42.6680631', '-73.8807209', 'albany']
     return location
 
 
