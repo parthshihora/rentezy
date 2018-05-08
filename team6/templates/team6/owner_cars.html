@@ -69,7 +69,9 @@
                                    Car Type: {{car.cartype}} <br>
                                    Capacity: {{car.passengerCapacity}} <br>
                                </p>
-			    				<a href="{% url 'modify_car' car.id %}" class="btn btn-primary">Modify</a>
+			    			<!--	<a href="{% url 'modify_car' car.id %}" class="btn btn-primary" onclick=""myFunction()"">Modify</a> -->
+			    			<a href="" class="btn btn-primary" onclick="myFunction()">Modify</a>
+			    		
                                 <a href="{% url 'delete_object' car.id %}" class="btn btn-primary" id= "{{ car.id }}">Delete</a>
 
 
@@ -88,6 +90,9 @@
                                        }
                                         
                                     }
+                                    function myFunction() {
+ 										   alert("This car is Reserved, You can't modify it at the moment");
+												}
                                 </script>
 
 			  				</div>

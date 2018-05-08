@@ -26,8 +26,9 @@ def getlocation(request):
     threading.Timer(120,getlocation,[request]).start()
     print datetime.utcnow()
     g = GeoIP2()
-    #ip = request.META.get('REMOTE_ADDR', None)
-    ip = '134.201.250.155'
+    ip = request.META.get('REMOTE_ADDR', None)
+    #ip = '134.201.250.155'
+    #ip='170.123.234.133'
     #print("******meta*******",request.META['REMOTE_ADDR'])
     if (not ip or ip == '127.0.0.1') and request.META.has_key('HTTP_X_FORWARDED_FOR'):
         ip = request.META['HTTP_X_FORWARDED_FOR']
@@ -59,6 +60,10 @@ def mytrips(request):
     #reservations = Reservation.objects.filter(user=request.session['id'],drop_date__range=['2018-04-23',today])
     if request.session['role'] == 'customer':
         reservations = Reservation.objects.filter(customer=request.session['id'],drop_date__lte=today)
+        for r in reservations:
+            car = r.carid
+            car.Reserved = "No"
+            car.save()
     elif request.session['role'] == 'owner':
         reservations = Reservation.objects.filter(owner=request.session['id'], drop_date__lte=today)
 
@@ -78,10 +83,10 @@ def allCars(request):
         print car_type + no_of_pass
         if car_type=='none' and no_of_pass == "10" and sorting=="lowtohigh":
             cars = Car.objects.exclude(Reserved="Yes").order_by('priceperhour')
-    
+
         elif car_type=='none' and no_of_pass == "10" and sorting=="hightolow":
             cars = Car.objects.exclude(Reserved="Yes").order_by('-priceperhour')
-    
+
 
         elif car_type != 'none' and no_of_pass == "10" and sorting=="lowtohigh":
             cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type).order_by("priceperhour")
@@ -94,10 +99,10 @@ def allCars(request):
 
         elif car_type == 'none' and no_of_pass != "10" and sorting=="hightolow":
             cars = Car.objects.exclude(Reserved="Yes").filter(passengerCapacity__exact=no_of_pass).order_by("-priceperhour")
-            
+
         else:
             cars = Car.objects.exclude(Reserved="Yes").filter(cartype__contains=car_type, passengerCapacity__exact=no_of_pass)
-            
+
 
     return render(request, "team6/allcars.html", {'form': form, 'cars': cars})
 
@@ -155,7 +160,7 @@ def rejectOwners(request,object_id):
     print("*******",owner)
     owner.status = "Rejected"
     owner.save()
-    return HttpResponseRedirect('/allowners/')    
+    return HttpResponseRedirect('/allowners/')
 
 def modifyCar(request, object_id):
     if 'id' not in request.session:
@@ -229,7 +234,7 @@ def ownersignup(request):
                         userdata.__setattr__('status',"Not Approved")
                     else:
                         userdata.__setattr__('status',"Approved")
-                    userdata.license = request.FILES.get("license")  
+                    userdata.license = request.FILES.get("license")
                     form.save()
                     messages.success(request, 'Registration Successful')
         else:
@@ -407,7 +412,7 @@ def modify_reservation(request,object_id):
                 message1 = "Reservation of your car "+ car.modelName +" hase been modified by " + reservation.customer.first_name + " "+ reservation.customer.first_name
                 message2 = "\nYou can contact your customer on " + reservation.customer.email
                 message3 = "\nReservation Details\n"
-                message4 = "Pickup Date:"+str(reservation.pickup_date) + "\n" + "Drop Date:"+str(reservation.drop_date) 
+                message4 = "Pickup Date:"+str(reservation.pickup_date) + "\n" + "Drop Date:"+str(reservation.drop_date)
                 message = message1 + message2 + message3 + message4
                 reservation.save()
                 from_email = settings.EMAIL_HOST_USER
@@ -425,7 +430,7 @@ def make_reservation(request, object_id):
     if 'id' not in request.session:
         return redirect('/errorpage/')
     car = Car.objects.get(pk=object_id)
-    
+
     if(Reservation.objects.filter(carid=object_id).exists()):
         reservation = Reservation.objects.get(carid=object_id)
         if(reservation.status=="Deleted"):
@@ -461,7 +466,7 @@ def make_reservation(request, object_id):
                 message1 = "Your car "+ car.modelName + " haowse been reserved by " + reservation.customer.first_name + " "+ reservation.customer.last_name
                 message2 = "\nYou can contact your customer on " + reservation.customer.email
                 message3 = "\nReservation Details\n"
-                message4 = "Pickup Date:"+str(reservation.pickup_date) + "\n" + "Drop Date:"+str(reservation.drop_date) 
+                message4 = "Pickup Date:"+str(reservation.pickup_date) + "\n" + "Drop Date:"+str(reservation.drop_date)
                 message = message1 + message2 + message3 + message4
 
                 from_email = settings.EMAIL_HOST_USER

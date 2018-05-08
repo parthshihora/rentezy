@@ -58,9 +58,10 @@
 			      			<div class="card-body">
 			    				<h5 class="card-title">{{ reservation.session.username }}</h5>
 			    				<p class="card-text">
-			    					Owner: {{ reservation.carid.user.first_name}} <br>
+			    					Owner: {{ reservation.owner.first_name}} <br>
 			    					Pickup Time: {{ reservation.pickup_date}} {{ reservation.pickup_time }}<br>
                                     Drop Time: {{ reservation.drop_date}} {{ reservation.drop_time }}<br>
+                                    Price: {{ reservation.carid.priceperhour}}<br>
 			    				</p>
 			    				<a href="{% url 'modify_reservation' reservation.carid_id %}" class="btn btn-primary">Edit Reservation</a>
 
