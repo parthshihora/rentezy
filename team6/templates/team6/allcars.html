@@ -30,7 +30,7 @@
 	  			<a class="navbar-brand" href="#">RENTEZY</a>
 				<ul class="navbar-nav ml-auto">
 {#                  <li class="nav-item"> <a href = "{% url 'allcars' %}" class="nav-link text-white" ><span class="fa fa-home fa-2x mr-2"></span></a>	</li>#}
-                    <li class="nav-item"> <a href = '/yourcars' class="nav-link text-secondary font-weight-bold border-right">Home</a> </li>
+                    <li class="nav-item"> <a href = '{% url 'allcars' %}' class="nav-link text-secondary font-weight-bold border-right">Home</a> </li>
                     <li class="nav-item"> <a href = '{% url 'myreservations' %}' class="nav-link text-white border-right">My Reservations</a> </li>
                     <li class="nav-item"> <a href = '{% url 'mytrips' %}' class="nav-link text-white border-right">My Trips</a> </li>
                     <li class="nav-item"> <a href= '{% url 'myfeedbacks' %}' class="nav-link text-white border-right">My Feedbacks</a> </li>
@@ -154,7 +154,7 @@
 
 					<div class="container">
 						<div class="row">
-							<div class="col-sm-4">
+							<div class="col-sm-4 my-auto">
 			  					<img class="card-img-top img-responsive" src="{{ car.car_pic.url }}" alt="Card image cap" style="width: 100%">
 			  				</div>
 			  				<div class="col-sm-8">
